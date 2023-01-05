@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
 
@@ -11,11 +12,12 @@ export const MainLayout = ({ children }: any) => {
             <Sidebar />
 
             <main style={{
-                margin: '80px auto',
+                margin: '0px auto',
                 maxWidth: '1440px',
-                padding: '0px 30px'
+                padding: '0px 30px',
             }}>
-                { children }
+                {/* { children } */}
+                <Outlet />
             </main>
         </>
     );
