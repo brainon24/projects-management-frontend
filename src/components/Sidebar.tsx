@@ -33,9 +33,9 @@ export const Sidebar = () => {
 
                     {/* <Divider /> */}
 
-                    <ListItem>
+                    <ListItem className='list-item'>
                         <LinkRRD to='/'>
-                            <Link display='flex' alignItems='center'>
+                            <Link className='link'>
                                 <ListItemIcon>
                                     <VscHome className='icon' />
                                 </ListItemIcon>
@@ -44,21 +44,25 @@ export const Sidebar = () => {
                         </LinkRRD>
                     </ListItem>
 
-                    <ListItem>
+                    <ListItem className='list-item'>
                         <LinkRRD to='/login'>
-                            <ListItemIcon>
-                                <FiLogIn className='icon' />
-                            </ListItemIcon>
-                            <ListItemText primary='Iniciar Sesión' />
+                            <Link className='link'>
+                                <ListItemIcon>
+                                    <FiLogIn className='icon' />
+                                </ListItemIcon>
+                                <ListItemText primary='Iniciar Sesión' />
+                            </Link>
                         </LinkRRD>
                     </ListItem>
 
-                    <ListItem>
+                    <ListItem className='list-item'>
                         <LinkRRD to='/signUp'>
-                            <ListItemIcon>
-                                <BsKey className='icon' />
-                            </ListItemIcon>
-                            <ListItemText primary='Registrarme' />
+                            <Link className='link'>
+                                <ListItemIcon>
+                                    <BsKey className='icon' />
+                                </ListItemIcon>
+                                <ListItemText primary='Registrarme' />
+                            </Link>
                         </LinkRRD>
                     </ListItem>
 

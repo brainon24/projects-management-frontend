@@ -10,3 +10,13 @@
     font-size: 17px;
     color: #5c5959;
 }
+
+.link {
+    display: flex;
+    align-items: center;
+}
+
+.list-item:hover {
+    background-color: aqua; /* TODO: Change color here */
+    width: 100%;
+}
