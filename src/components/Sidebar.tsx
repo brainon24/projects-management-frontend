@@ -33,7 +33,7 @@ export const Sidebar = () => {
 
                     {/* <Divider /> */}
 
-                    <ListItem className='list-item'>
+                    <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                         <LinkRRD to='/'>
                             <Link className='link'>
                                 <ListItemIcon>
@@ -44,7 +44,7 @@ export const Sidebar = () => {
                         </LinkRRD>
                     </ListItem>
 
-                    <ListItem className='list-item'>
+                    <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                         <LinkRRD to='/login'>
                             <Link className='link'>
                                 <ListItemIcon>
@@ -55,8 +55,8 @@ export const Sidebar = () => {
                         </LinkRRD>
                     </ListItem>
 
-                    <ListItem className='list-item'>
-                        <LinkRRD to='/signUp'>
+                    <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                        <LinkRRD to='/sign-up'>
                             <Link className='link'>
                                 <ListItemIcon>
                                     <BsKey className='icon' />

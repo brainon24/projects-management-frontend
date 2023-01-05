@@ -3,20 +3,23 @@ import { MainLayout } from "./layouts/MainLayout";
 import { Home } from "./pages/Home"
 import { NotFound } from './pages/NotFound';
 import { Login } from './pages/Login';
+import { SignUp } from './pages/SignUp';
 
 const App = () => {
 
   return (
     <>
-      <MainLayout>
+      {/* <MainLayout> */}
         {/* <BrowserRouter> */}
 
         {/* </BrowserRouter> */}
-      </MainLayout>
+      {/* </MainLayout> */}
 
       <Routes>
+        
         <Route path="/" element={ <Home /> } />
         <Route path="/login" element={ <Login /> } />
+        <Route path="/sign-up" element={ <SignUp /> } />
 
         <Route path="/*" element={ <NotFound /> } />
       </Routes>

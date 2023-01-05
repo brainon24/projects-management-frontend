@@ -16,7 +16,8 @@
     align-items: center;
 }
 
-.list-item:hover {
+.list-item:hover, .list-item:focus {
     background-color: aqua; /* TODO: Change color here */
     width: 100%;
+    cursor: pointer;
 }
