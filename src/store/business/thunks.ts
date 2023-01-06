@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { baseURL } from '../../api/api';
-import { findByIdReducer } from './businessSlice';
+import { addErrorReducer, findByIdReducer } from './businessSlice';
+import projectsManagement from '../../api/api';
 
 
 export const findBusinessById_thunk = (businessId : any) => {
@@ -8,15 +9,21 @@ export const findBusinessById_thunk = (businessId : any) => {
 
         // dispatch( checkingReducer() );
 
-        const { data }: any = await axios.get(`${baseURL}/business/findById/${ businessId }`);
-        console.log('DATA - THUNK: ', data);
+        projectsManagement.get(`/business/findById/${ businessId }`)
+            .then(({ data, status }) => {
+                if (status !== 200) {
+                    throw new Error(data.message);
+                }
 
-        if ( data.message ) {
-            // return dispatch( addErrorReducer( data ) );
-        }
-
-        dispatch( findByIdReducer( data ) );
-
-        return data;
+                dispatch( findByIdReducer( data.businessName ) );
+            })
+            .catch(error => {
+                try {
+                    // console.log(error.response.data.message);
+                    dispatch( addErrorReducer(error.response.data.message) );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
     }
 }

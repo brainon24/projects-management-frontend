@@ -1,21 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as LinkRRD } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Box, Input, Typography } from '@mui/material';
-import axios, { AxiosResponse } from 'axios';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { HiBadgeCheck } from 'react-icons/hi';
 
 import '../styles/signUp.css';
 import { useForm } from '../hooks/useForm';
 import { signUp_thunk } from '../store/auth/thunks';
-import { baseURL } from '../api/api';
+import { findBusinessById_thunk } from '../store/business/thunks';
+import { clearErrorBusinessReducer } from '../store/business/businessSlice';
 
 export const SignUp = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
-    const [ businessName, setBusinessName ] = useState<string | undefined>( undefined );
+    const { businessName, businessErrorMessage } = useSelector((state: any) => state.business);
+    console.log(businessName);
 
     const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
         name: '',
@@ -27,13 +28,10 @@ export const SignUp = () => {
     });
 
     const searchBusiness = async () => {
-        const { data }: AxiosResponse<any, any> = await axios.get(`${baseURL}/business/findById/${ businessId }`);
-        
-        if ( data.message ) {
-            // return dispatch( addErrorReducer( data ) );
-        }
+        if( businessId.length < 5 ) return;
 
-        setBusinessName( data.businessName );
+        dispatch( findBusinessById_thunk( businessId ) );
+
     }
 
     const onSubmit = (event: any) => {
@@ -51,9 +49,17 @@ export const SignUp = () => {
         onResetForm();
     }
 
-    // useEffect(() => {
-        
-    // }, []);
+    useEffect(() => {
+        if( !businessErrorMessage || businessName ) return;
+
+        const timer = setTimeout(() => {
+            dispatch( clearErrorBusinessReducer() );
+        }, 4500);
+
+        return () => {
+            clearTimeout( timer );
+        }
+    }, [ businessErrorMessage ]);
 
     return (
         <div className='container-page'>
@@ -143,6 +149,7 @@ export const SignUp = () => {
                         onChange={ onInputChange }
                         onBlur={ searchBusiness }
                     />
+                    <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography>
 
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <button
