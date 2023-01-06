@@ -30,6 +30,32 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
+.container-header-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-business-name {
+    background-color: #eee;
+    padding: 0 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.business-name {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.business-found-icon {
+    font-size: 18px;
+    margin-left: 10px;
+    color: #009f4d;
+}
+
 .form-input {
     width: 100%;
     margin: 15px 0;
@@ -76,7 +102,7 @@
     }
 
     .sign-up-page-container {
-        height: 90vh;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;

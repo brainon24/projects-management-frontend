@@ -1,6 +1,7 @@
 import { Link as LinkRRD } from 'react-router-dom';
 import { Box, Link, Input, Typography } from '@mui/material';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { HiBadgeCheck } from 'react-icons/hi';
 
 import '../styles/signUp.css';
 
@@ -33,7 +34,14 @@ export const SignUp = () => {
                     onSubmit={ onSubmit }
                     className='form-container'
                 >
-                    <h1>Registro</h1>
+                    <Box className='container-header-form'>
+                        <h1>Registro</h1>
+                        <Box className='container-business-name'>
+                            <p className='business-name'>brainon24</p>
+                            <HiBadgeCheck className='business-found-icon' />
+                        </Box>
+                    </Box>
+
                     <Input 
                         placeholder='Nombre'
                         className='form-input'
@@ -62,6 +70,12 @@ export const SignUp = () => {
                         placeholder='Celular'
                         className='form-input'
                         type='number'
+                        autoComplete='off'
+                    />
+                    <Input 
+                        placeholder='ID de la empresa para la que trabajas'
+                        className='form-input'
+                        type='text'
                         autoComplete='off'
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
