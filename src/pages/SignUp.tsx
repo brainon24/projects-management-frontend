@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import { Link as LinkRRD } from 'react-router-dom';
-import { Box, Link, Input, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from '@reduxjs/toolkit';
+import { Box, Input, Typography } from '@mui/material';
+import axios, { AxiosResponse } from 'axios';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { HiBadgeCheck } from 'react-icons/hi';
 
 import '../styles/signUp.css';
 import { useForm } from '../hooks/useForm';
+import { signUp_thunk } from '../store/auth/thunks';
+import { baseURL } from '../api/api';
 
 export const SignUp = () => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+    const [ businessName, setBusinessName ] = useState<string | undefined>( undefined );
 
     const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
         name: '',
@@ -17,12 +26,34 @@ export const SignUp = () => {
         businessId: ''
     });
 
+    const searchBusiness = async () => {
+        const { data }: AxiosResponse<any, any> = await axios.get(`${baseURL}/business/findById/${ businessId }`);
+        
+        if ( data.message ) {
+            // return dispatch( addErrorReducer( data ) );
+        }
+
+        setBusinessName( data.businessName );
+    }
+
     const onSubmit = (event: any) => {
         event.preventDefault();
 
-        //TODO: Consume thunk of sign up here
+        dispatch( signUp_thunk({
+            name,
+            lastName,
+            email,
+            password,
+            phone,
+            businessId
+        }) );
+        
         onResetForm();
     }
+
+    // useEffect(() => {
+        
+    // }, []);
 
     return (
         <div className='container-page'>
@@ -30,10 +61,8 @@ export const SignUp = () => {
                 component='section'
                 className='go-to-back-container'
             >
-                <LinkRRD to='/'>
-                    <Link className='go-to-back-icon'>
-                        <AiOutlineArrowLeft />
-                    </Link>
+                <LinkRRD to='/' className='go-to-back-icon'>
+                    <AiOutlineArrowLeft />
                 </LinkRRD>
             </Box>
 
@@ -47,10 +76,16 @@ export const SignUp = () => {
                 >
                     <Box className='container-header-form'>
                         <h1>Registro</h1>
-                        <Box className='container-business-name'>
-                            <p className='business-name'>brainon24</p>
-                            <HiBadgeCheck className='business-found-icon' />
-                        </Box>
+                        {
+                            typeof businessName === 'string' 
+                                ?   (
+                                        <Box className='container-business-name'>
+                                            <p className='business-name'>{ businessName.length >= 15 ? businessName.substring(0, 15) + '...' : businessName }</p>
+                                            <HiBadgeCheck className='business-found-icon' />
+                                        </Box>
+                                    ) 
+                                : null
+                        }
                     </Box>
 
                     <Input 
@@ -106,6 +141,7 @@ export const SignUp = () => {
                         name='businessId'
                         value={ businessId }
                         onChange={ onInputChange }
+                        onBlur={ searchBusiness }
                     />
 
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
