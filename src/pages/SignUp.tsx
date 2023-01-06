@@ -4,13 +4,24 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { HiBadgeCheck } from 'react-icons/hi';
 
 import '../styles/signUp.css';
+import { useForm } from '../hooks/useForm';
 
 export const SignUp = () => {
+
+    const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
+        name: '',
+        lastName: '',
+        email: '',
+        password: '',
+        phone: '', //TODO: Cast to number in onSubmit
+        businessId: ''
+    });
 
     const onSubmit = (event: any) => {
         event.preventDefault();
 
-        console.log('click');
+        //TODO: Consume thunk of sign up here
+        onResetForm();
     }
 
     return (
@@ -47,40 +58,60 @@ export const SignUp = () => {
                         className='form-input'
                         type='text'
                         autoComplete='off'
+                        name='name'
+                        value={ name }
+                        onChange={ onInputChange }
                     />
                     <Input 
                         placeholder='Apellidos'
                         className='form-input'
                         type='text'
                         autoComplete='off'
+                        name='lastName'
+                        value={ lastName }
+                        onChange={ onInputChange }
                     />
                     <Input 
                         placeholder='Correo Electrínico'
                         className='form-input'
                         type='email'
                         autoComplete='off'
+                        name='email'
+                        value={ email }
+                        onChange={ onInputChange }
                     />
                     <Input 
                         placeholder='Contraseña'
                         className='form-input'
                         type='password'
                         autoComplete='off'
+                        name='password'
+                        value={ password }
+                        onChange={ onInputChange }
                     />
                     <Input 
                         placeholder='Celular'
                         className='form-input'
                         type='number'
                         autoComplete='off'
+                        name='phone'
+                        value={ phone }
+                        onChange={ onInputChange }
                     />
                     <Input 
                         placeholder='ID de la empresa para la que trabajas'
                         className='form-input'
                         type='text'
                         autoComplete='off'
+                        name='businessId'
+                        value={ businessId }
+                        onChange={ onInputChange }
                     />
+
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <button
                             className='btn-sign-up'
+                            type='submit'
                         >
                             Registrarme
                         </button>
