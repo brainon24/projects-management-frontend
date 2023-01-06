@@ -16,7 +16,6 @@ export const SignUp = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
     const { businessName, businessErrorMessage } = useSelector((state: any) => state.business);
-    console.log(businessName);
 
     const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
         name: '',
@@ -148,6 +147,7 @@ export const SignUp = () => {
                         value={ businessId }
                         onChange={ onInputChange }
                         onBlur={ searchBusiness }
+                        disabled={ businessName }
                     />
                     <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography>
 
@@ -155,6 +155,7 @@ export const SignUp = () => {
                         <button
                             className='btn-sign-up'
                             type='submit'
+                            // disabled={}
                         >
                             Registrarme
                         </button>

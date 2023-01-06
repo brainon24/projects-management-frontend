@@ -26,7 +26,7 @@ export const signUp_thunk = ({ name, lastName, email, password, phone, businessI
             phone: cellphone, 
             businessId,
         });
-        console.log('DATA - THUNK: ', data);
+        // console.log('DATA - THUNK: ', data);
 
         if ( data.message ) {
             return dispatch( addErrorReducer( data ) );
