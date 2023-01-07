@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { baseURL } from '../../api/api';
-import { addErrorReducer, findByIdReducer } from './businessSlice';
+import { addErrorReducer, findByIdReducer, loadingBusinessReducer } from './businessSlice';
 import projectsManagement from '../../api/api';
 
 
 export const findBusinessById_thunk = (businessId : any) => {
     return async ( dispatch: any ) => {
 
-        // dispatch( checkingReducer() );
+        // dispatch( loadingBusinessReducer() );
 
         projectsManagement.get(`/business/findById/${ businessId }`)
             .then(({ data, status }) => {

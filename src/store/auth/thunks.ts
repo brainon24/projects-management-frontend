@@ -1,6 +1,6 @@
-import axios from "axios";
 import { addErrorReducer, checkingReducer, signInReducer } from "./authSlice";
-import { baseURL } from '../../api/api';
+import projectsManagement from '../../api/api';
+import { clearBusinessIdAndName } from "../business/businessSlice";
 
 interface SignUpProps {
     name: string;
@@ -18,24 +18,31 @@ export const signUp_thunk = ({ name, lastName, email, password, phone, businessI
         
         const cellphone = parseInt( phone );
 
-        const { data }: any = await axios.post(`${baseURL}/auth/signUp`, {
+        console.log('entro al sign in')
+        projectsManagement.post(`/auth/signUp`, {
             name, 
             lastName, 
             email, 
             password, 
             phone: cellphone, 
             businessId,
-        });
-        // console.log('DATA - THUNK: ', data);
-
-        if ( data.message ) {
-            return dispatch( addErrorReducer( data ) );
-        }
-
-        dispatch( signInReducer( data ) );
-
-        await localStorage.setItem('token', data.token);
-
-        return data;
+        })
+            .then(({ data, status }) => {
+                if (status !== 201) {
+                    throw new Error(data.message);
+                }
+                
+                localStorage.setItem('token', data.token);
+                dispatch( signInReducer( data ) );
+            })
+            .catch(error => {
+                try {
+                    // console.log(error.response.data.message);
+                    dispatch( clearBusinessIdAndName() );
+                    dispatch( addErrorReducer(error.response.data.message) );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
     }
 }

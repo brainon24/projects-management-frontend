@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link as LinkRRD } from 'react-router-dom';
+import { Link as LinkRRD, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Box, Input, Typography } from '@mui/material';
@@ -11,11 +11,16 @@ import { useForm } from '../hooks/useForm';
 import { signUp_thunk } from '../store/auth/thunks';
 import { findBusinessById_thunk } from '../store/business/thunks';
 import { clearErrorBusinessReducer } from '../store/business/businessSlice';
+import ModalError from '../components/ModalError';
 
 export const SignUp = () => {
 
+    const navigate = useNavigate();
+
     const dispatch: Dispatch<any> = useDispatch();
     const { businessName, businessId: businessID, businessErrorMessage } = useSelector((state: any) => state.business);
+
+    const { errorMessage } = useSelector((state: any) => state.auth);
 
     const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
         name: '',
@@ -30,11 +35,17 @@ export const SignUp = () => {
         if( businessId.length < 5 ) return;
 
         dispatch( findBusinessById_thunk( businessId ) );
-
     }
 
     const onSubmit = (event: any) => {
         event.preventDefault();
+
+        if( !name || 
+            !lastName ||
+            !email ||
+            !password ||
+            !phone ||
+            !businessId ) return
 
         dispatch( signUp_thunk({
             name,
@@ -46,6 +57,8 @@ export const SignUp = () => {
         }) );
         
         onResetForm();
+
+        navigate('/private');
     }
 
     useEffect(() => {
@@ -62,6 +75,14 @@ export const SignUp = () => {
 
     return (
         <div className='container-page'>
+            {
+                errorMessage ? (
+                    <ModalError
+                        title='Error de Registro'
+                        descriptionError={ errorMessage }
+                    />
+                ) : null
+            }
             <Box 
                 component='section'
                 className='go-to-back-container'
