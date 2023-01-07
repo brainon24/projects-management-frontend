@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface InitialState {
-    businessName: string | undefined,
-    businessErrorMessage: string | undefined,
+    businessName: string | undefined;
+    businessId: string | undefined;
+    businessErrorMessage: string | undefined;
 }
 
 const initialState: InitialState = {
     businessName: undefined,
+    businessId: undefined,
     businessErrorMessage: undefined,
 }
 
@@ -17,11 +19,13 @@ export const businessSlice = createSlice({
         createBusinessReducer: () => {},
 
         findByIdReducer: ( state, { payload } ) => {
-            state.businessName = payload;
+            state.businessName = payload.name;
+            state.businessId = payload.id;
         },
 
         addErrorReducer: ( state, { payload } ) => {
             state.businessName = undefined;
+            state.businessId = undefined;
             state.businessErrorMessage = payload;
         },
 

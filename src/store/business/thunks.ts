@@ -15,7 +15,7 @@ export const findBusinessById_thunk = (businessId : any) => {
                     throw new Error(data.message);
                 }
 
-                dispatch( findByIdReducer( data.businessName ) );
+                dispatch( findByIdReducer( {name: data.businessName, id: businessId} ) );
             })
             .catch(error => {
                 try {

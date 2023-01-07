@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link as LinkRRD } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
@@ -15,7 +15,7 @@ import { clearErrorBusinessReducer } from '../store/business/businessSlice';
 export const SignUp = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
-    const { businessName, businessErrorMessage } = useSelector((state: any) => state.business);
+    const { businessName, businessId: businessID, businessErrorMessage } = useSelector((state: any) => state.business);
 
     const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
         name: '',
@@ -144,7 +144,7 @@ export const SignUp = () => {
                         type='text'
                         autoComplete='off'
                         name='businessId'
-                        value={ businessId }
+                        value={ businessId ? businessId : businessID }
                         onChange={ onInputChange }
                         onBlur={ searchBusiness }
                         disabled={ businessName }
