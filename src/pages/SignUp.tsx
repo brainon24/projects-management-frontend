@@ -20,14 +20,14 @@ export const SignUp = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const { businessName, businessId: businessID, businessErrorMessage } = useSelector((state: any) => state.business);
 
-    const { errorMessage } = useSelector((state: any) => state.auth);
+    const { status, errorMessage } = useSelector((state: any) => state.auth);
 
     const { formState, onInputChange, onResetForm, name, lastName, email, password, phone, businessId } = useForm({
         name: '',
         lastName: '',
         email: '',
         password: '',
-        phone: '', //TODO: Cast to number in onSubmit
+        phone: '', 
         businessId: ''
     });
 
@@ -45,8 +45,10 @@ export const SignUp = () => {
             !email ||
             !password ||
             !phone ||
-            !businessId ) return
+            !businessId ) return;
 
+        onResetForm();
+        
         dispatch( signUp_thunk({
             name,
             lastName,
@@ -55,10 +57,6 @@ export const SignUp = () => {
             phone,
             businessId
         }) );
-        
-        onResetForm();
-
-        navigate('/private');
     }
 
     useEffect(() => {
@@ -72,6 +70,13 @@ export const SignUp = () => {
             clearTimeout( timer );
         }
     }, [ businessErrorMessage ]);
+
+    useEffect(() => {
+        if( status === 'not-authenticated' ) return;
+
+        return navigate('/private', { replace: true }); 
+    }, [ status ]);
+
 
     return (
         <div className='container-page'>
@@ -151,15 +156,6 @@ export const SignUp = () => {
                         onChange={ onInputChange }
                     />
                     <Input 
-                        placeholder='Celular'
-                        className='form-input'
-                        type='number'
-                        autoComplete='off'
-                        name='phone'
-                        value={ phone }
-                        onChange={ onInputChange }
-                    />
-                    <Input 
                         placeholder='ID de la empresa para la que trabajas'
                         className='form-input'
                         type='text'
@@ -169,6 +165,15 @@ export const SignUp = () => {
                         onChange={ onInputChange }
                         onBlur={ searchBusiness }
                         disabled={ businessName }
+                    />
+                    <Input 
+                        placeholder='Celular'
+                        className='form-input'
+                        type='number'
+                        autoComplete='off'
+                        name='phone'
+                        value={ phone }
+                        onChange={ onInputChange }
                     />
                     <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography>
 

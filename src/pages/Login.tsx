@@ -1,20 +1,61 @@
-import { Link as LinkRRD } from 'react-router-dom';
+import { Link as LinkRRD, useNavigate } from 'react-router-dom';
 import { Box, Link, Input, Typography } from '@mui/material';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 import '../styles/login.css';
+import { login_thunk } from '../store/auth/thunks';
+import { Dispatch } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from '../hooks/useForm';
+import ModalError from '../components/ModalError';
+import { useEffect } from 'react';
 
 
 export const Login = () => {
 
+    const navigate = useNavigate();
+
+    const dispatch: Dispatch<any> = useDispatch();
+    const { status, errorMessage } = useSelector((state: any) => state.auth);
+
+    const { formState, onInputChange, onResetForm, email, password } = useForm({
+        email: '',
+        password: '',
+    });
+
     const onSubmit = (event: any) => {
         event.preventDefault();
 
-        console.log('click');
+        if(
+            !email ||
+            !password
+        ) return;
+
+        onResetForm();
+
+        dispatch( login_thunk({
+            email,
+            password
+        }) );
     }
+
+    useEffect(() => {
+        if( status === 'not-authenticated' ) return;
+
+        return navigate('/private', { replace: true }); 
+    }, [ status ]);
 
     return (
         <div className='container-page'>
+            {
+                errorMessage ? (
+                    <ModalError
+                        title='Error al Iniciar Sesión'
+                        descriptionError={ errorMessage }
+                    />
+                ) : null
+            }
+
             <Box 
                 component='section'
                 className='go-to-back-container'
@@ -38,17 +79,25 @@ export const Login = () => {
                     <Input 
                         placeholder='Correo Electrínico'
                         className='form-input'
+                        type='email'
                         autoComplete='off'
+                        name='email'
+                        value={ email }
+                        onChange={ onInputChange }
                     />
                     <Input 
                         placeholder='Contraseña'
                         className='form-input'
                         type='password'
                         autoComplete='off'
+                        name='password'
+                        value={ password }
+                        onChange={ onInputChange }
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <button
                             className='btn-login'
+                            type='submit'
                         >
                             Ingresar
                         </button>

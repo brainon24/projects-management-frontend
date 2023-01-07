@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog, styled, Button } from '@mui/material';
 import { RiCloseFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { clearErrorReducer } from '../store/auth/authSlice';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -44,12 +46,11 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 export default function ModalError({ title, descriptionError }: any) {
   const [open, setOpen] = React.useState(true);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
+    dispatch( clearErrorReducer() );
   };
 
   return (
