@@ -39,46 +39,54 @@ export const Sidebar = () => {
 
                     {/* <Divider /> */}
 
-                    <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                        <LinkRRD to='/'>
-                            <Link className='link'>
-                                <ListItemIcon>
-                                    <VscHome className='icon' />
-                                </ListItemIcon>
-                                <ListItemText primary='Inicio' />
-                            </Link>
-                        </LinkRRD>
-                    </ListItem>
+                    {
+                        status === 'not-authenticated'
+                        ? (
+                            <>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <VscHome className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Inicio' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
 
-                    <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                        <LinkRRD to='/login'>
-                            <Link className='link'>
-                                <ListItemIcon>
-                                    <FiLogIn className='icon' />
-                                </ListItemIcon>
-                                <ListItemText primary='Iniciar sesión' />
-                            </Link>
-                        </LinkRRD>
-                    </ListItem>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/login'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <FiLogIn className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Iniciar sesión' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
 
-                    <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                        <LinkRRD to='/sign-up'>
-                            <Link className='link'>
-                                <ListItemIcon>
-                                    <BsKey className='icon' />
-                                </ListItemIcon>
-                                <ListItemText primary='Registrarme' />
-                            </Link>
-                        </LinkRRD>
-                    </ListItem>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/sign-up'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <BsKey className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Registrarme' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
+                            </>
+                        ) : null
+                    }
 
-                    {/* <Divider /> */}
 
                     
 
                     {
                         status === 'authenticated' ? (
                             <>
+                                <Divider />
+
                                 <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
                                     <LinkRRD to='/'>
                                         <Link className='link'>

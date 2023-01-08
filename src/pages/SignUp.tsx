@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link as LinkRRD, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
-import { Box, Input, Typography } from '@mui/material';
+import { Box, Chip, Input, Typography } from '@mui/material';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { HiBadgeCheck } from 'react-icons/hi';
 
@@ -12,6 +12,7 @@ import { signUp_thunk } from '../store/auth/thunks';
 import { findBusinessById_thunk } from '../store/business/thunks';
 import { clearErrorBusinessReducer } from '../store/business/businessSlice';
 import ModalError from '../components/ModalError';
+import { BiErrorCircle } from 'react-icons/bi';
 
 export const SignUp = () => {
 
@@ -32,7 +33,7 @@ export const SignUp = () => {
     });
 
     const searchBusiness = async () => {
-        if( businessId.length < 5 ) return;
+        if( businessId.length <= 8 ) return;
 
         dispatch( findBusinessById_thunk( businessId ) );
     }
@@ -64,7 +65,7 @@ export const SignUp = () => {
 
         const timer = setTimeout(() => {
             dispatch( clearErrorBusinessReducer() );
-        }, 4500);
+        }, 6000);
 
         return () => {
             clearTimeout( timer );
@@ -110,6 +111,14 @@ export const SignUp = () => {
                                 onSubmit={ onSubmit }
                                 className='form-container'
                             >
+                                <Chip
+                                    label={ businessErrorMessage }
+                                    color='error'
+                                    icon={ <BiErrorCircle size={25} />}
+                                    className='fadeIn'
+                                    sx={{ display: businessErrorMessage ? 'flex' : 'none' }}
+                                    style={{ margin: '5px 0', padding: '20px 0' }}
+                                />
                                 <Box className='container-header-form'>
                                     <h1>Registro</h1>
                                     {
@@ -171,6 +180,7 @@ export const SignUp = () => {
                                     onBlur={ searchBusiness }
                                     disabled={ businessName }
                                 />
+                                {/* <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography> */}
                                 <Input 
                                     placeholder='Celular'
                                     className='form-input'
@@ -180,7 +190,6 @@ export const SignUp = () => {
                                     value={ phone }
                                     onChange={ onInputChange }
                                 />
-                                <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <button

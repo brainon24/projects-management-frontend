@@ -119,7 +119,7 @@ export const checkToken_thunk = (token: string) => {
 export const logout_thunk = () => {
     return async ( dispatch: any ) => {
 
-        localStorage.removeItem('token');
+        await localStorage.removeItem('token');
         
         dispatch( logoutReducer() );
 

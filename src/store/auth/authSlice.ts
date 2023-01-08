@@ -11,7 +11,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-    status: 'checking', //TODO: Change it for 'checking'
+    status: 'checking',
     user: {},
     token: undefined,
     errorMessage: undefined
