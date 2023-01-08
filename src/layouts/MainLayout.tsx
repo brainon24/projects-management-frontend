@@ -16,8 +16,8 @@ export const MainLayout = ({ children }: any) => {
                 maxWidth: '1440px',
                 padding: '0px 30px',
             }}>
-                {/* { children } */}
-                <Outlet />
+                { children }
+                {/* <Outlet /> */}
             </main>
         </>
     );

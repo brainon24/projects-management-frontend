@@ -11,7 +11,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-    status: 'not-authenticated', //TODO: Change it for 'checking'
+    status: 'checking', //TODO: Change it for 'checking'
     user: {},
     token: undefined,
     errorMessage: undefined
@@ -26,7 +26,7 @@ export const authSlice = createSlice({
             state.errorMessage = undefined;
         },
 
-        signInReducer: ( state, { payload } ) => {
+        signInReducer: ( state, { payload } ) => {            
             state.status = 'authenticated';
             state.user = payload.user;
             state.token = payload.token;

@@ -1,6 +1,6 @@
-import { addErrorReducer, checkingReducer, signInReducer } from "./authSlice";
-import projectsManagement from '../../api/api';
+import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from "./authSlice";
 import { clearBusinessIdAndName } from "../business/businessSlice";
+import projectsManagement from '../../api/api';
 
 
 interface SignUpProps {
@@ -77,5 +77,51 @@ export const login_thunk = ({ email, password }: LoginProps) => {
                     console.error(error);
                 }
             });
+    }
+}
+
+export const checkToken_thunk = (token: string) => {
+    return async ( dispatch: any ) => {
+
+        dispatch( checkingReducer() ); 
+
+        projectsManagement.request({
+            method: 'GET',
+            url: '/auth/checkToken',
+            headers: { 'x-token': token },
+        })
+            .then(({ data }) => {
+                if( !token ) return dispatch( logout_thunk() );
+
+                if( data.user ) {
+                    // localStorage.setItem('token', data.token);
+                    dispatch( signInReducer( data ) );
+                }
+
+                const { response: { statusCode, message } } = data;
+                
+                if (statusCode !== 200) {
+                    dispatch( addErrorReducer( message ) );
+                }
+            })
+            .catch(error => {
+                try {
+                    // console.log(error.response.data.message);
+                    dispatch( addErrorReducer(error.response.data.message) );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+    }
+}
+
+
+export const logout_thunk = () => {
+    return async ( dispatch: any ) => {
+
+        localStorage.removeItem('token');
+        
+        dispatch( logoutReducer() );
+
     }
 }

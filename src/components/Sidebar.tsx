@@ -8,15 +8,21 @@ import { BsKey } from 'react-icons/bs';
 import { Link as LinkRRD, } from 'react-router-dom';
 
 import './styles/sidebar.css';
+import { logout_thunk } from '../store/auth/thunks';
+import { Dispatch } from '@reduxjs/toolkit';
+import { RiLogoutBoxLine } from 'react-icons/ri';
 
 export const Sidebar = () => {
 
     const { sidemenuOpen } = useSelector((state: any) => state.ui);
-    const dispatch = useDispatch();
+    const { status } = useSelector((state: any) => state.auth);
+
+    const dispatch: Dispatch<any> = useDispatch();
 
     return (
         <Drawer
             open={ sidemenuOpen }
+            onClose={ () => dispatch( closeSidemenu() ) }
             anchor='right'
             sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }} 
         >
@@ -50,7 +56,7 @@ export const Sidebar = () => {
                                 <ListItemIcon>
                                     <FiLogIn className='icon' />
                                 </ListItemIcon>
-                                <ListItemText primary='Iniciar Sesión' />
+                                <ListItemText primary='Iniciar sesión' />
                             </Link>
                         </LinkRRD>
                     </ListItem>
@@ -68,6 +74,25 @@ export const Sidebar = () => {
 
                     {/* <Divider /> */}
 
+                    
+
+                    {
+                        status === 'authenticated' ? (
+                            <>
+                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
+                                    <LinkRRD to='/'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <RiLogoutBoxLine className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Cerrar sesión' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
+
+                            </>
+                        ) : null
+                    }
                 </List>
             </Box>
         </Drawer> 
