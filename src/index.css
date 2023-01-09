@@ -1,5 +1,20 @@
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+
+  /* --primary: ; */
+  /* --secondary: ; */
+  --white: #fff;
+  --gray: #fafafa;
+  --grayDark: #404040;
+  --black: #000;
+  --dark: #27272a;
+
+  --borderRadius: 6px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 a {

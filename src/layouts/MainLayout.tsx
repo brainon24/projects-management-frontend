@@ -3,7 +3,11 @@ import { Sidebar } from '../components/Sidebar';
 
 export const MainLayout = ({ children }: any) => {
     return (
-        <>
+        <div style={{
+            backgroundColor: '#fafafa',
+            height: '100vh',
+            overflowY: 'scroll'
+        }}>
             <nav>
                 <Navbar />
             </nav>
@@ -16,8 +20,7 @@ export const MainLayout = ({ children }: any) => {
                 padding: '0px 30px',
             }}>
                 { children }
-                {/* <Outlet /> */}
             </main>
-        </>
+        </div>
     );
 }

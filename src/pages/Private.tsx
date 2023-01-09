@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import { PrivateClient } from "../components/private/PrivateClient";
+import { PrivateUser } from "../components/private/PrivateUser";
 import { MainLayout } from '../layouts/MainLayout';
 
 export const Private = () => {
@@ -6,8 +8,17 @@ export const Private = () => {
     const { user } = useSelector((state: any) => state.auth);
 
     return (
-        <MainLayout>
-            <div>Welcome to Private - { user.fullName }</div>
-        </MainLayout>
+        <>
+            <MainLayout>
+                {
+                    user.role === 'USER' && <PrivateUser />
+                }
+
+                {
+                    user.role === 'CLIENT' && <PrivateClient />
+                }
+            </MainLayout>
+
+        </>
     )
 }
