@@ -16,7 +16,8 @@
 }
 
 .sign-up-page-container {
-    height: 75vh;
+    /* height: 89vh; */
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,20 +100,27 @@
     animation-name: fadeIn;
 }
 
+.chip-desktop {
+    display: block;
+}
+
+.chip-mobile {
+    display: none;
+}
+
+.link-back-mobile {
+    display: none;
+}
+
 
 @media (max-width: 650px) {
-    .container-page {
-        background-color: #fafafa;
-        width: 100vw;
-        height: 90vh;
-    }
 
     .go-to-back-container {
-        padding: 25px;
+        display: none;
     }
 
     .sign-up-page-container {
-        height: 100vh;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -120,9 +128,29 @@
 
     .form-container {
         width: 100%;
+        /* height: 100%; */
         background-color: #fff;
         padding: 25px;
         margin: 30px;
-        margin-bottom: 60px;
+    }
+
+    .btn-sign-up {
+        margin: 10px 0;
+    }
+
+    .chip-desktop {
+        display: none;
+    }
+
+    .chip-mobile {
+        display: block;
+    }
+
+    .link-back-mobile {
+        display: block;
+        font-size: 17px;
+        margin-right: 15px;
+        color: #000;
+        margin-top: 3px;
     }
 }

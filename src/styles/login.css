@@ -76,7 +76,8 @@
     }
 
     .login-page-container {
-        height: 63vh;
+        /* height: 63vh; */
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;

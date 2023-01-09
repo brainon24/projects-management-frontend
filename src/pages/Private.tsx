@@ -7,7 +7,7 @@ export const Private = () => {
 
     return (
         <MainLayout>
-            <div>Welcome to Private - { user.name }</div>
+            <div>Welcome to Private - { user.fullName }</div>
         </MainLayout>
     )
 }

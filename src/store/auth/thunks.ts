@@ -4,15 +4,14 @@ import projectsManagement from '../../api/api';
 
 
 interface SignUpProps {
-    name: string;
-    lastName: string;
+    fullName: string;
     phone: string; 
     email: string; 
     password: string;
     businessId: string;
 }
 
-export const signUp_thunk = ({ name, lastName, email, password, phone, businessId }: SignUpProps) => {
+export const signUp_thunk = ({ fullName, email, password, phone, businessId }: SignUpProps) => {
     return async ( dispatch: any ) => {
 
         dispatch( checkingReducer() );
@@ -20,8 +19,7 @@ export const signUp_thunk = ({ name, lastName, email, password, phone, businessI
         const cellphone = parseInt( phone );
 
         projectsManagement.post(`/auth/signUp`, {
-            name, 
-            lastName, 
+            fullName, 
             email, 
             password, 
             phone: cellphone, 

@@ -80,7 +80,12 @@ export const Login = () => {
                                 onSubmit={ onSubmit }
                                 className='form-container'
                             >
-                                <h1>Iniciar Sesión</h1>
+                                <Box  sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                                    <LinkRRD to='/' className='link-back-mobile'>
+                                        <AiOutlineArrowLeft />
+                                    </LinkRRD>
+                                    <h1>Iniciar Sesión</h1>
+                                </Box>
                                 <Input 
                                     placeholder='Correo Electrínico'
                                     className='form-input'
