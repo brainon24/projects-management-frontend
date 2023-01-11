@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom"
+import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch } from "@reduxjs/toolkit";
+import { checkingReducer } from "./store/auth/authSlice";
+import { checkToken_thunk, logout_thunk } from './store/auth/thunks';
 import { Home } from "./pages/Home"
 import { NotFound } from './pages/NotFound';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
-import { useSelector, useDispatch } from 'react-redux';
 import { Private } from './pages/Private';
 import Loading from "./components/Loading";
 import { ProtectedRoute } from "./helpers/ProtectedRoute";
-import { checkToken_thunk, logout_thunk } from './store/auth/thunks';
-import { Dispatch } from "@reduxjs/toolkit";
-import { checkingReducer } from "./store/auth/authSlice";
+import { Profile } from "./pages/Profile";
 
 const App = () => {
 
@@ -23,7 +24,6 @@ const App = () => {
 
     if( !token ) {
       dispatch( logout_thunk() );
-      // return dispatch( logout_thunk() );
     }
     
     dispatch( checkToken_thunk( token ) );
@@ -47,6 +47,15 @@ const App = () => {
           element={ 
             <ProtectedRoute>
               <Private />
+            </ProtectedRoute>
+         } 
+        />
+
+        <Route 
+          path="/private/profile" 
+          element={ 
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
          } 
         />

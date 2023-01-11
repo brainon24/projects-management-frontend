@@ -1,20 +1,20 @@
-import { Box, Divider, Drawer, Link, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Divider, Drawer, Link, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
+import { Link as LinkRRD, } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch } from '@reduxjs/toolkit';
 import { closeSidemenu } from '../store/ui/uiSlice';
+import { logout_thunk } from '../store/auth/thunks';
 import { FiLogIn } from 'react-icons/fi';
 import { VscHome } from 'react-icons/vsc';
 import { SlClose } from 'react-icons/sl';
 import { BsKey } from 'react-icons/bs';
-import { Link as LinkRRD, } from 'react-router-dom';
+import { GoCommentDiscussion } from 'react-icons/go';
+import { RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
+import { MdDashboardCustomize, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
+import { GrProjects } from 'react-icons/gr';
+import { BiUserCircle } from 'react-icons/bi';
 
 import './styles/sidebar.css';
-import { logout_thunk } from '../store/auth/thunks';
-import { Dispatch } from '@reduxjs/toolkit';
-import { RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
-import { BiUserCircle } from 'react-icons/bi';
-import { MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
-import { GrProjects } from 'react-icons/gr';
-import { GoCommentDiscussion } from 'react-icons/go';
 
 export const Sidebar = () => {
 
@@ -30,7 +30,7 @@ export const Sidebar = () => {
             anchor='right'
             sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }} 
         >
-            <Box sx={{ width: 250, paddingTop: 3 }}>                
+            <Box sx={{ width: 250, paddingTop: 3 }}>
                 <List>
                     <ListItem>
                         <ListItemIcon>
@@ -87,10 +87,23 @@ export const Sidebar = () => {
                     {
                         status === 'authenticated' && user.role === 'CLIENT' ? (
                             <>
-                                {/* <Divider /> */}
+                                <Divider />
 
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
-                                    <LinkRRD to='/profile'>
+                                <ListSubheader>Panel de Clientes</ListSubheader>
+
+                                <ListItem className='list-item'>
+                                    <LinkRRD to='/private'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <MdDashboardCustomize className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi panel' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item'>
+                                    <LinkRRD to='/private/profile'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <BiUserCircle className='icon' />
@@ -100,7 +113,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
+                                <ListItem className='list-item'>
                                     <LinkRRD to='/my-business'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -111,7 +124,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
+                                <ListItem className='list-item'>
                                     <LinkRRD to='/create-project'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -122,7 +135,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
+                                <ListItem className='list-item'>
                                     <LinkRRD to='/my-projects'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -133,7 +146,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
+                                <ListItem className='list-item'>
                                     <LinkRRD to='/my-business-projects'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -144,7 +157,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
+                                <ListItem className='list-item'>
                                     <LinkRRD to='/my-commentaries'>
                                         <Link className='link'>
                                             <ListItemIcon>

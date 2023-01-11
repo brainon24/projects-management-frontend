@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
+import { MainLayout } from '../layouts/MainLayout';
 import { PrivateClient } from "../components/private/PrivateClient";
 import { PrivateUser } from "../components/private/PrivateUser";
-import { MainLayout } from '../layouts/MainLayout';
 
 export const Private = () => {
 

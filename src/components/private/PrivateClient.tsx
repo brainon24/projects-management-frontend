@@ -1,21 +1,26 @@
-import { Box, Chip } from '@mui/material'
+import { useSelector } from 'react-redux';
+import { Box, Chip, Typography } from '@mui/material'
 import { BiUserCircle } from 'react-icons/bi';
 import { MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
 import { GoCommentDiscussion } from 'react-icons/go';
-
-import '../styles/privateClient.css';
 import { RiOrganizationChart } from 'react-icons/ri';
 
+import '../styles/privateClient.css';
+
 export const PrivateClient = () => {
+
+    const { user } = useSelector((state: any) => state.auth);
+
     return (
         <Box>
+            <Typography sx={{ textAlign: 'center' }}>Hola, { user.fullName.split(' ')[0] }</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
                 <h1>Menú</h1>
                 <Chip
                     label='Beta'
                     className='fadeIn'
-                    style={{ color: '#CC0078', backgroundColor: '#FFE5F4', marginLeft: 10, width: 55, height: 22 }}
+                    style={{ color: 'var(--darkPink)', backgroundColor: 'var(--lightPink)', marginLeft: 10, width: 55, height: 22 }}
                 />
             </Box>
             <Box className='cards-client'>
