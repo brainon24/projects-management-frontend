@@ -114,7 +114,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-business'>
+                                    <LinkRRD to='/private/my-business'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <MdOutlineBusinessCenter className='icon' />
@@ -125,7 +125,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/create-project'>
+                                    <LinkRRD to='/private/create-project'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <MdOutlineCreateNewFolder className='icon' />
@@ -136,7 +136,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-projects'>
+                                    <LinkRRD to='/private/my-projects'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <GrProjects className='icon' />
@@ -147,7 +147,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-business-projects'>
+                                    <LinkRRD to='/private/my-business-projects'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <RiOrganizationChart className='icon' />
@@ -158,7 +158,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-commentaries'>
+                                    <LinkRRD to='/private/my-commentaries'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <GoCommentDiscussion className='icon' />
@@ -203,7 +203,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-business'>
+                                    <LinkRRD to='/private/my-business'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <MdOutlineBusinessCenter className='icon' />
@@ -214,7 +214,7 @@ export const Sidebar = () => {
                                 </ListItem> 
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-projects'>
+                                    <LinkRRD to='/private/my-projects-asigned'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <GrProjects className='icon' />
@@ -225,7 +225,7 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/my-commentaries'>
+                                    <LinkRRD to='/private/my-commentaries'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <GoCommentDiscussion className='icon' />

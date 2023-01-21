@@ -22,7 +22,7 @@ export const NotFound = () => {
                 <h1 className='title'>Upss!</h1>
                 <p className='text'>Esta página no fue encontrada, haz abajo para volver al home! 👇</p>
                 <LinkRRD to={ status === 'authenticated' ? '/private' : '/' } style={{ display: 'flex', justifyContent: 'center' }}>
-                    <button className='btn-login'>Ir al home</button>
+                    <button className='btn-go-to-home'>Ir al home</button>
                 </LinkRRD>
             </Box>
         </Box>

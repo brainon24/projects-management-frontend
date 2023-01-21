@@ -1,11 +1,13 @@
+import React from "react";
 import { Navigate } from "react-router-dom";
+import {useSelector} from "react-redux";
 
-export const ProtectedRoute = ({ children }: any) => {
+export const ProtectedRoute = ({ children, roles = [], }: any) => {
 
-    const token = localStorage.getItem('token');
+    const { user } = useSelector((state: any) => state.auth);
 
-    if( !token ){
-        return <Navigate to='/login' /> 
+    if ( !roles.includes(user.role) ) {
+        return <Navigate to='/private' />
     }
 
     return children;

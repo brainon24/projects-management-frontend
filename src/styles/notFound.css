@@ -23,3 +23,14 @@
     margin: 0 10px;
     margin-bottom: 15px;
 }
+
+.btn-go-to-home {
+    padding: 10px 50px;
+    margin: 20px 0;
+    background-color: var(--orange);
+    color: var(--white);
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
