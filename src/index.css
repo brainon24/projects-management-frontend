@@ -5,11 +5,16 @@
   /* --secondary: ; */
   --white: #fff;
   --gray: #fafafa;
-  --grayDark: #404040;
+  --grayDark: #3f3e40;
   --black: #000;
   --dark: #27272a;
   --lightPink: #FFE5F4;
   --darkPink: #CC0078;
+  --yellow: #ffc232;
+  --orange: #ff9500;
+  --blue: #369EB3;
+  --lightBlue: #7dd3fc;
+  --aquagreen: #12b39a;
 
   --borderRadius: 6px;
 }

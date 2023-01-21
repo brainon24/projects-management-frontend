@@ -91,18 +91,18 @@ export const Sidebar = () => {
 
                                 <ListSubheader>Panel de Clientes</ListSubheader>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/private'>
                                         <Link className='link'>
                                             <ListItemIcon>
                                                 <MdDashboardCustomize className='icon' />
                                             </ListItemIcon>
-                                            <ListItemText primary='Mi panel' />
+                                            <ListItemText primary='Mi panel' className='item-text-sidebar' />
                                         </Link>
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/private/profile'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -113,7 +113,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/my-business'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -124,7 +124,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/create-project'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -135,7 +135,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/my-projects'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -146,7 +146,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/my-business-projects'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -157,7 +157,7 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
-                                <ListItem className='list-item'>
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/my-commentaries'>
                                         <Link className='link'>
                                             <ListItemIcon>
@@ -168,6 +168,72 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
 
+                            </>
+                        ) : null
+                    }
+
+
+                    {
+                        status === 'authenticated' && user.role === 'EMPLOYEE' ? (
+                            <>
+                                <Divider />
+
+                                <ListSubheader>Panel de Empleados</ListSubheader>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <MdDashboardCustomize className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi panel' className='item-text-sidebar' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/profile'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <BiUserCircle className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi perfil' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/my-business'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <MdOutlineBusinessCenter className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi negocio' /> {/* CHANGE IT*/}
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem> 
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/my-projects'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <GrProjects className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mis Proyectos Asignados' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/my-commentaries'>
+                                        <Link className='link'>
+                                            <ListItemIcon>
+                                                <GoCommentDiscussion className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mis comentarios' />
+                                        </Link>
+                                    </LinkRRD>
+                                </ListItem>
                             </>
                         ) : null
                     }

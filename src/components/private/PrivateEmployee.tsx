@@ -9,7 +9,7 @@ import { RiOrganizationChart } from 'react-icons/ri';
 import '../styles/privateClient.css';
 import { FiChevronRight } from 'react-icons/fi';
 
-export const PrivateClient = () => {
+export const PrivateEmployee = () => {
 
     const { user } = useSelector((state: any) => state.auth);
 
@@ -48,32 +48,12 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Crear Nuevo Proyecto</p>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <MdOutlineCreateNewFolder className='icon-card' />
-                    </Box>
-                    <p className='card-client_description'>Acá podrás crear un nuevo proyecto donde te ayudaremos a resolver tus necesidades</p>
-                </Box>
-                <Box className='card-client'>
-                    <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Listar Mis Proyectos</p>
+                            <p className='card-client_title'>Mis Proyectos Asignados</p>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <GrProjects className='icon-card' />
                     </Box>
                     <p className='card-client_description'>Acá podrás listar todos los proyectos que creaste.</p>
-                </Box>
-                <Box className='card-client'>
-                    <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Listar Los Proyectos de Mi Compañia</p>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <RiOrganizationChart className='icon-card' />
-                    </Box>
-                    <p className='card-client_description'>Acá podrás listar todos los proyectos de tu empresa.</p>
                 </Box>
                 <Box className='card-client'>
                     <Box className='container-header-card'>

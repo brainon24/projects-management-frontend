@@ -38,7 +38,7 @@ const App = () => {
   return (
     <> 
       <Routes>
-        <Route path="/" element={ <Home /> } />
+        <Route path="/" element={ <Home /> }  />
         <Route path="/login" element={ <Login /> } />
         <Route path="/sign-up" element={ <SignUp /> } />
 
@@ -63,7 +63,7 @@ const App = () => {
         <Route path="/*" element={ <NotFound /> } />
       </Routes>
     </>
-  )
+  );
 }
 
 export default App

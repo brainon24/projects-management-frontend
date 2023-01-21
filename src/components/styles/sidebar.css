@@ -18,7 +18,11 @@
 }
 
 .list-item:hover, .list-item:focus {
-    background-color: aqua; /* TODO: Change color here */
+    background-color: var(--gray); /* TODO: Change color here */
     width: 100%;
     cursor: pointer;
 }
+
+/* .list-item:hover .item-text-sidebar {
+    color: var(--white);
+} */
