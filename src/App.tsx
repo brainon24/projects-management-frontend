@@ -39,11 +39,11 @@ const App = () => {
     dispatch( checkToken_thunk( token ) );
   }
 
-  useEffect(() => {
+  useEffect((): any => {
       if(location.pathname.includes('/login') || location.pathname.includes('/sign-up')) {
-          if(errorMessage === 'Se ha expirado tu sesión, por favor inicia sesión nuevamente.') {
-            return dispatch(clearErrorReducer())
-          }
+        if(errorMessage === 'Se ha expirado tu sesión, por favor inicia sesión nuevamente.') {
+          return dispatch(clearErrorReducer())
+        }
       }
 
       checkToken();
