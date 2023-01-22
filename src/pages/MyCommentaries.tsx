@@ -1,10 +1,10 @@
-import {Box} from "@mui/system";
+import {MainLayout} from "../layouts/MainLayout";
 
 export const MyCommentaries = () => {
 
     return (
-        <Box>
+        <MainLayout>
             <h1>My Commentaries</h1>
-        </Box>
+        </MainLayout>
     );
 }

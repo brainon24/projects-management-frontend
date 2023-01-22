@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Navigate, Route, Routes, useLocation} from "react-router-dom"
+import {Route, Routes, useLocation} from "react-router-dom"
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch} from "@reduxjs/toolkit";
 import {checkingReducer, clearErrorReducer} from "./store/auth/authSlice";
@@ -41,7 +41,7 @@ const App = () => {
 
   useEffect(() => {
       if(location.pathname.includes('/login') || location.pathname.includes('/sign-up')) {
-          if(errorMessage === 'Se ha expirado tu sesión, por favor ingresa nuevamente.') {
+          if(errorMessage === 'Se ha expirado tu sesión, por favor inicia sesión nuevamente.') {
             return dispatch(clearErrorReducer())
           }
       }

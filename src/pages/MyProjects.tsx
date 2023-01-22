@@ -1,10 +1,10 @@
-import {Box} from "@mui/system";
+import {MainLayout} from "../layouts/MainLayout";
 
 export const MyProjects = () => {
 
     return (
-        <Box>
+        <MainLayout>
             <h1>My Projects</h1>
-        </Box>
+        </MainLayout>
     );
 }

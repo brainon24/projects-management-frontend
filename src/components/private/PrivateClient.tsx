@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Box, Chip, Typography } from '@mui/material'
+import { Link as LinkRRD, } from 'react-router-dom';
 import { BiRightArrowAlt, BiUserCircle } from 'react-icons/bi';
 import { MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
@@ -7,7 +8,6 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import { RiOrganizationChart } from 'react-icons/ri';
 
 import '../styles/privateClient.css';
-import { FiChevronRight } from 'react-icons/fi';
 
 export const PrivateClient = () => {
 
@@ -28,7 +28,9 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Visitar Mi Perfil </p>
+                            <LinkRRD to='/private/profile' className='card-client_title'>
+                                <p>Visitar Mi Perfil</p>
+                            </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <BiUserCircle className='icon-card' />
@@ -38,7 +40,9 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Ver Mi Compañia</p>
+                            <LinkRRD to='/private/my-business' className='card-client_title'>
+                                <p>Ver Mi Compañia</p>
+                            </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <MdOutlineBusinessCenter className='icon-card' />
@@ -48,7 +52,9 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Crear Nuevo Proyecto</p>
+                            <LinkRRD to='/private/create-project' className='card-client_title'>
+                                <p>Crear Nuevo Proyecto</p>
+                            </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <MdOutlineCreateNewFolder className='icon-card' />
@@ -58,7 +64,9 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Listar Mis Proyectos</p>
+                            <LinkRRD to='/private/my-projects' className='card-client_title'>
+                                <p>Listar Mis Proyectos</p>
+                            </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <GrProjects className='icon-card' />
@@ -68,7 +76,9 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Listar Los Proyectos de Mi Compañia</p>
+                            <LinkRRD to='/private/my-business-projects' className='card-client_title'>
+                                <p>Listar Los Proyectos de Mi Compañia</p>
+                            </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <RiOrganizationChart className='icon-card' />
@@ -78,7 +88,9 @@ export const PrivateClient = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <p className='card-client_title'>Ver Mis Últimos Comentarios</p>
+                            <LinkRRD to='/private/my-commentaries' className='card-client_title'>
+                                <p>Ver Mis Últimos Comentarios</p>
+                            </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <GoCommentDiscussion className='icon-card' />
