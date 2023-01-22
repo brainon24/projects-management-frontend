@@ -1,7 +1,9 @@
+import * as React from "react";
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
 
 export const MainLayout = ({ children }: any) => {
+
     return (
         <div style={{
             backgroundColor: '#fafafa',

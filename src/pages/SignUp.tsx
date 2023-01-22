@@ -118,6 +118,7 @@ export const SignUp = () => {
                                         style={{ margin: '5px 0', padding: '20px 0' }}
                                     />
                                 </Box>
+
                                 <Box className='container-header-form'>
                                     <Box  sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
                                         <LinkRRD to='/' className='link-back-mobile'>

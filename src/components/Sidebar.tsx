@@ -259,6 +259,10 @@ export const Sidebar = () => {
                         ) : null
                     }
                 </List>
+                <Box sx={{ bottom: 100, position: 'absolute', width: '100%' }}>
+                    <p style={{textAlign: 'center', fontSize: 17}}>by. David Diaz H</p>
+                    <p style={{textAlign: 'center', fontSize: 13}}>{new Date().getFullYear()}</p>
+                </Box>
             </Box>
         </Drawer> 
     )

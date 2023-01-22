@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
-import {Route, Routes} from "react-router-dom"
+import {Navigate, Route, Routes, useLocation} from "react-router-dom"
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch} from "@reduxjs/toolkit";
-import {checkingReducer} from "./store/auth/authSlice";
+import {checkingReducer, clearErrorReducer} from "./store/auth/authSlice";
 import {checkToken_thunk, logout_thunk} from './store/auth/thunks';
 import {Home} from "./pages/Home"
 import {NotFound} from './pages/NotFound';
@@ -19,31 +19,49 @@ import {MyProjects} from "./pages/MyProjects";
 import {MyBusinessProjects} from "./pages/MyBusinessProjects";
 import {MyCommentaries} from "./pages/MyCommentaries";
 import {Role} from "./enums/user-role.enum";
+import ModalError from "./components/ModalError";
 
 const App = () => {
 
-  const { status } = useSelector((state: any) => state.auth);
+  const { status, errorMessage } = useSelector((state: any) => state.auth);
   const dispatch: Dispatch<any> = useDispatch();
 
-  const checkToken = () => {
+  const location = useLocation();
+
+  const checkToken = async () => {
     dispatch( checkingReducer() );
     const token: string = localStorage.getItem('token')!;
 
     if( !token ) {
       dispatch( logout_thunk() );
     }
-    
-    dispatch( checkToken_thunk( token ) );
+
+    await dispatch( checkToken_thunk( token ) );
   }
 
   useEffect(() => {
+      if(location.pathname.includes('/login') || location.pathname.includes('/sign-up')) {
+          if(errorMessage === 'Se ha expirado tu sesión, por favor ingresa nuevamente.') {
+            return dispatch(clearErrorReducer())
+          }
+      }
+
       checkToken();
-  }, []);
+  }, [location]);
 
   if( status === 'checking' ) return <Loading />
 
+
   return (
     <>
+        {
+            errorMessage ? (
+                <ModalError
+                    title='Sesión expirada'
+                    descriptionError={ errorMessage }
+                />
+            ) : null
+        }
       <Routes>
         <Route path="/" element={ <Home /> }  />
         <Route path="/login" element={ <Login /> } />

@@ -50,6 +50,7 @@ export default function ModalError({ title, descriptionError }: any) {
 
   const handleClose = () => {
     setOpen(false);
+
     dispatch( clearErrorReducer() );
   };
 
@@ -59,7 +60,7 @@ export default function ModalError({ title, descriptionError }: any) {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        sx={{ backdropFilter: 'blur(3px)', bgcolor: 'rgba(0,0,0, 0.5)' }}
+        sx={{ backdropFilter: 'blur(3px)', bgcolor: 'rgba(0,0,0, 0.1)' }}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           { title }

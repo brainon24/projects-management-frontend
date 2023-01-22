@@ -1,6 +1,8 @@
 import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from "./authSlice";
 import { clearBusinessIdAndName } from "../business/businessSlice";
 import projectsManagement from '../../api/api';
+import {Navigate} from "react-router-dom";
+import React from "react";
 
 
 interface SignUpProps {
@@ -93,18 +95,18 @@ export const checkToken_thunk = (token: string) => {
 
                 if( data.user ) {
                     // localStorage.setItem('token', data.token);
-                    dispatch( signInReducer( data ) );
+                    return dispatch( signInReducer( data ) );
                 }
 
                 const { response: { statusCode, message } } = data;
-                
+
                 if (statusCode !== 200) {
                     dispatch( addErrorReducer( message ) );
                 }
             })
             .catch(error => {
                 try {
-                    // console.log(error.response.data.message);
+                    console.log(error.response.data.message);
                     dispatch( addErrorReducer(error.response.data.message) );
                 } catch (error) {
                     console.error(error);
@@ -119,7 +121,6 @@ export const logout_thunk = () => {
 
         await localStorage.removeItem('token');
         
-        dispatch( logoutReducer() );
-
+        return dispatch( logoutReducer() );
     }
 }
