@@ -26,7 +26,7 @@ export const PrivateUser = () => {
                 <p className='text-permissions'>Por favor comunicate con el administrador de la App para que te otorgue los permisos y puedas navegar en ella!</p>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <button 
-                        className='btn-login'
+                        className='btn-go-to-home'
                         onClick={ () => dispatch( logout_thunk() ) }
                     >
                         Cerrar sesión

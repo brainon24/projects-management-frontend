@@ -28,7 +28,7 @@ const App = () => {
 
   const location = useLocation();
 
-  const checkToken = async () => {
+  const checkToken = () => {
     dispatch( checkingReducer() );
     const token: string = localStorage.getItem('token')!;
 
@@ -36,7 +36,7 @@ const App = () => {
       dispatch( logout_thunk() );
     }
 
-    await dispatch( checkToken_thunk( token ) );
+    dispatch( checkToken_thunk( token ) );
   }
 
   useEffect(() => {
