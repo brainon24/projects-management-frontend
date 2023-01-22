@@ -106,7 +106,7 @@ export const checkToken_thunk = (token: string) => {
             })
             .catch(error => {
                 try {
-                    console.log(error.response.data.message);
+                    // console.log(error.response.data.message);
                     dispatch( addErrorReducer(error.response.data.message) );
                 } catch (error) {
                     console.error(error);
