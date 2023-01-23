@@ -13,6 +13,7 @@ import { RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
 import { MdDashboardCustomize, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
 import { BiUserCircle } from 'react-icons/bi';
+import { FcPrivacy } from 'react-icons/fc';
 
 import './styles/sidebar.css';
 
@@ -88,7 +89,8 @@ export const Sidebar = () => {
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/private' className='link'>
                                             <ListItemIcon>
-                                                <MdDashboardCustomize className='icon' />
+                                                {/*<MdDashboardCustomize className='icon' />*/}
+                                                <FcPrivacy />
                                             </ListItemIcon>
                                             <ListItemText primary='Mi panel' className='item-text-sidebar' />
                                     </LinkRRD>
