@@ -1,0 +1,49 @@
+.container-form-cp {
+    background-color: var(--white);
+    width: 100%;
+    padding: 20px;
+    border-radius: 6px;
+
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.container-input-form {
+    margin: 20px 0;
+}
+
+.input-form-cp {
+    width: 100%;
+    border-radius: 6px;
+    padding: 10px 20px;
+    border: none;
+    background-color: transparent;
+    border: 1px solid rgb(214, 216, 218);
+}
+
+.input-form-cp:focus {
+    outline: transparent;
+}
+
+.container-show-ca {
+    border: 1px solid rgb(214, 216, 218);
+    padding: 40px 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.container-show-ca:hover > .pharagraph-show-ca {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.pharagraph-show-ca {
+    text-align: center;
+    color: var(--black);
+}
+
+.icon-show-ca {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+    font-size: 20px;
+}

@@ -13,6 +13,7 @@ export const TagsInput = (props: any) => {
     }
 
     const addTags = ({target}: any) => {
+        target.value.trim();
         if( target.value.length <= 1 ) return;
 
         setTags([ ...tags, target.value ]);

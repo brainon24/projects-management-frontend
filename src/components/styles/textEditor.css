@@ -1,4 +1,26 @@
-
 .text-editor-quill {
     height: 150px;
+    margin-bottom: 65px;
+}
+
+
+@media (max-width: 920px) {
+    .text-editor-quill {
+        height: 100px;
+        margin-bottom: 100px;
+    }
+}
+
+@media (max-width: 529px) {
+    .text-editor-quill {
+        height: 100px;
+        margin-bottom: 120px;
+    }
+}
+
+@media (max-width: 380px) {
+    .text-editor-quill {
+        height: 100px;
+        margin-bottom: 165px;
+    }
 }
