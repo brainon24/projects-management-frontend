@@ -1,16 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
-import { GrFormClose } from 'react-icons/gr';
+import { useState, useEffect } from 'react';
 
 import './styles/tagsInput.css';
 
 export const TagsInput = (props: any) => {
 
     const [ tags, setTags ] = useState(props.tags);
+    // console.log(tags)
 
     const removeTags = (indexToRemove: any) => {
         setTags([...tags.filter((_: any, index: any) => index !== indexToRemove)]);
-        props.selectedTags([ ...tags ])
+        props.selectedTags([tags])
     }
 
     const addTags = ({target}: any) => {
@@ -21,6 +20,10 @@ export const TagsInput = (props: any) => {
 
         target.value = '';
     }
+
+    useEffect(() => {
+        props.selectedTags([...tags])
+    }, [ tags ]);
 
     return (
         <div className='tags-input'>
