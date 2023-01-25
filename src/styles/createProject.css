@@ -17,7 +17,7 @@
     padding: 10px 20px;
     border: none;
     background-color: transparent;
-    border: 1px solid rgb(214, 216, 218);
+    border: 1px solid #ccc;
 }
 
 .input-form-cp:focus {
@@ -25,7 +25,7 @@
 }
 
 .container-show-ca {
-    border: 1px solid rgb(214, 216, 218);
+    border: 1px solid #ccc;
     padding: 40px 0;
     border-radius: 6px;
     cursor: pointer;
@@ -46,4 +46,32 @@
     justify-content: center;
     padding-bottom: 5px;
     font-size: 20px;
+}
+
+.container-btns-cp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin: 50px 0 30px 0;
+}
+
+.btn-cancel-cp {
+    padding: 10px 30px;
+    border: none;
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-confirm-cp {
+    padding: 10px 30px;
+    border: none;
+    background-color: var(--orange);
+    color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
 }

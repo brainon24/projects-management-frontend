@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { baseURL } from '../../api/api';
 import { addErrorReducer, findByIdReducer, loadingBusinessReducer } from './businessSlice';
 import projectsManagement from '../../api/api';
 

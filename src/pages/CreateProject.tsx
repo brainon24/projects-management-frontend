@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link as LinkRRD } from 'react-router-dom';
 import {MainLayout} from '../layouts/MainLayout';
-import TextEditor from '../components/TextEditor';
 import { useForm } from '../hooks/useForm';
+import TextEditor from '../components/TextEditor';
+import { TagsInputWithAutoComplete } from '../components/TagsInputWithAutoComplete';
 import { TagsInput } from '../components/TagsInput';
 
 import '../styles/createProject.css';
-import { FiMaximize2 } from 'react-icons/fi';
-import { VscChromeMinimize } from 'react-icons/vsc';
 import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { findUsersByRole_thunk } from '../store/users/thunks';
 
 export const CreateProject = () => {
+
+    const { mUsers, isLoadingUsers } = useSelector((state: any) => state.users);
+    const dispatch = useDispatch();
 
     const [description, setDescription] = useState('');
     const [acceptanceCriteria, setAcceptanceCriteria] = useState('');
@@ -22,7 +27,7 @@ export const CreateProject = () => {
     console.log({description, acceptanceCriteria})
 
     const selectedTags = (tags: any) => {
-        console.log(tags)
+        console.log('selectedTags: ', tags)
     }
 
     console.log('title: ', title)
@@ -31,10 +36,25 @@ export const CreateProject = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
     }
 
+    const onSubmit = (e: any) => {
+        e.preventDefault();
+    }
+
+    const fetchUsersByRole = async (): Promise<any> => {
+        await dispatch( findUsersByRole_thunk('EMPLOYEE') );
+    }
+
+    useEffect(() => {
+        fetchUsersByRole();
+    }, []);
+
+    // console.log('mUsers AFTER useEffect: ', mUsers)
+    // console.log('isLoadingUsers AFTER useEffect: ', isLoadingUsers)
+
     return (
         <MainLayout>
 
-            <form className='container-form-cp'>
+            <form className='container-form-cp' onSubmit={ onSubmit }>
                 <h1>Crear Proyecto</h1>
 
                 <div className='container-input-form'>
@@ -51,7 +71,8 @@ export const CreateProject = () => {
 
                 <div className='container-input-form'>
                     <label>Responsables del proyecto:</label>
-                    <TagsInput selectedTags={selectedTags} tags={[]} />
+                    {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
+                    <TagsInputWithAutoComplete users={mUsers} selectedTags={selectedTags} tags={[]} />
                 </div>
 
                 <div className='container-input-form'>
@@ -74,7 +95,7 @@ export const CreateProject = () => {
                                     </span>
                                 </div>
                             </div>
-                            <TextEditor value={ acceptanceCriteria } setValue={ setAcceptanceCriteria } /> 
+                            <TextEditor value={ acceptanceCriteria } setValue={ setAcceptanceCriteria } />
                         </div>
                     ) : (
                         <div>
@@ -91,6 +112,23 @@ export const CreateProject = () => {
                         </div>
                     )
                 }
+
+                <div className='container-btns-cp'>
+                    <LinkRRD to='/private'>
+                        <button 
+                            type='submit'
+                            className='btn-cancel-cp'
+                        >
+                            Cancelar
+                        </button>
+                    </LinkRRD>
+                    <button
+                        type='submit'
+                        className='btn-confirm-cp'
+                    >
+                        Crear Proyecto
+                    </button>
+                </div>
             </form>
         </MainLayout>
     );

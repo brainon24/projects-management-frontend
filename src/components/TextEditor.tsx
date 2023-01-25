@@ -25,7 +25,8 @@ TextEditor.modules = {
         [{ size: [] }],
         [ "bold", "italic", "underline", "strike", "blockquote" ],
         [{ list: "ordered", }, { list: "bullet" }],
-        ["link", "image", "video"],
+        // ["link", "image", "video"],
+        ["link",],
         ["clean"],
         ["code-block"],
     ],
@@ -43,8 +44,8 @@ TextEditor.formats = [
 	"list",
 	"bullet",
 	"link",
-	"image",
-	"video",
+	// "image",
+	// "video",
 	"code-block"
 ];
 
