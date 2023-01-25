@@ -10,6 +10,7 @@ import '../styles/createProject.css';
 import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { findUsersByRole_thunk } from '../store/users/thunks';
+import TagsInputAutoCompleteMUI from '../components/TagsInputAutoCompleteMUI';
 
 export const CreateProject = () => {
 
@@ -24,10 +25,10 @@ export const CreateProject = () => {
         title: '',
     });
     
-    console.log({description, acceptanceCriteria})
+    // console.log({description, acceptanceCriteria})
 
     const selectedTags = (tags: any) => {
-        console.log('selectedTags: ', tags)
+        console.log('selectedTags: ', tags.map((tag: any) => tag._id))
     }
 
     console.log('title: ', title)

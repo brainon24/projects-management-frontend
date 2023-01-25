@@ -5,7 +5,7 @@ import { loadingUsersReducer, usersFoundedReducer } from './usersSlice';
 
 export const findUsersByRole_thunk = ( role: string ): any => {
     return async ( dispatch: Dispatch ) => {
-
+        // console.log('findUsersByRole_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.get(`/user/findAllByRole/${ role }`)

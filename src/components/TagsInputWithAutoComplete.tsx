@@ -3,12 +3,13 @@ import { useForm } from '../hooks/useForm';
 import { FiSearch } from 'react-icons/fi';
 
 import './styles/tagsInput.css';
+import { Box } from '@mui/material';
 
 export const TagsInputWithAutoComplete = (props: any) => {
     console.log('entro al componente')
-    const { users } = props;    
+    const { users } = props;
 
-    const { formState, userInput, onInputChange, onResetForm } = useForm({
+    let { formState, userInput, onInputChange, onResetForm } = useForm({
         userInput: '',
     });
 
@@ -41,9 +42,17 @@ export const TagsInputWithAutoComplete = (props: any) => {
         if( target.value.length <= 1 ) return;
 
         setTags([ ...tags, target.value ]);
-        props.selectedTags([ ...tags, target.value ])
+        props.selectedTags([ ...tags, target.value ]);
 
         target.value = '';
+    }
+
+    const addTagsById = (user: any) => {
+        // console.log('DENTRO DE ADD TAGS BY ID: ', user)
+        setTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
+        props.selectedTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
+
+        userInput = '';
     }
 
     const onSubmitSearch = (event: any) => {
@@ -52,7 +61,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
     }
 
     useEffect(() => {
-        props.selectedTags([...tags])
+        props.selectedTags([...tags]);
     }, [ tags ]);
 
     return (
@@ -62,7 +71,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
                     {
                         tags.map((tag: any, index: any) => (
                             <li key={index} className='tag'>
-                                <span className='tag-title'>{tag}</span>
+                                <span className='tag-title'>{tag.fullName}</span>
                                 <span 
                                     className='tag-close-icon'
                                     onClick={ () => removeTags(index) }
@@ -87,7 +96,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
                     <input 
                         placeholder='Agrega los responsables del proyecto'
                         type="text"
-                        onKeyUp={event => event.key === 'Enter' ? addTags(event) : null}
+                        // onKeyUp={event => event.key === 'Enter' ? addTags(event) : null}
                         className='form-input-tags'
                         name='userInput'
                         onChange={ onInputChange }
@@ -97,18 +106,21 @@ export const TagsInputWithAutoComplete = (props: any) => {
                     
                     <div 
                         className={ blur === false && focus === true ? 'autocomplete' : 'autocomplete-off' }
-                        onClick={ () => console.log('click') }
+                        // onClick={ () => console.log('click') }
                     >
                         {
                             users && users?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase())).slice(0, 5).map( (user: any) => (
-                                <div 
-                                    key={ user?.id } 
+                                <button 
+                                    key={ user?._id } 
                                     className="autocomplete-element"
-                                    onClick={ () => console.log(user._id) }
+                                    onClick={ (e) => {
+                                        e.preventDefault();
+                                        addTagsById({fullName: user.fullName, _id: user._id})
+                                    } }
                                 >
                                     <span style={{ color: '#cecece', paddingRight: 10, paddingTop: 3 }}><FiSearch /></span>
                                     <p className='text-autocomplete'>{user?.fullName?.substring(0, 25) + '...'}</p>
-                                </div>
+                                </button>
                             ))
                         }
                     </div>

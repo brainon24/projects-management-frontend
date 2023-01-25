@@ -4,6 +4,8 @@ import './styles/tagsInput.css';
 
 export const TagsInput = (props: any) => {
 
+    console.log('Entro al componente <TagsInput />')
+
     const [ tags, setTags ] = useState(props.tags);
     // console.log(tags)
 
