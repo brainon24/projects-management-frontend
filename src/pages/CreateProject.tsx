@@ -9,16 +9,20 @@ import { TagsInput } from '../components/TagsInput';
 import '../styles/createProject.css';
 import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { findUsersByRole_thunk } from '../store/users/thunks';
-import TagsInputAutoCompleteMUI from '../components/TagsInputAutoCompleteMUI';
+import { findEmployeesByRole_thunk, findClientsByRole_thunk } from '../store/users/thunks';
+import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
+import { Chip } from '@mui/material';
 
 export const CreateProject = () => {
 
-    const { mUsers, isLoadingUsers } = useSelector((state: any) => state.users);
+    const { user } = useSelector((state: any) => state.auth);
+    const { mEmployees, mClients, isLoadingUsers } = useSelector((state: any) => state.users);
     const dispatch = useDispatch();
 
-    const [description, setDescription] = useState('');
-    const [acceptanceCriteria, setAcceptanceCriteria] = useState('');
+    const [ authorId, setAuthorId ] = useState('');
+    const [ responsiblesId, setResponsiblesId ] = useState([]);
+    const [ description, setDescription ] = useState('');
+    const [ acceptanceCriteria, setAcceptanceCriteria ] = useState('');
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
 
     const { formState, title, onInputChange, onResetForm, } = useForm({
@@ -27,11 +31,21 @@ export const CreateProject = () => {
     
     // console.log({description, acceptanceCriteria})
 
-    const selectedTags = (tags: any) => {
-        console.log('selectedTags: ', tags.map((tag: any) => tag._id))
+    const selectedTags = (tags: any = []) => {
+        // console.log('selectedTags: ', tags.map((tag: any) => tag._id))
+        const tag = tags.map((tag: any) => tag._id)
+        setResponsiblesId( tag );
+        // console.log('responsiblesId: ', responsiblesId)
     }
 
-    console.log('title: ', title)
+    const selectedTagAuthorId = (tag: any = {}) => {
+        console.log('selectedTagAuthorId: ', tag)
+        const authorId = tag._id;
+        setAuthorId( authorId );
+        console.log('authorId: ', authorId)
+    }
+
+    // console.log('title: ', title)
 
     const changeVisibilityCA = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
@@ -41,22 +55,43 @@ export const CreateProject = () => {
         e.preventDefault();
     }
 
-    const fetchUsersByRole = async (): Promise<any> => {
-        await dispatch( findUsersByRole_thunk('EMPLOYEE') );
+    const fetchEmployee = async (role: string): Promise<any> => {
+        await dispatch( findEmployeesByRole_thunk(role) );
+    }
+
+    const fetchClients = async (role: string): Promise<any> => {
+        await dispatch( findClientsByRole_thunk(role) );
     }
 
     useEffect(() => {
-        fetchUsersByRole();
+        fetchEmployee('EMPLOYEE');
+        
+        user.role === 'ADMIN' ? fetchClients('CLIENT') : null
     }, []);
 
-    // console.log('mUsers AFTER useEffect: ', mUsers)
-    // console.log('isLoadingUsers AFTER useEffect: ', isLoadingUsers)
 
     return (
         <MainLayout>
 
             <form className='container-form-cp' onSubmit={ onSubmit }>
                 <h1>Crear Proyecto</h1>
+
+                {
+                    user.role === 'ADMIN' ? (
+                        <div className='container-input-form'>
+                            <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
+                                <Chip
+                                    label='Only Admin'
+                                    className='fadeIn'
+                                    style={{ color: '#3483fa', backgroundColor: '#4189e626', marginRight: 10, width: 93, height: 22 }}
+                                />
+                                <label>Dueño del proyecto:</label>
+                            </div>
+                            {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
+                            <TagsInputWithAutoCompleteClients clients={mClients} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
+                        </div>
+                    ) : null
+                }
 
                 <div className='container-input-form'>
                     <label>Titulo del proyecto:</label>
@@ -73,7 +108,7 @@ export const CreateProject = () => {
                 <div className='container-input-form'>
                     <label>Responsables del proyecto:</label>
                     {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
-                    <TagsInputWithAutoComplete users={mUsers} selectedTags={selectedTags} tags={[]} />
+                    <TagsInputWithAutoComplete employees={mEmployees} selectedTags={selectedTags} tags={[]} responsiblesId={responsiblesId} />
                 </div>
 
                 <div className='container-input-form'>

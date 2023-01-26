@@ -4,9 +4,9 @@ import { FiSearch } from 'react-icons/fi';
 
 import './styles/tagsInput.css';
 
-export const TagsInputWithAutoComplete = (props: any) => {
+export const TagsInputWithAutoCompleteClients = (props: any) => {
     
-    const { employees = [] } = props;
+    const { clients = [] } = props;
 
     let { formState, userInput, onInputChange, onResetForm } = useForm({
         userInput: '',
@@ -15,8 +15,8 @@ export const TagsInputWithAutoComplete = (props: any) => {
     const [ focus, setFocus ] = useState<boolean>(false);
     const [ blur, setBlur ] = useState<boolean>(false);
 
-    const [ tags, setTags ] = useState(props.tags);
-    // console.log(tags)
+    const [ tag, setTag ] = useState(props.tag);
+    // console.log('tag: ', tag)
 
     // console.log('users: ', users)
 
@@ -31,25 +31,15 @@ export const TagsInputWithAutoComplete = (props: any) => {
         setBlur(true);
     }
 
-    const removeTags = (indexToRemove: any) => {
-        setTags([...tags.filter((_: any, index: any) => index !== indexToRemove)]);
-        props.selectedTags([tags]);
+    const removeTag = () => {
+        setTag({});
+        props.selectedTagAuthorId({});
     }
 
-    const addTags = ({target}: any) => {
-        target.value.trim();
-        if( target.value.length <= 1 ) return;
-
-        setTags([ ...tags, target.value ]);
-        props.selectedTags([ ...tags, target.value ]);
-
-        target.value = '';
-    }
-
-    const addTagsById = (user: any) => {
+    const addTagById = (user: any) => {
         // console.log('DENTRO DE ADD TAGS BY ID: ', user)
-        setTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
-        props.selectedTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
+        setTag({fullName: user.fullName, _id: user._id} );
+        props.selectedTagAuthorId({fullName: user.fullName, _id: user._id});
 
         userInput = '';
     }
@@ -60,27 +50,27 @@ export const TagsInputWithAutoComplete = (props: any) => {
     }
 
     useEffect(() => {
-        props.selectedTags([...tags]);
-    }, [ tags ]);
+        props.selectedTagAuthorId(tag);
+    }, [ tag ]);
 
     return (
         <div>
             <div className='tags-input'>
-                <ul id='tags'>
-                    {
-                        tags.map((tag: any, index: any) => (
-                            <li key={index} className='tag'>
+                {
+                    tag.fullName && (
+                        <ul id='tags'>
+                            <div key={tag._id} className='tag'>
                                 <span className='tag-title'>{tag.fullName}</span>
                                 <span 
                                     className='tag-close-icon'
-                                    onClick={ () => removeTags(index) }
+                                    onClick={ () => removeTag() }
                                 >
                                     x
                                 </span>
-                            </li>
-                        ))
-                    }
-                </ul>
+                            </div>
+                        </ul>
+                    )
+                }
 
 
                 <form 
@@ -94,7 +84,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
                     }}
                 >
                     <input 
-                        placeholder='Agrega los responsables del proyecto'
+                        placeholder='Agrega el dueño del proyecto'
                         type="text"
                         // onKeyUp={event => event.key === 'Enter' ? addTags(event) : null}
                         className='form-input-tags'
@@ -102,22 +92,22 @@ export const TagsInputWithAutoComplete = (props: any) => {
                         onChange={ onInputChange }
                         onFocus={(e) => handleOnFocus() }
                         autoComplete="off"
+                        disabled={ tag.fullName }
                     />
                     
 
-                    {/* .filter((user: any, index: number) => user._id !== tags[index]._id ) */}
                     <div 
                         className={ blur === false && focus === true ? 'autocomplete' : 'autocomplete-off' }
                         // onClick={ () => console.log('click') }
                     >
                         {
-                            employees && employees?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase()) && !props.responsiblesId.includes( user._id ) ).slice(0, 5).map( (user: any) => (
+                            clients && clients?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase())).slice(0, 5).map( (user: any) => (
                                 <button 
                                     key={ user?._id } 
                                     className="autocomplete-element"
                                     onClick={ (e) => {
                                         e.preventDefault();
-                                        addTagsById({fullName: user.fullName, _id: user._id})
+                                        addTagById({fullName: user.fullName, _id: user._id})
                                     } }
                                 >
                                     <span style={{ color: '#cecece', paddingRight: 10, paddingTop: 3 }}><FiSearch /></span>
