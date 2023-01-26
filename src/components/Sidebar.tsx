@@ -10,12 +10,13 @@ import { SlClose } from 'react-icons/sl';
 import { BsKey } from 'react-icons/bs';
 import { GoCommentDiscussion } from 'react-icons/go';
 import { RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
-import { MdDashboardCustomize, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
+import { MdAddBusiness, MdDashboardCustomize, MdManageAccounts, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
 import { BiUserCircle } from 'react-icons/bi';
 import { FcPrivacy } from 'react-icons/fc';
 
 import './styles/sidebar.css';
+import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 
 export const Sidebar = () => {
 
@@ -165,7 +166,8 @@ export const Sidebar = () => {
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/private' className='link'>
                                             <ListItemIcon>
-                                                <MdDashboardCustomize className='icon' />
+                                                {/* <MdDashboardCustomize className='icon' /> */}
+                                                <FcPrivacy className='icon' />
                                             </ListItemIcon>
                                             <ListItemText primary='Mi panel' className='item-text-sidebar' />
                                     </LinkRRD>
@@ -195,6 +197,99 @@ export const Sidebar = () => {
                                                 <GrProjects className='icon' />
                                             </ListItemIcon>
                                             <ListItemText primary='Mis Proyectos Asignados' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/my-commentaries' className='link'>
+                                            <ListItemIcon>
+                                                <GoCommentDiscussion className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mis comentarios' />
+                                    </LinkRRD>
+                                </ListItem>
+                            </>
+                        ) : null
+                    }
+
+
+                    {
+                        status === 'authenticated' && user.role === 'ADMIN' ? (
+                            <>
+                                <Divider />
+
+                                <ListSubheader>Panel de Administración</ListSubheader>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private' className='link'>
+                                            <ListItemIcon>
+                                                {/* <MdDashboardCustomize className='icon' /> */}
+                                                <FcPrivacy className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi panel' className='item-text-sidebar' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/profile' className='link'>
+                                            <ListItemIcon>
+                                                <BiUserCircle className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi perfil' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/my-business' className='link'>
+                                            <ListItemIcon>
+                                                <MdOutlineBusinessCenter className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi negocio' /> {/* CHANGE IT*/}
+                                    </LinkRRD>
+                                </ListItem> 
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/create-project' className='link'>
+                                            <ListItemIcon>
+                                                <MdOutlineCreateNewFolder className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Crear proyecto' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/all-projects' className='link'>
+                                            <ListItemIcon>
+                                                <GrProjects className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Todos los proyectos' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/my-projects-asigned' className='link'>
+                                            <ListItemIcon>
+                                                <AiOutlineFundProjectionScreen className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mis proyectos asignados' />
+                                    </LinkRRD>
+                                </ListItem>
+                                
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/create-business' className='link'>
+                                            <ListItemIcon>
+                                                <MdAddBusiness className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Crear negocio' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/management-accounts' className='link'>
+                                            <ListItemIcon>
+                                                <MdManageAccounts className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Gestionar usuarios' />
                                     </LinkRRD>
                                 </ListItem>
 
