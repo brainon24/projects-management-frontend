@@ -3,6 +3,7 @@ import { uiSlice } from './ui/uiSlice';
 import { authSlice } from './auth/authSlice';
 import { businessSlice } from './business/businessSlice';
 import { usersSlice } from './users/usersSlice';
+import { projectsSlice } from './projects/projectsSlice';
 
 
 export const store = configureStore({
@@ -11,5 +12,6 @@ export const store = configureStore({
         auth: authSlice.reducer,
         business: businessSlice.reducer,
         users: usersSlice.reducer,
+        projects: projectsSlice.reducer,
     }
 });

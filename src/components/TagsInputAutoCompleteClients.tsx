@@ -38,8 +38,8 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
 
     const addTagById = (user: any) => {
         // console.log('DENTRO DE ADD TAGS BY ID: ', user)
-        setTag({fullName: user.fullName, _id: user._id} );
-        props.selectedTagAuthorId({fullName: user.fullName, _id: user._id});
+        setTag({fullName: user.fullName, _id: user._id, businessId: user.businessId} );
+        props.selectedTagAuthorId({fullName: user.fullName, _id: user._id, businessId: user.businessId});
 
         userInput = '';
     }
@@ -107,7 +107,8 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
                                     className="autocomplete-element"
                                     onClick={ (e) => {
                                         e.preventDefault();
-                                        addTagById({fullName: user.fullName, _id: user._id})
+                                        addTagById({fullName: user.fullName, _id: user._id, businessId: user.businessId.id })
+                                        handleOnBlur();
                                     } }
                                 >
                                     <span style={{ color: '#cecece', paddingRight: 10, paddingTop: 3 }}><FiSearch /></span>

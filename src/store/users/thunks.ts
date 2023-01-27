@@ -5,7 +5,7 @@ import { clientsFoundedReducer, employeesFoundedReducer, loadingUsersReducer } f
 
 export const findEmployeesByRole_thunk = ( role: string ): any => {
     return async ( dispatch: Dispatch ) => {
-        // console.log('findUsersByRole_thunk')
+        console.log('findEmployeesByRole_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.get(`/user/findAllByRole/${ role }`)
@@ -25,7 +25,7 @@ export const findEmployeesByRole_thunk = ( role: string ): any => {
 
 export const findClientsByRole_thunk = ( role: string ): any => {
     return async ( dispatch: Dispatch ) => {
-        // console.log('findUsersByRole_thunk')
+        console.log('findUsersByRole_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.get(`/user/findAllByRole/${ role }`)

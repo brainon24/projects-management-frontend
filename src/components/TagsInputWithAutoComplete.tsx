@@ -118,6 +118,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
                                     onClick={ (e) => {
                                         e.preventDefault();
                                         addTagsById({fullName: user.fullName, _id: user._id})
+                                        handleOnBlur();
                                     } }
                                 >
                                     <span style={{ color: '#cecece', paddingRight: 10, paddingTop: 3 }}><FiSearch /></span>

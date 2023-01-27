@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { findEmployeesByRole_thunk, findClientsByRole_thunk } from '../store/users/thunks';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import { Chip } from '@mui/material';
+import { createProject_thunk } from '../store/projects/thunks';
 
 export const CreateProject = () => {
 
@@ -19,17 +20,19 @@ export const CreateProject = () => {
     const { mEmployees, mClients, isLoadingUsers } = useSelector((state: any) => state.users);
     const dispatch = useDispatch();
 
+    const { formState, title, onInputChange, onResetForm, } = useForm({
+        title: '',
+    });
+
+    const [ businessId, setBusinessId ] = useState('');
     const [ authorId, setAuthorId ] = useState('');
     const [ responsiblesId, setResponsiblesId ] = useState([]);
     const [ description, setDescription ] = useState('');
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState('');
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
-
-    const { formState, title, onInputChange, onResetForm, } = useForm({
-        title: '',
-    });
     
     // console.log({description, acceptanceCriteria})
+    // console.log('title: ', title)
 
     const selectedTags = (tags: any = []) => {
         // console.log('selectedTags: ', tags.map((tag: any) => tag._id))
@@ -42,10 +45,11 @@ export const CreateProject = () => {
         console.log('selectedTagAuthorId: ', tag)
         const authorId = tag._id;
         setAuthorId( authorId );
-        console.log('authorId: ', authorId)
+        // console.log('authorId: ', authorId)
+        
+        setBusinessId( tag.businessId );
+        console.log('businessId: ', businessId)
     }
-
-    // console.log('title: ', title)
 
     const changeVisibilityCA = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
@@ -53,6 +57,17 @@ export const CreateProject = () => {
 
     const onSubmit = (e: any) => {
         e.preventDefault();
+
+        if( responsiblesId.length < 0 || title.length < 5 || description.length < 5 ) return;
+
+        dispatch( createProject_thunk({
+            businessId: businessId ? businessId : user.business.businessId,
+            authorId: authorId ? authorId : user._id,
+            title,
+            responsiblesId,
+            description,
+            acceptanceCriteria
+        }) );
     }
 
     const fetchEmployee = async (role: string): Promise<any> => {
@@ -64,8 +79,10 @@ export const CreateProject = () => {
     }
 
     useEffect(() => {
+        if( mEmployees.length > 0 ) return;
         fetchEmployee('EMPLOYEE');
         
+        if( mClients.length > 0 ) return;
         user.role === 'ADMIN' ? fetchClients('CLIENT') : null
     }, []);
 
@@ -75,6 +92,10 @@ export const CreateProject = () => {
 
             <form className='container-form-cp' onSubmit={ onSubmit }>
                 <h1>Crear Proyecto</h1>
+                {/* <input type="date" />
+                <input type="date" />
+                <br /> */}
+                
 
                 {
                     user.role === 'ADMIN' ? (
@@ -120,7 +141,7 @@ export const CreateProject = () => {
                     showAcceptanceCriteria ? (
                         <div className='container-input-form'>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <label>Agregar criterios de aceptación:</label>
+                                <label>Agregar criterios al proyecto:</label>
                                 <div 
                                     onClick={ changeVisibilityCA }
                                     style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', }}
@@ -135,7 +156,7 @@ export const CreateProject = () => {
                         </div>
                     ) : (
                         <div>
-                            <label>Agregar criterios de aceptación:</label>
+                            <label>Agregar criterios al proyecto:</label>
                             <div 
                                 onClick={ changeVisibilityCA }
                                 className='container-show-ca'
@@ -152,7 +173,7 @@ export const CreateProject = () => {
                 <div className='container-btns-cp'>
                     <LinkRRD to='/private'>
                         <button 
-                            type='submit'
+                            type='button'
                             className='btn-cancel-cp'
                         >
                             Cancelar
