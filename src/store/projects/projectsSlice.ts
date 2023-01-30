@@ -7,8 +7,7 @@ const initialState = {
     allProjectsByBusinessId: [],
     allProjectsByResponsibleId: [],
 
-    lastUpdateProject: undefined,
-    clearLastUpdateProject: undefined,
+    lastUpdateProject: undefined, 
     errorNotFoundProject: undefined,
     clearErrorNotFoundProject: undefined,
     isLoadingProjects: false,
@@ -28,7 +27,7 @@ export const projectsSlice = createSlice({
         },
 
         clearlastUpdateProjectsReducer: ( state ) => {
-            state.clearLastUpdateProject = undefined;
+            state.lastUpdateProject = undefined;
             state.isLoadingProjects = false;
         },
 

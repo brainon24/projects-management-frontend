@@ -11,7 +11,7 @@ export const findEmployeesByRole_thunk = ( role: string ): any => {
         projectsManagement.get(`/user/findAllByRole/${ role }`)
             .then(({ data, status }) => {
                 // console.log('data en then: ', data)
-                dispatch( employeesFoundedReducer( data ) );
+                return dispatch( employeesFoundedReducer( data ) );
             })
             .catch(error => {
                 try {
@@ -31,7 +31,7 @@ export const findClientsByRole_thunk = ( role: string ): any => {
         projectsManagement.get(`/user/findAllByRole/${ role }`)
             .then(({ data, status }) => {
                 // console.log('data en then: ', data)
-                dispatch( clientsFoundedReducer( data ) );
+                return dispatch( clientsFoundedReducer( data ) );
             })
             .catch(error => {
                 try {

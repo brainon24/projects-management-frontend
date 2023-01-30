@@ -102,12 +102,14 @@ export const checkToken_thunk = (token: string) => {
 
                 if (statusCode !== 200) {
                     dispatch( addErrorReducer( message ) );
+                    localStorage.removeItem('token');
                 }
             })
             .catch(error => {
                 try {
                     // console.log(error.response.data.message);
                     dispatch( addErrorReducer(error.response.data.message) );
+                    localStorage.removeItem('token');
                 } catch (error) {
                     console.error(error);
                 }

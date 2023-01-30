@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link as LinkRRD } from 'react-router-dom';
+import { Link as LinkRRD, } from 'react-router-dom';
 import {MainLayout} from '../layouts/MainLayout';
 import { useForm } from '../hooks/useForm';
 import TextEditor from '../components/TextEditor';
@@ -13,12 +13,18 @@ import { findEmployeesByRole_thunk, findClientsByRole_thunk } from '../store/use
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import { Chip } from '@mui/material';
 import { createProject_thunk } from '../store/projects/thunks';
+import ModalError from '../components/ModalError';
+import { TransitionModal } from '../components/TransitionModal';
 
 export const CreateProject = () => {
 
     const { user } = useSelector((state: any) => state.auth);
-    const { mEmployees, mClients, isLoadingUsers } = useSelector((state: any) => state.users);
+    const { mEmployees = [], mClients = [], isLoadingUsers } = useSelector((state: any) => state.users);
+    const { lastUpdateProject } = useSelector((state: any) => state.projects);
+
     const dispatch = useDispatch();
+
+    console.log('lastUpdateProject: ', lastUpdateProject);
 
     const { formState, title, onInputChange, onResetForm, } = useForm({
         title: '',
@@ -55,12 +61,12 @@ export const CreateProject = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
     }
 
-    const onSubmit = (e: any) => {
+    const onSubmit = async (e: any) => {
         e.preventDefault();
 
         if( responsiblesId.length < 0 || title.length < 5 || description.length < 5 ) return;
 
-        dispatch( createProject_thunk({
+        await dispatch( createProject_thunk({
             businessId: businessId ? businessId : user.business.businessId,
             authorId: authorId ? authorId : user._id,
             title,
@@ -71,122 +77,138 @@ export const CreateProject = () => {
     }
 
     const fetchEmployee = async (role: string): Promise<any> => {
+        if( mEmployees.length > 0 ) return; //TODO: Change this conditional
         await dispatch( findEmployeesByRole_thunk(role) );
     }
 
     const fetchClients = async (role: string): Promise<any> => {
+        if( mClients.length > 0 ) return; //TODO: Change this conditional
         await dispatch( findClientsByRole_thunk(role) );
     }
 
     useEffect(() => {
-        if( mEmployees.length > 0 ) return;
         fetchEmployee('EMPLOYEE');
         
-        if( mClients.length > 0 ) return;
         user.role === 'ADMIN' ? fetchClients('CLIENT') : null
     }, []);
 
 
     return (
-        <MainLayout>
-
-            <form className='container-form-cp' onSubmit={ onSubmit }>
-                <h1>Crear Proyecto</h1>
-                {/* <input type="date" />
-                <input type="date" />
-                <br /> */}
-                
-
-                {
-                    user.role === 'ADMIN' ? (
-                        <div className='container-input-form'>
-                            <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
-                                <Chip
-                                    label='Only Admin'
-                                    className='fadeIn'
-                                    style={{ color: '#3483fa', backgroundColor: '#4189e626', marginRight: 10, width: 93, height: 22 }}
-                                />
-                                <label>Dueño del proyecto:</label>
-                            </div>
-                            {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
-                            <TagsInputWithAutoCompleteClients clients={mClients} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
-                        </div>
-                    ) : null
-                }
-
-                <div className='container-input-form'>
-                    <label>Titulo del proyecto:</label>
-                    <input 
-                        placeholder="Escribe un titulo para tu proyecto"
-                        type="text"
-                        name='title'
-                        value={title}
-                        onChange={ onInputChange }
-                        className='input-form-cp'
+        <>
+            {
+                lastUpdateProject && lastUpdateProject.code === 'ERROR' ? (
+                    <ModalError
+                        title='Ocurrio un error al crear el proyecto'
+                        descriptionError={ lastUpdateProject.message }
                     />
-                </div>
+                ) : null
+            }
 
-                <div className='container-input-form'>
-                    <label>Responsables del proyecto:</label>
-                    {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
-                    <TagsInputWithAutoComplete employees={mEmployees} selectedTags={selectedTags} tags={[]} responsiblesId={responsiblesId} />
-                </div>
+            {
+                lastUpdateProject && lastUpdateProject.code === 'SUCCESS' ? (
+                    <TransitionModal title={ lastUpdateProject.message } data={ lastUpdateProject.data } />
+                ) : null
+            }
 
-                <div className='container-input-form'>
-                    <label>Añade una descripción:</label>
-                    <TextEditor value={ description } setValue={ setDescription } /> 
-                </div>
+            <MainLayout>
 
-                {
-                    showAcceptanceCriteria ? (
-                        <div className='container-input-form'>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <form className='container-form-cp' onSubmit={ onSubmit }>
+                    <h1>Crear Proyecto</h1>
+                    {/* <input type="date" />
+                    <input type="date" />
+                    <br /> */}
+                    
+                    {
+                        user.role === 'ADMIN' ? (
+                            <div className='container-input-form'>
+                                <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
+                                    <Chip
+                                        label='Only Admin'
+                                        className='fadeIn'
+                                        style={{ color: '#3483fa', backgroundColor: '#4189e626', marginRight: 10, width: 93, height: 22 }}
+                                    />
+                                    <label>Dueño del proyecto:</label>
+                                </div>
+                                {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
+                                <TagsInputWithAutoCompleteClients clients={mClients} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
+                            </div>
+                        ) : null
+                    }
+
+                    <div className='container-input-form'>
+                        <label>Titulo del proyecto:</label>
+                        <input 
+                            placeholder="Escribe un titulo para tu proyecto"
+                            type="text"
+                            name='title'
+                            value={title}
+                            onChange={ onInputChange }
+                            className='input-form-cp'
+                        />
+                    </div>
+
+                    <div className='container-input-form'>
+                        <label>Responsables del proyecto:</label>
+                        {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
+                        <TagsInputWithAutoComplete employees={mEmployees} selectedTags={selectedTags} tags={[]} responsiblesId={responsiblesId} />
+                    </div>
+
+                    <div className='container-input-form'>
+                        <label>Añade una descripción:</label>
+                        <TextEditor value={ description } setValue={ setDescription } /> 
+                    </div>
+
+                    {
+                        showAcceptanceCriteria ? (
+                            <div className='container-input-form'>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <label>Agregar criterios al proyecto:</label>
+                                    <div 
+                                        onClick={ changeVisibilityCA }
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', }}
+                                    >
+                                        <p>Minimizar</p>
+                                        <span>
+                                            <AiOutlineZoomOut style={{ fontSize: 16, marginLeft: 10 }} />
+                                        </span>
+                                    </div>
+                                </div>
+                                <TextEditor value={ acceptanceCriteria } setValue={ setAcceptanceCriteria } />
+                            </div>
+                        ) : (
+                            <div>
                                 <label>Agregar criterios al proyecto:</label>
                                 <div 
                                     onClick={ changeVisibilityCA }
-                                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', }}
+                                    className='container-show-ca'
                                 >
-                                    <p>Minimizar</p>
-                                    <span>
-                                        <AiOutlineZoomOut style={{ fontSize: 16, marginLeft: 10 }} />
+                                    <span className='icon-show-ca'>
+                                        <AiOutlineZoomIn />
                                     </span>
+                                    <p className='pharagraph-show-ca'>Maximizar</p>
                                 </div>
                             </div>
-                            <TextEditor value={ acceptanceCriteria } setValue={ setAcceptanceCriteria } />
-                        </div>
-                    ) : (
-                        <div>
-                            <label>Agregar criterios al proyecto:</label>
-                            <div 
-                                onClick={ changeVisibilityCA }
-                                className='container-show-ca'
-                            >
-                                <span className='icon-show-ca'>
-                                    <AiOutlineZoomIn />
-                                </span>
-                                <p className='pharagraph-show-ca'>Maximizar</p>
-                            </div>
-                        </div>
-                    )
-                }
+                        )
+                    }
 
-                <div className='container-btns-cp'>
-                    <LinkRRD to='/private'>
-                        <button 
-                            type='button'
-                            className='btn-cancel-cp'
+                    <div className='container-btns-cp'>
+                        <LinkRRD to='/private'>
+                            <button 
+                                type='button'
+                                className='btn-cancel-cp'
+                            >
+                                Cancelar
+                            </button>
+                        </LinkRRD>
+                        <button
+                            type='submit'
+                            className='btn-confirm-cp'
                         >
-                            Cancelar
+                            Crear Proyecto
                         </button>
-                    </LinkRRD>
-                    <button
-                        type='submit'
-                        className='btn-confirm-cp'
-                    >
-                        Crear Proyecto
-                    </button>
-                </div>
-            </form>
-        </MainLayout>
+                    </div>
+                </form>
+            </MainLayout>
+        </>
     );
 }

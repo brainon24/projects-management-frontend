@@ -4,16 +4,17 @@ import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdat
 
 export const createProject_thunk = ( payload: any ): any => {
     return async ( dispatch: Dispatch ) => {
-        // console.log('createProject_thunk');
         // console.log('payload: ', payload)
         dispatch( loadingProjectsReducer() );
 
         projectsManagement.post(`/project/create`, payload)
             .then(({ data, status }) => {
-                console.log('DATA en THEN: ', data)
+                // console.log('DATA en THEN: ', data)
                 return dispatch( lastUpdateProjectsReducer({
                     code: 'SUCCESS',
-                    message: `Se ha creado el proyecto con exito, el ID del proyecto es: ${ data._id }`,
+                    // message: `¡Se ha creado el proyecto con exito, el ID del proyecto es: ${ data._id }!`,
+                    message: `¡Se ha creado el proyecto con exito!`,
+                    data,
                 }) );
             })
             .catch(error => {
