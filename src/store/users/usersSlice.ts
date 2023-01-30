@@ -36,6 +36,14 @@ export const usersSlice = createSlice({
             state.mClients = payload;
             state.isLoadingUsers = false;
         },
+
+        clearStateUsersReducer: ( state ) => {
+            state.mClients = [];
+            state.mEmployees = [];
+            state.mUser = {};
+            state.mUsers = [];
+            state.isLoadingUsers = false;
+        },
     }
 });
 
@@ -45,4 +53,5 @@ export const {
     usersFoundedReducer,
     employeesFoundedReducer,
     clientsFoundedReducer,
+    clearStateUsersReducer,
 } = usersSlice.actions;

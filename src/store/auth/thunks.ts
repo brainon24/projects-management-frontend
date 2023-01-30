@@ -3,6 +3,7 @@ import { clearBusinessIdAndName } from "../business/businessSlice";
 import projectsManagement from '../../api/api';
 import {Navigate} from "react-router-dom";
 import React from "react";
+import { clearStateUsersReducer } from "../users/usersSlice";
 
 
 interface SignUpProps {
@@ -123,6 +124,8 @@ export const logout_thunk = () => {
 
         await localStorage.removeItem('token');
         
-        return dispatch( logoutReducer() );
+        dispatch( logoutReducer() );
+
+        return dispatch( clearStateUsersReducer() );
     }
 }

@@ -24,7 +24,7 @@ export const CreateProject = () => {
 
     const dispatch = useDispatch();
 
-    console.log('lastUpdateProject: ', lastUpdateProject);
+    // console.log('lastUpdateProject: ', lastUpdateProject);
 
     const { formState, title, onInputChange, onResetForm, } = useForm({
         title: '',

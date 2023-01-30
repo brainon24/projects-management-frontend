@@ -76,7 +76,7 @@ export const TransitionModal = ({ title, data, }: any) => {
                         width: 35,
                         height: 35,
                         margin: '30px auto 10px',
-                        display: 'flex'
+                        display: 'flex',                        
                     }}>
                         <Box style={{
                             margin: '8.5px auto',
