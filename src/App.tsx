@@ -17,7 +17,6 @@ import {CreateProject} from "./pages/CreateProject";
 import {MyProjectsAsigned} from "./pages/MyProjectsAsigned";
 import {MyProjects} from "./pages/MyProjects";
 import {MyBusinessProjects} from "./pages/MyBusinessProjects";
-import {MyCommentaries} from "./pages/MyCommentaries";
 import {Role} from "./enums/user-role.enum";
 import ModalError from "./components/ModalError";
 import { AllProjects } from './pages/AllProjects';
@@ -129,15 +128,6 @@ const App = () => {
           element={
               <ProtectedRoute roles={[Role.CLIENT, Role.EMPLOYEE, Role.ADMIN]}>
                 <MyBusinessProjects />
-              </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/private/my-commentaries"
-          element={
-              <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.EMPLOYEE, Role.ADMIN]}>
-                <MyCommentaries />
               </ProtectedRoute>
           }
         />

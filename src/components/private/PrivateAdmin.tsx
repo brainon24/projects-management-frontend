@@ -83,18 +83,6 @@ export const PrivateAdmin = () => {
                     </Box>
                     <p className='card-client_description'>Acá podrás listar todos los proyectos de tu empresa.</p>
                 </Box>
-                <Box className='card-client'>
-                    <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <LinkRRD to='/private/my-commentaries' className='card-client_title'>
-                                <p>Ver Mis Últimos Comentarios</p>
-                            </LinkRRD>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <GoCommentDiscussion className='icon-card' />
-                    </Box>
-                    <p className='card-client_description'>Si quieres ver todos los comentarios que has hecho, los puedes ver acá</p>
-                </Box>
             </Box>
         </Box>
     )

@@ -141,16 +141,6 @@ export const Sidebar = () => {
                                             <ListItemText primary='Proyectos de mi negocio' />
                                     </LinkRRD>
                                 </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-commentaries' className='link'>
-                                            <ListItemIcon>
-                                                <GoCommentDiscussion className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mis comentarios' />
-                                    </LinkRRD>
-                                </ListItem>
-
                             </>
                         ) : null
                     }
@@ -197,15 +187,6 @@ export const Sidebar = () => {
                                                 <GrProjects className='icon' />
                                             </ListItemIcon>
                                             <ListItemText primary='Mis Proyectos Asignados' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-commentaries' className='link'>
-                                            <ListItemIcon>
-                                                <GoCommentDiscussion className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mis comentarios' />
                                     </LinkRRD>
                                 </ListItem>
                             </>
@@ -290,15 +271,6 @@ export const Sidebar = () => {
                                                 <MdManageAccounts className='icon' />
                                             </ListItemIcon>
                                             <ListItemText primary='Gestionar usuarios' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-commentaries' className='link'>
-                                            <ListItemIcon>
-                                                <GoCommentDiscussion className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mis comentarios' />
                                     </LinkRRD>
                                 </ListItem>
                             </>
