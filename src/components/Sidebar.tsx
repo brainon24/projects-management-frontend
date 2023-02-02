@@ -10,7 +10,7 @@ import { SlClose } from 'react-icons/sl';
 import { BsKey } from 'react-icons/bs';
 import { FaStoreAlt } from 'react-icons/fa';
 import { RiGitRepositoryPrivateLine, RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
-import { MdAddBusiness, MdDashboardCustomize, MdManageAccounts, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
+import { MdAddBusiness, MdManageAccounts, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
 import { BiUserCircle } from 'react-icons/bi';
 import { FcPrivacy } from 'react-icons/fc';

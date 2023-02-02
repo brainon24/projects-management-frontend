@@ -1,4 +1,3 @@
-import React from 'react'
 import { MainLayout } from '../layouts/MainLayout'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -11,7 +10,6 @@ import { Chip } from '@mui/material';
 export const AllProjects = () => {
 
     const dispatch = useDispatch();
-    const { user } = useSelector((state: any) => state.auth);
     const { allProjects, errorNotFoundProject } = useSelector((state: any) => state.projects);
 
     useEffect(() => {
