@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import projectsManagement from '../../api/api';
-import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer } from './projectsSlice';
+import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer } from './projectsSlice';
 
 export const createProject_thunk = ( payload: any ): any => {
     return async ( dispatch: Dispatch ) => {
@@ -42,6 +42,29 @@ export const findProjectsByUserId_thunk = ( userId: any ): any => {
             .then(({ data, status }) => {
                 console.log('DATA en THEN: ', data)
                 return dispatch( findProjectsByUserIdReducer( data ) );
+            })
+            .catch(error => {
+                try {
+                    console.log('ERROR en TRY: ', error.response.data.message);
+
+                    return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+    }
+}
+
+
+export const findProjectsByBusinessId_thunk = ( businessId: any ): any => {
+    return async ( dispatch: Dispatch ) => {
+        console.log('findProjectsByBusinessId_thunk');
+        dispatch( loadingProjectsReducer() );
+
+        projectsManagement.get(`/project/findByBusinessId/${ businessId }`)
+            .then(({ data, status }) => {
+                console.log('DATA en THEN: ', data)
+                return dispatch( findProjectsByBusinessIdReducer( data ) );
             })
             .catch(error => {
                 try {

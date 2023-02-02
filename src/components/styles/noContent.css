@@ -1,0 +1,40 @@
+.container-nc {
+    height: 78vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-icon-nc {
+    display: flex; 
+    justify-content: center;
+}
+
+.icon-nc {
+    font-size: 25px;
+}
+
+.paragraph-nc {
+    font-size: 14px;
+    padding-top: 5px;
+    color: var(--grayDark);
+}
+
+.container-btn-nc {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-nc {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--blue);
+    margin-top: 20px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.btn-nc:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
