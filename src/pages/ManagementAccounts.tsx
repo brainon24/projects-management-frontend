@@ -1,7 +1,10 @@
 import React from 'react'
+import { MainLayout } from '../layouts/MainLayout';
 
 export const ManagementAccounts = () => {
     return (
-        <div>Management Accounts</div>
-    )
+      <MainLayout>
+        <h1>Gestion de Usuarios</h1>
+      </MainLayout>  
+    );
 }

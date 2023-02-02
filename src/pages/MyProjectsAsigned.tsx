@@ -29,7 +29,7 @@ export const MyProjectsAsigned = () => {
                             message="Aún no tienes proyectos asignados, pulsa el botón👇 para volver!"
                             icon={ <BiTime /> }
                             messageButton='Ir a Mi Panel'
-                            urlRedirect='/private/create-project'
+                            urlRedirect='/private'
                         />
                     </div>
                 ) : (

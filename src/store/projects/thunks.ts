@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import projectsManagement from '../../api/api';
-import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer, findProjectsByResponsibleIdReducer } from './projectsSlice';
+import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer, findProjectsByResponsibleIdReducer, findAllProjectsReducer } from './projectsSlice';
 
-export const createProject_thunk = ( payload: string ): any => {
+export const createProject_thunk = ( payload: any ): any => {
     return async ( dispatch: Dispatch ) => {
         // console.log('payload: ', payload)
         dispatch( loadingProjectsReducer() );
@@ -30,6 +30,29 @@ export const createProject_thunk = ( payload: string ): any => {
                 }
             });
     }
+}
+
+
+export const findAllProjects_thunk = (): any => {
+    return async ( dispatch: Dispatch ) => {
+        console.log('findProjectsByResponsibleI_thunk');
+        dispatch( loadingProjectsReducer() );
+
+        projectsManagement.get(`/project/findAll/`)
+            .then(({ data, status }) => {
+                console.log('DATA en THEN: ', data)
+                return dispatch( findAllProjectsReducer( data ) );
+            })
+            .catch(error => {
+                try {
+                    console.log('ERROR en TRY: ', error.response.data.message);
+
+                    return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        }
 }
 
 

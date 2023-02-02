@@ -8,8 +8,8 @@ import { FiLogIn } from 'react-icons/fi';
 import { VscHome } from 'react-icons/vsc';
 import { SlClose } from 'react-icons/sl';
 import { BsKey } from 'react-icons/bs';
-import { GoCommentDiscussion } from 'react-icons/go';
-import { RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
+import { FaStoreAlt } from 'react-icons/fa';
+import { RiGitRepositoryPrivateLine, RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
 import { MdAddBusiness, MdDashboardCustomize, MdManageAccounts, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
 import { BiUserCircle } from 'react-icons/bi';
@@ -266,11 +266,29 @@ export const Sidebar = () => {
                                 </ListItem>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/administrative-managment' className='link'>
+                                            <ListItemIcon>
+                                                <RiGitRepositoryPrivateLine className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Gestión Administrativa' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/private/management-accounts' className='link'>
                                             <ListItemIcon>
                                                 <MdManageAccounts className='icon' />
                                             </ListItemIcon>
                                             <ListItemText primary='Gestionar usuarios' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/management-business' className='link'>
+                                            <ListItemIcon>
+                                                <FaStoreAlt className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Gestionar negocios' />
                                     </LinkRRD>
                                 </ListItem>
                             </>

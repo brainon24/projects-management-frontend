@@ -2,9 +2,10 @@ import { useSelector } from 'react-redux';
 import { Box, Chip, Typography } from '@mui/material'
 import { Link as LinkRRD, } from 'react-router-dom';
 import { BiRightArrowAlt, BiUserCircle } from 'react-icons/bi';
-import { MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
+import { MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
-import { RiOrganizationChart } from 'react-icons/ri';
+import { RiOrganizationChart, RiGitRepositoryPrivateLine } from 'react-icons/ri';
+import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 
 export const PrivateAdmin = () => {
 
@@ -37,14 +38,14 @@ export const PrivateAdmin = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <LinkRRD to='/private/my-business' className='card-client_title'>
-                                <p>Ver Mi Compañia</p>
+                            <LinkRRD to='/private/administrative-managment' className='card-client_title'>
+                                <p>Gestión Administrativa</p>
                             </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
-                        <MdOutlineBusinessCenter className='icon-card' />
+                        <RiGitRepositoryPrivateLine className='icon-card' />
                     </Box>
-                    <p className='card-client_description'>Visita el perfil de la compañia donde trabajas.</p>
+                    <p className='card-client_description'>Desde esta sección puedes gestionar usuarios y negocios.</p>
                 </Box>
                 <Box className='card-client'>
                     <Box className='container-header-card'>
@@ -66,7 +67,7 @@ export const PrivateAdmin = () => {
                             </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
-                        <GrProjects className='icon-card' />
+                        <AiOutlineFundProjectionScreen className='icon-card' />
                     </Box>
                     <p className='card-client_description'>Acá podrás listar todos los proyectos que creaste.</p>
                 </Box>
@@ -79,6 +80,18 @@ export const PrivateAdmin = () => {
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <RiOrganizationChart className='icon-card' />
+                    </Box>
+                    <p className='card-client_description'>Acá podrás listar todos los proyectos de tu empresa.</p>
+                </Box>
+                <Box className='card-client'>
+                    <Box className='container-header-card'>
+                        <Box display='flex' alignItems='center'>
+                            <LinkRRD to='/private/all-projects' className='card-client_title'>
+                                <p>Listar Todos los Proyectos</p>
+                            </LinkRRD>
+                            <BiRightArrowAlt className='icon-link' />
+                        </Box>
+                        <GrProjects className='icon-card' />
                     </Box>
                     <p className='card-client_description'>Acá podrás listar todos los proyectos de tu empresa.</p>
                 </Box>

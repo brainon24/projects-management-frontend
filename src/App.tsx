@@ -22,6 +22,8 @@ import ModalError from "./components/ModalError";
 import { AllProjects } from './pages/AllProjects';
 import { CreateBusiness } from "./pages/CreateBusiness";
 import { ManagementAccounts } from './pages/ManagementAccounts';
+import { ManagementBusiness } from './pages/ManagementBusiness';
+import { AdministrativeManagement } from './pages/AdministrativeManagement';
 
 const App = () => {
 
@@ -155,6 +157,24 @@ const App = () => {
           element={
               <ProtectedRoute roles={[Role.ADMIN]}>
                 <ManagementAccounts />
+              </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/private/management-business"
+          element={
+              <ProtectedRoute roles={[Role.ADMIN]}>
+                <ManagementBusiness />
+              </ProtectedRoute>
+          }
+        />
+
+      <Route
+          path="/private/administrative-managment"
+          element={
+              <ProtectedRoute roles={[Role.ADMIN]}>
+                <AdministrativeManagement />
               </ProtectedRoute>
           }
         />
