@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import projectsManagement from '../../api/api';
-import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer } from './projectsSlice';
+import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer, findProjectsByResponsibleIdReducer } from './projectsSlice';
 
-export const createProject_thunk = ( payload: any ): any => {
+export const createProject_thunk = ( payload: string ): any => {
     return async ( dispatch: Dispatch ) => {
         // console.log('payload: ', payload)
         dispatch( loadingProjectsReducer() );
@@ -33,7 +33,7 @@ export const createProject_thunk = ( payload: any ): any => {
 }
 
 
-export const findProjectsByUserId_thunk = ( userId: any ): any => {
+export const findProjectsByUserId_thunk = ( userId: string ): any => {
     return async ( dispatch: Dispatch ) => {
         console.log('findProjectsByUserId_thunk');
         dispatch( loadingProjectsReducer() );
@@ -56,7 +56,7 @@ export const findProjectsByUserId_thunk = ( userId: any ): any => {
 }
 
 
-export const findProjectsByBusinessId_thunk = ( businessId: any ): any => {
+export const findProjectsByBusinessId_thunk = ( businessId: string ): any => {
     return async ( dispatch: Dispatch ) => {
         console.log('findProjectsByBusinessId_thunk');
         dispatch( loadingProjectsReducer() );
@@ -65,6 +65,29 @@ export const findProjectsByBusinessId_thunk = ( businessId: any ): any => {
             .then(({ data, status }) => {
                 console.log('DATA en THEN: ', data)
                 return dispatch( findProjectsByBusinessIdReducer( data ) );
+            })
+            .catch(error => {
+                try {
+                    console.log('ERROR en TRY: ', error.response.data.message);
+
+                    return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+    }
+}
+
+
+export const findProjectsByResponsibleI_thunk = ( responsibleId: string ): any => {
+    return async ( dispatch: Dispatch ) => {
+        console.log('findProjectsByResponsibleI_thunk');
+        dispatch( loadingProjectsReducer() );
+
+        projectsManagement.get(`/project/findByResponsibleId/${ responsibleId }`)
+            .then(({ data, status }) => {
+                console.log('DATA en THEN: ', data)
+                return dispatch( findProjectsByResponsibleIdReducer( data ) );
             })
             .catch(error => {
                 try {

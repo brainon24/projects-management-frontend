@@ -4,7 +4,6 @@ import { Link as LinkRRD, } from 'react-router-dom';
 import { BiRightArrowAlt, BiUserCircle } from 'react-icons/bi';
 import { MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
-import { GoCommentDiscussion } from 'react-icons/go';
 import { RiOrganizationChart } from 'react-icons/ri';
 
 export const PrivateAdmin = () => {
