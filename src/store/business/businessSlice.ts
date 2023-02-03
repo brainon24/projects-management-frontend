@@ -5,6 +5,7 @@ interface InitialState {
     businessName: string | undefined;
     businessId: string | undefined;
     businessErrorMessage: string | undefined;
+    allBusiness: undefined | [],
 }
 
 const initialState: InitialState = {
@@ -12,6 +13,8 @@ const initialState: InitialState = {
     businessName: undefined,
     businessId: undefined,
     businessErrorMessage: undefined,
+
+    allBusiness: [],
 }
 
 export const businessSlice = createSlice({
@@ -45,6 +48,10 @@ export const businessSlice = createSlice({
         clearErrorBusinessReducer: ( state ) => {            
             state.businessErrorMessage = undefined;
         },
+
+        allBusinessFoundedReducer: ( state, { payload } ) => {
+            state.allBusiness = payload;
+        },
     }
 });
 
@@ -54,4 +61,5 @@ export const {
     clearBusinessIdAndName,
     addErrorReducer,
     clearErrorBusinessReducer,
+    allBusinessFoundedReducer,
 } = businessSlice.actions;
