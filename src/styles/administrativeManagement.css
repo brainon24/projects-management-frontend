@@ -1,0 +1,50 @@
+.container-btns-management-am {
+    height: 76vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.p-message-am {
+    margin: 20px 0;
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.container-flex-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-management-am {
+    border: 1px solid #ccc;
+    padding: 20px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+}
+
+.container-icon-management-am {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.icon-management-am {
+    font-size: 20px;
+}
+
+.p-management-am {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.btn-management-am:hover > .p-management-am {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-color: var(--blue);
+}

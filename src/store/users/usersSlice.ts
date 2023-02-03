@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    mUser: {},
+    mUser: undefined,
     mUsers: [],
     mEmployees: [],
     mClients: [],
@@ -19,6 +19,11 @@ export const usersSlice = createSlice({
         
         userFoundedReducer: ( state, { payload } ) => {
             state.mUser = payload;
+            state.isLoadingUsers = false;
+        },
+
+        clearUserReducer: ( state ) => {
+            state.mUser = undefined;
             state.isLoadingUsers = false;
         },
         
@@ -40,7 +45,7 @@ export const usersSlice = createSlice({
         clearStateUsersReducer: ( state ) => {
             state.mClients = [];
             state.mEmployees = [];
-            state.mUser = {};
+            state.mUser = undefined;
             state.mUsers = [];
             state.isLoadingUsers = false;
         },
@@ -50,6 +55,7 @@ export const usersSlice = createSlice({
 export const {
     loadingUsersReducer,
     userFoundedReducer,
+    clearUserReducer,
     usersFoundedReducer,
     employeesFoundedReducer,
     clientsFoundedReducer,

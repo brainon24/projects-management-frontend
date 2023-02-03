@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress, {
   circularProgressClasses,
   CircularProgressProps,
 } from '@mui/material/CircularProgress';
 
 
-function FacebookCircularProgress(props: CircularProgressProps) {
+function Spinner(props: CircularProgressProps) {
   return (
     <Box sx={{ position: 'relative' }}>
       <CircularProgress
@@ -45,10 +43,7 @@ function FacebookCircularProgress(props: CircularProgressProps) {
 export default function Loading() {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <FacebookCircularProgress />
-      {/* <Box sx={{ width: '300px', }}>
-        <LinearProgress />
-      </Box> */}
+      <Spinner />
     </Box>
   );
 }

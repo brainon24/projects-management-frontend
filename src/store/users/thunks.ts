@@ -1,6 +1,27 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import projectsManagement from '../../api/api';
-import { clientsFoundedReducer, employeesFoundedReducer, loadingUsersReducer } from './usersSlice';
+import { clientsFoundedReducer, employeesFoundedReducer, loadingUsersReducer, usersFoundedReducer } from './usersSlice';
+
+
+export const findAllClients_thunk = (): any => {
+    return async ( dispatch: Dispatch ) => {
+        console.log('findUsersByRole_thunk')
+        dispatch( loadingUsersReducer() );
+
+        projectsManagement.get('/user/findAll')
+            .then(({ data, status }) => {
+                // console.log('data en then: ', data)
+                return dispatch( usersFoundedReducer( data ) );
+            })
+            .catch(error => {
+                try {
+                    console.log(error.response.data.message);
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+    }
+}
 
 
 export const findEmployeesByRole_thunk = ( role: string ): any => {

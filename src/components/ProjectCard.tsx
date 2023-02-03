@@ -19,7 +19,7 @@ export const ProjectCard = ({ project }: any) => {
                         fontSize: 18,
                     }}
                 >
-                    { project.title.length >= 30 ? project.title.substring(0, 29) + '...' : project.title }
+                    { project.title.length >= 27 ? project.title.substring(0, 27) + '...' : project.title }
                 </p>
                 <ProjectStatus status={ project.status } />
             </Box>
