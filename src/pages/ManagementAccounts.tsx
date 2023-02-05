@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { findAllClients_thunk } from '../store/users/thunks';
 import {UserModal} from '../components/UserModal';
 import { userFoundedReducer } from '../store/users/usersSlice';
+import Loading from '../components/Loading';
 
 interface Column {
   id: '_id' | 'fullName' | 'phone' | 'role' | 'email' | 'businessName' | 'businessId' | 'createdAt';
@@ -122,7 +123,7 @@ export const ManagementAccounts = () => {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.auth);
-  const { mUsers, mUser } = useSelector((state: any) => state.users);
+  const { mUsers, mUser, isLoadingUsers } = useSelector((state: any) => state.users);
 
   const handleUserModal = (user: any) => {
     dispatch( userFoundedReducer(user) );
@@ -148,7 +149,7 @@ export const ManagementAccounts = () => {
     );
   });
   // console.log(rows)
-  console.log('mUser: ', mUser)
+  // console.log('mUser: ', mUser)
 
   return (
     <MainLayout>
@@ -202,7 +203,8 @@ export const ManagementAccounts = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 15, 25, 50]}
+          labelRowsPerPage='Filas por página'
+          rowsPerPageOptions={[5, 10, 25, 50,]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

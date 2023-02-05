@@ -4,6 +4,7 @@ import { authSlice } from './auth/authSlice';
 import { businessSlice } from './business/businessSlice';
 import { usersSlice } from './users/usersSlice';
 import { projectsSlice } from './projects/projectsSlice';
+import { commentariesSlice } from './commentaries/commentarySlice';
 
 
 export const store = configureStore({
@@ -13,5 +14,6 @@ export const store = configureStore({
         business: businessSlice.reducer,
         users: usersSlice.reducer,
         projects: projectsSlice.reducer,
+        commentaries: commentariesSlice.reducer,
     }
 });

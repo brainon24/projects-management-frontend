@@ -21,7 +21,8 @@ const TextEditor = ({ value, setValue }: any) => {
 
 TextEditor.modules = {
     toolbar: [
-        [{ header: "1" }, {header: "2"}, {header: [3, 4, 5, 6]}, {font: []}],
+        // [{ header: "1" }, {header: "2"}, {header: [3, 4, 5, 6]}, {font: []}],
+        ['clean', {header: [3, 4, 5, 6]}, {font: []}],
         [{ size: [] }],
         [ "bold", "italic", "underline", "strike", "blockquote" ],
         [{ list: "ordered", }, { list: "bullet" }],

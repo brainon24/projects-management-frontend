@@ -63,3 +63,24 @@ export const findClientsByRole_thunk = ( role: string ): any => {
             });
     }
 }
+
+
+export const updateRole_thunk = ({ userId, role }: any): any => {
+    return async ( dispatch: Dispatch ) => {
+        console.log('findAll_thunk')
+        dispatch( loadingUsersReducer() );
+
+        projectsManagement.patch(`/user/updateRole/${ userId }`, {role})
+            .then(({ data, status }) => {
+                // console.log('data en then: ', data)
+                // return dispatch( usersFoundedReducer( data ) );
+            })
+            .catch(error => {
+                try {
+                    console.log(error.response.data.message);
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+    }
+}

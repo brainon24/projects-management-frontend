@@ -9,7 +9,7 @@ import { TagsInput } from '../components/TagsInput';
 import '../styles/createProject.css';
 import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { findEmployeesByRole_thunk, findClientsByRole_thunk } from '../store/users/thunks';
+import { findEmployeesByRole_thunk, findClientsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import { Chip } from '@mui/material';
 import { createProject_thunk } from '../store/projects/thunks';
@@ -19,7 +19,7 @@ import { TransitionModal } from '../components/TransitionModal';
 export const CreateProject = () => {
 
     const { user } = useSelector((state: any) => state.auth);
-    const { mEmployees = [], mClients = [], isLoadingUsers } = useSelector((state: any) => state.users);
+    const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { lastUpdateProject } = useSelector((state: any) => state.projects);
 
     const dispatch = useDispatch();
@@ -86,10 +86,16 @@ export const CreateProject = () => {
         await dispatch( findClientsByRole_thunk(role) );
     }
 
+    const fetchAllUsers = async (): Promise<any> => {
+        if( mClients.length > 0 ) return; //TODO: Change this conditional
+        await dispatch( findAllClients_thunk() );
+    }
+
     useEffect(() => {
         fetchEmployee('EMPLOYEE');
         
-        user.role === 'ADMIN' ? fetchClients('CLIENT') : null
+        // user.role === 'ADMIN' ? fetchClients('CLIENT') : null
+        user.role === 'ADMIN' ? fetchAllUsers() : null
     }, []);
 
 
@@ -130,7 +136,7 @@ export const CreateProject = () => {
                                     <label>Dueño del proyecto:</label>
                                 </div>
                                 {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
-                                <TagsInputWithAutoCompleteClients clients={mClients} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
+                                <TagsInputWithAutoCompleteClients clients={mUsers} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
                             </div>
                         ) : null
                     }
