@@ -21,7 +21,6 @@ export const ProjectsList = ({projects = [], title = ''}: any) => {
                     borderRadius: 6,
                     overflow: 'scroll',
                 }}
-                className='projects-list-component'
             >
                 <h3>{ title }</h3>
                 {

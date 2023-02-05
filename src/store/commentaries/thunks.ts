@@ -7,7 +7,7 @@ export const findAllCommentariesByProjectID_thunk = (projectId: string): any => 
 
         // dispatch( loadingBusinessReducer() );
 
-        projectsManagement.get(`/commentary/findAllByProject/${ projectId }`)
+        projectsManagement.get(`/commentary/findAllByProject/${ projectId }?limit=5`)
             .then(({ data, status }) => {
                 if (status !== 200) {
                     throw new Error(data.message);

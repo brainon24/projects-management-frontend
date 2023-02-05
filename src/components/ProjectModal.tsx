@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -6,9 +7,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 
-import '../styles/createProject.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearProjectByIdReducer } from '../store/projects/projectsSlice';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,10 @@ import { RiCloseFill } from 'react-icons/ri';
 import { DialogTitleProps } from './ModalError';
 import useFormatDate from '../hooks/useFormatDate';
 import { findAllCommentariesByProjectID_thunk } from '../store/commentaries/thunks';
-import { useEffect } from 'react';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
+
+import '../styles/createProject.css';
+import './projectModal.css';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -52,7 +55,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export const ProjectModal = ({ project }: any) => {
-    console.log('project: ', project)
+    // console.log('project: ', project)
 
     const navigate = useNavigate();
 
@@ -87,10 +90,10 @@ export const ProjectModal = ({ project }: any) => {
                 sx={{ backdropFilter: 'blur(2px)', }}
             >
                 <Box 
-                    sx={{ 
-                        textAlign: 'center', 
-                        margin: 0,
-                    }}
+                    className='container-modal'
+                    // sx={{
+                    //     margin: 0
+                    // }}
                 >
                     <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
                         { project.title }
@@ -117,7 +120,8 @@ export const ProjectModal = ({ project }: any) => {
                     <DialogContent 
                         sx={{ 
                             margin: '0px 10px',
-                            height: 310,
+                            // height: 310,
+                            maxHeight: 310,
                             overflow: 'scroll'
                         }}
                     >
@@ -140,39 +144,8 @@ export const ProjectModal = ({ project }: any) => {
                         >
                             <div dangerouslySetInnerHTML={{ __html: project.description }} />
                         </DialogContentText>
-                        {/* <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                fontSize: 13,
-                                marginTop: 25
-                            }}
-                        >
-                            Comprobante No. (ID)
-                        </DialogContentText>
-                        <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                fontSize: 15,
-                                fontWeight: 500,
-                                color: '#59585a'
-                            }}
-                        >
-                            { project._id }
-                        </DialogContentText> */}
-
-                        {/* <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                marginTop: 30,
-                                fontSize: 15
-                            }}
-                        >
-                            { eventDate(year, month, day).toLocaleDateString('es-ES', options).slice(0, 1).toUpperCase() + eventDate(year, month, day).toLocaleDateString('es-ES', options).slice(1) }
-                        </DialogContentText> */}
                     </DialogContent>
+
                     <DialogContent>
                         <DialogContentText 
                             id="alert-dialog-slide-description"
@@ -202,21 +175,23 @@ export const ProjectModal = ({ project }: any) => {
                                 textAlign: 'left',
                                 fontSize: 17,
                                 fontWeight: 500,
-                                color: '#000'
+                                color: '#000',
+                                paddingTop: 20
                             }}
                         >
                             Comentarios:
                             {
-                                commentariesByProjectID ? (
+                                commentariesByProjectID?.length > 0 ? (
                                     <Box
                                         sx={{ 
                                             margin: '0px 10px',
-                                            height: 200,
+                                            // height: 200,
+                                            maxHeight: 200,
                                             overflow: 'scroll'
                                         }}
                                     >
                                         {
-                                            commentariesByProjectID.map(({user, commentary}: any) => (
+                                            commentariesByProjectID?.map(({user, commentary}: any) => (
                                                 <div style={{
                                                     padding: '8px 0'
                                                 }}>
@@ -237,7 +212,18 @@ export const ProjectModal = ({ project }: any) => {
                                             ))
                                         }
                                     </Box>
-                                ) : null //TODO: TERMINARLO
+                                ) : (
+                                    <Box>
+                                        <span style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            padding: '15px 0'
+                                        }}>
+                                            <AiOutlineExclamationCircle />
+                                        </span>
+                                        <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay comentarios en este proyecto.</Typography>
+                                    </Box>
+                                )
                             }
                         </DialogContentText>
                     </DialogContent>

@@ -1,0 +1,12 @@
+.container-modal {
+    width: 600px;
+    padding: 10px 25px;
+}
+
+@media (max-width: 585px){
+    .container-modal {
+        /* width: 350px; */
+        width: 100%;
+        padding: 10px 25px;
+    }
+}
