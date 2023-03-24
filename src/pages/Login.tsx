@@ -61,15 +61,32 @@ export const Login = () => {
                             ) : null
                         }
 
-                        <Box 
+                        {/* <Box
                             component='section'
                             className='go-to-back-container'
                         >
-                            <LinkRRD to='/'>
+                            <LinkRRD to='https://brainon24.com/'>
                                 <Link className='go-to-back-icon'>
                                     <AiOutlineArrowLeft />
                                 </Link>
                             </LinkRRD>
+                        </Box> */}
+                        <Box
+                            component='section'
+                            className='go-to-back-container'
+                        >
+                            <a href='https://brainon24.com/' style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 15
+                            }}>
+                                <Link className='go-to-back-icon'>
+                                    <AiOutlineArrowLeft />
+                                </Link>
+                                <p style={{
+                                    fontSize: 25
+                                }}>Inicio</p>
+                            </a>
                         </Box>
 
                         <Box 

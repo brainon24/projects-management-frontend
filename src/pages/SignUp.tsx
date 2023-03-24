@@ -213,7 +213,7 @@ export const SignUp = () => {
                                     <hr style={{ width: '50%', height: '2px', margin: 'auto 0' }} />
                                 </Box>
                                 
-                                <LinkRRD to='/login'>
+                                <LinkRRD to='/'>
                                     <p className='login-link'>¿Ya tienes cuenta? ¡Inicia sesión!</p>                                    
                                 </LinkRRD>
                             </form>

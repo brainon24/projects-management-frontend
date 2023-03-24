@@ -36,6 +36,7 @@ export const businessSlice = createSlice({
         clearBusinessIdAndName: ( state ) => {            
             state.businessId = undefined;
             state.businessName = undefined;
+            state.isLoadingBusiness = false;
         },
 
         addErrorReducer: ( state, { payload } ) => {
@@ -45,11 +46,13 @@ export const businessSlice = createSlice({
             state.businessErrorMessage = payload;
         },
 
-        clearErrorBusinessReducer: ( state ) => {            
+        clearErrorBusinessReducer: ( state ) => {
+            state.isLoadingBusiness = false;
             state.businessErrorMessage = undefined;
         },
 
         allBusinessFoundedReducer: ( state, { payload } ) => {
+            state.isLoadingBusiness = false;
             state.allBusiness = payload;
         },
     }

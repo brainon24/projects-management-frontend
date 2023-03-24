@@ -24,6 +24,7 @@ import { CreateBusiness } from "./pages/CreateBusiness";
 import { ManagementAccounts } from './pages/ManagementAccounts';
 import { ManagementBusiness } from './pages/ManagementBusiness';
 import { AdministrativeManagement } from './pages/AdministrativeManagement';
+import { ProjectId } from './pages/ProjectId';
 
 const App = () => {
 
@@ -67,8 +68,8 @@ const App = () => {
             ) : null
         }
       <Routes>
-        <Route path="/" element={ <Home /> }  />
-        <Route path="/login" element={ <Login /> } />
+        <Route path="/" element={ <Login /> }  />
+        {/* <Route path="/login" element={ <Login /> } /> */}
         <Route path="/sign-up" element={ <SignUp /> } />
 
         <Route 
@@ -121,6 +122,15 @@ const App = () => {
           element={
               <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN]}>
                 <MyProjects />
+              </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/private/project/:projectId"
+          element={
+              <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN, Role.EMPLOYEE]}>
+                <ProjectId />
               </ProtectedRoute>
           }
         />

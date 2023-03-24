@@ -15,6 +15,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
     const [ focus, setFocus ] = useState<boolean>(false);
     const [ blur, setBlur ] = useState<boolean>(false);
 
+    // console.log(props.tags)
     const [ tags, setTags ] = useState(props.tags);
     // console.log(tags)
 
@@ -33,7 +34,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
 
     const removeTags = (indexToRemove: any) => {
         setTags([...tags.filter((_: any, index: any) => index !== indexToRemove)]);
-        props.selectedTags([tags]);
+        props?.selectedTags([tags]);
     }
 
     const addTags = ({target}: any) => {
@@ -41,7 +42,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
         if( target.value.length <= 1 ) return;
 
         setTags([ ...tags, target.value ]);
-        props.selectedTags([ ...tags, target.value ]);
+        props?.selectedTags([ ...tags, target.value ]);
 
         target.value = '';
     }
@@ -49,7 +50,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
     const addTagsById = (user: any) => {
         // console.log('DENTRO DE ADD TAGS BY ID: ', user)
         setTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
-        props.selectedTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
+        props?.selectedTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
 
         userInput = '';
     }
@@ -60,7 +61,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
     }
 
     useEffect(() => {
-        props.selectedTags([...tags]);
+        props?.selectedTags([...tags]);
     }, [ tags ]);
 
     return (
@@ -68,9 +69,9 @@ export const TagsInputWithAutoComplete = (props: any) => {
             <div className='tags-input'>
                 <ul id='tags'>
                     {
-                        tags.map((tag: any, index: any) => (
+                        tags?.map((tag: any, index: any) => (
                             <li key={index} className='tag'>
-                                <span className='tag-title'>{tag.fullName}</span>
+                                <span className='tag-title'>{tag}</span>
                                 <span 
                                     className='tag-close-icon'
                                     onClick={ () => removeTags(index) }
@@ -111,7 +112,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
                         // onClick={ () => console.log('click') }
                     >
                         {
-                            employees && employees?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase()) && !props.responsiblesId.includes( user._id ) ).slice(0, 5).map( (user: any) => (
+                            employees && employees?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase()) && !props.responsiblesId.includes( user._id ) )?.slice(0, 5)?.map( (user: any) => (
                                 <button 
                                     key={ user?._id } 
                                     className="autocomplete-element"

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     allProjects: [],
     projectById: undefined,
+    oneProject: undefined,
     allProjectsByUserId: [],
     allProjectsByBusinessId: [],
     allProjectsByResponsibleId: [],
@@ -46,6 +47,16 @@ export const projectsSlice = createSlice({
             state.isLoadingProjects = false;
         },
 
+        findProjectOneReducer: ( state, { payload } ) => {
+            state.oneProject = payload;
+            state.isLoadingProjects = false;
+        },
+
+        clearProjectOneReducer: ( state ) => {
+            state.oneProject = undefined;
+            state.isLoadingProjects = false;
+        },
+
         findProjectByIdReducer: ( state, { payload } ) => {
             state.projectById = payload;
             state.isLoadingProjects = false;
@@ -82,6 +93,8 @@ export const {
     findAllProjectsReducer,
     findProjectByIdReducer,
     clearProjectByIdReducer,
+    findProjectOneReducer,
+    clearProjectOneReducer,
     findProjectsByUserIdReducer,
     findProjectsByBusinessIdReducer,
     findProjectsByResponsibleIdReducer,

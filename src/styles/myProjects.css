@@ -9,6 +9,11 @@
     gap: 25px;
 }
 
+.container-list-projects-mp > div {
+    flex: 1;
+    width: calc(100% / 3);
+}
+
 .each-project-mp {
     width: 100%;
     /* width: 400px; */
@@ -16,6 +21,6 @@
     margin: 20px 0px;
     background-color: var(--white);
     border-radius: 6px;
-    cursor: pointer;
+    /* cursor: pointer; */
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
 }

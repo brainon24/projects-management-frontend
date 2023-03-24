@@ -10,8 +10,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import { Box, IconButton, Typography } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { clearProjectByIdReducer } from '../store/projects/projectsSlice';
-import { useNavigate } from 'react-router-dom';
+import { clearProjectOneReducer } from '../store/projects/projectsSlice';
+import { useNavigate, Link as LinkRRD } from 'react-router-dom';
 import { RiCloseFill } from 'react-icons/ri';
 import { DialogTitleProps } from './ModalError';
 import useFormatDate from '../hooks/useFormatDate';
@@ -20,6 +20,8 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 import '../styles/createProject.css';
 import './projectModal.css';
+import { TbExternalLink } from 'react-icons/tb';
+import { ProjectStatus } from './ProjectStatus';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -31,10 +33,10 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function BootstrapDialogTitle(props: DialogTitleProps) {
-    const { children, onClose, ...other } = props;
+    const { children, status, onClose, ...other } = props;
   
     return (
-      <DialogTitle sx={{ mt: 6, p: 0 }} {...other}>
+      <DialogTitle sx={{ mt: 6, p: 0,  }} {...other}>
         {children}
         {onClose ? (
           <IconButton
@@ -42,11 +44,17 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
             onClick={onClose}
             sx={{
               position: 'absolute',
-              right: 8,
-              top: 7,
+              right: 0,
+              top: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              paddingX: '30px',
               color: (theme) => theme.palette.grey[500],
             }}
           >
+            { status }
             <RiCloseFill />
           </IconButton>
         ) : null}
@@ -64,20 +72,25 @@ export const ProjectModal = ({ project }: any) => {
     const [open, setOpen] = React.useState(true);
 
     const { formatDate } = useFormatDate();
-
+    
     const handleClose = () => {
         setOpen(false);
 
-        dispatch( clearProjectByIdReducer() );
-
-        // navigate('/private');
+        dispatch( clearProjectOneReducer() );
     };
+
+    const openProject = () => {
+        setOpen(false);
+        dispatch( clearProjectOneReducer() );
+
+        navigate(`/private/project/${ project._id }`)
+    }
 
     useEffect(() => {
         // if( allProjectsByUserId.length > 0 ) return;
     
         dispatch( findAllCommentariesByProjectID_thunk(project._id) );
-      }, []);
+    }, []);
 
     return (
         <div>
@@ -91,11 +104,8 @@ export const ProjectModal = ({ project }: any) => {
             >
                 <Box 
                     className='container-modal'
-                    // sx={{
-                    //     margin: 0
-                    // }}
                 >
-                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} status={ <ProjectStatus status={project.status} />}>
                         { project.title }
                     </BootstrapDialogTitle>
                     <p
@@ -105,21 +115,36 @@ export const ProjectModal = ({ project }: any) => {
                             color: 'var(--grayDark)',
                             paddingTop: 0,
                             textAlign: 'left',
-                            margin: '5px 30px',
+                            margin: '5px 23px',
                             textDecoration: 'underline',
                             textUnderlineOffset: 3,
                             textDecorationColor: '#ccc'
                         }}
                     >
-                        <span style={{ fontWeight: 500 }}>Fecha de creación:</span> {''}
-                        {
-                            formatDate(project.createdAt)
-                        }
+                        <LinkRRD to={`/private/project/${ project._id }`}>
+                            <span style={{ fontWeight: 500, cursor: 'pointer' }}>Fecha de creación:</span> {''}
+                            {
+                                formatDate(project.createdAt)
+                            }
+                        </LinkRRD>
+
+                        <LinkRRD to={`/private/project/${ project._id }`}>
+                            <span>
+                                <TbExternalLink
+                                    style={{
+                                        fontSize: 30,
+                                        cursor: 'pointer',
+                                        paddingTop: 17,
+                                        paddingLeft: 10
+                                    }}
+                                />
+                            </span>
+                        </LinkRRD>
                     </p>
 
                     <DialogContent 
                         sx={{ 
-                            margin: '0px 10px',
+                            margin: '0px',
                             // height: 310,
                             maxHeight: 310,
                             overflow: 'scroll'
@@ -204,7 +229,7 @@ export const ProjectModal = ({ project }: any) => {
                                                         fontSize: 13,
                                                         marginTop: -5,
                                                         paddingBottom: 2
-                                                    }}>{ formatDate(commentary.createdAt) }</p>
+                                                    }}>{ formatDate(commentary.createdAt) } · { new Date(commentary.createdAt).getHours() }:{ new Date(commentary.createdAt).getMinutes() }</p>
                                                     <p style={{
                                                         fontWeight: 300
                                                     }}>{ commentary.comment }</p>
@@ -244,7 +269,7 @@ export const ProjectModal = ({ project }: any) => {
                             Cerrar
                         </button>
                         <button 
-                            onClick={handleClose}
+                            onClick={openProject}
                             style={{
                                 padding: '8px 20px',
                                 borderRadius: 6,

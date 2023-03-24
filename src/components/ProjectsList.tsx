@@ -5,12 +5,12 @@ import { ProjectModal } from './ProjectModal';
 
 export const ProjectsList = ({projects = [], title = ''}: any) => {
 
-    const { projectById } = useSelector((state: any) => state.projects);
+    const { oneProject } = useSelector((state: any) => state.projects);
 
     return (
         <div>
             {
-                projectById && <ProjectModal project={ projectById } />
+                oneProject && <ProjectModal project={ oneProject } />
             }
             <div 
                 style={{
@@ -20,6 +20,7 @@ export const ProjectsList = ({projects = [], title = ''}: any) => {
                     padding: '10px 15px',
                     borderRadius: 6,
                     overflow: 'scroll',
+                    height: '97%'
                 }}
             >
                 <h3>{ title }</h3>

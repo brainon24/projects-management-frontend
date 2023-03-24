@@ -18,6 +18,8 @@ export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
+
+  status?: any,
 }
 
 function BootstrapDialogTitle(props: DialogTitleProps) {
@@ -76,9 +78,11 @@ export default function ModalError({ title, descriptionError }: any) {
             autoFocus 
             onClick={handleClose}
             sx={{ 
-              backgroundColor: 'secondary.main',
-              '&:hover': {
-                  backgroundColor: 'info.main',
+              backgroundColor: 'var(--blue)',
+              padding: '3px 25px',
+              borderRadius: 1,
+              '&:hover': { 
+                  backgroundColor: 'var(--blue)',
               }, 
             }}
           >

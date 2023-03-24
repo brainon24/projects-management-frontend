@@ -1,8 +1,6 @@
 import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from "./authSlice";
 import { clearBusinessIdAndName } from "../business/businessSlice";
 import projectsManagement from '../../api/api';
-import {Navigate} from "react-router-dom";
-import React from "react";
 import { clearStateUsersReducer } from "../users/usersSlice";
 
 
