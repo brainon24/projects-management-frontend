@@ -36,29 +36,30 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
     const { children, status, onClose, ...other } = props;
   
     return (
-      <DialogTitle sx={{ mt: 6, p: 0,  }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 0,
-              top: 10,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '100%',
-              paddingX: '30px',
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            { status }
-            <RiCloseFill />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
+    <>
+        <div style={{
+            marginTop: 9,
+        }}>
+            <ProjectStatus status={props.status} />
+        </div>
+        <DialogTitle sx={{ mt: 2, p: 0,  }} {...other}>
+            {children}
+            {onClose ? (
+            <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={{
+                position: 'absolute',
+                right: 0,
+                top: 10,
+                color: (theme) => theme.palette.grey[500],
+                }}
+            >
+                <RiCloseFill />
+            </IconButton>
+            ) : null}
+        </DialogTitle>
+    </>
     );
 }
 
@@ -86,6 +87,14 @@ export const ProjectModal = ({ project }: any) => {
         navigate(`/private/project/${ project._id }`)
     }
 
+    const getComplementHours = (time = 0) => {
+        let complement;
+
+        return time < 12 
+            ? complement = 'a.m' 
+            : complement = 'p.m';
+    }
+
     useEffect(() => {
         // if( allProjectsByUserId.length > 0 ) return;
     
@@ -105,7 +114,7 @@ export const ProjectModal = ({ project }: any) => {
                 <Box 
                     className='container-modal'
                 >
-                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} status={ <ProjectStatus status={project.status} />}>
+                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} status={project.status}>
                         { project.title }
                     </BootstrapDialogTitle>
                     <p
@@ -229,7 +238,7 @@ export const ProjectModal = ({ project }: any) => {
                                                         fontSize: 13,
                                                         marginTop: -5,
                                                         paddingBottom: 2
-                                                    }}>{ formatDate(commentary.createdAt) } · { new Date(commentary.createdAt).getHours() }:{ new Date(commentary.createdAt).getMinutes() }</p>
+                                                    }}>{ formatDate(commentary.createdAt) } · { new Date(commentary.createdAt).getHours() }:{ new Date(commentary.createdAt).getMinutes() } { getComplementHours(commentary.createdAt) }</p>
                                                     <p style={{
                                                         fontWeight: 300
                                                     }}>{ commentary.comment }</p>

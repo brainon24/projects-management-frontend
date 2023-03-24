@@ -16,7 +16,7 @@ export const ProjectStatus = ({ status }: any) => {
                                 width: 8,
                                 height: 8,
                                 borderRadius: 100,
-                                marginRight: 5,
+                                marginRight: 7,
                             }} 
                         />
                         <p
@@ -34,9 +34,7 @@ export const ProjectStatus = ({ status }: any) => {
                 status === 'En progreso' && (
                     <Box sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
                         alignItems: 'center',
-                        width: '135px',
                     }}>
                         <div 
                             style={{
@@ -44,7 +42,7 @@ export const ProjectStatus = ({ status }: any) => {
                                 width: 8,
                                 height: 8,
                                 borderRadius: 100,
-                                marginRight: 5
+                                marginRight: 7,
                             }} 
                         />
                         <p
@@ -62,9 +60,7 @@ export const ProjectStatus = ({ status }: any) => {
                 status === 'Completado' && (
                     <Box sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
                         alignItems: 'center',
-                        width: '135px',
                     }}>
                         <div 
                             style={{
@@ -72,7 +68,7 @@ export const ProjectStatus = ({ status }: any) => {
                                 width: 8,
                                 height: 8,
                                 borderRadius: 100,
-                                marginRight: 5
+                                marginRight: 7,
                             }} 
                         />
                         <p
