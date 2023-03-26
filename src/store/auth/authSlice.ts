@@ -26,7 +26,7 @@ export const authSlice = createSlice({
             // state.errorMessage = undefined;
         },
 
-        signInReducer: ( state, { payload } ) => {            
+        signInReducer: ( state, { payload } ) => {
             state.status = 'authenticated';
             state.user = payload.user;
             state.token = payload.token;

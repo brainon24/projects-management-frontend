@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialState: any = {
     allProjects: [],
     projectById: undefined,
     oneProject: undefined,
@@ -81,6 +81,16 @@ export const projectsSlice = createSlice({
             state.allProjectsByResponsibleId = payload;
             state.isLoadingProjects = false;
         },
+
+        updateProjectReducer: (state, { payload }) => {
+            const updatedProject = payload;
+            const index = state.allProjects.findIndex(
+              (project: any) => project._id === updatedProject.id
+            );
+            if (index !== -1) {
+              state.allProjects[index] = updatedProject;
+            }
+        },
     }
 });
 
@@ -98,4 +108,5 @@ export const {
     findProjectsByUserIdReducer,
     findProjectsByBusinessIdReducer,
     findProjectsByResponsibleIdReducer,
+    updateProjectReducer,
 } = projectsSlice.actions;

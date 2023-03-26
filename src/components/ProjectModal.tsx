@@ -87,6 +87,13 @@ export const ProjectModal = ({ project }: any) => {
         navigate(`/private/project/${ project._id }`)
     }
 
+    const getFormattedTime = (date: Date) => {
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        return `${hours}:${minutes}`;
+    }
+
     const getComplementHours = (time = 0) => {
         let complement;
 
@@ -238,7 +245,7 @@ export const ProjectModal = ({ project }: any) => {
                                                         fontSize: 13,
                                                         marginTop: -5,
                                                         paddingBottom: 2
-                                                    }}>{ formatDate(commentary.createdAt) } · { new Date(commentary.createdAt).getHours() }:{ new Date(commentary.createdAt).getMinutes() } { getComplementHours(commentary.createdAt) }</p>
+                                                    }}>{ formatDate(commentary.createdAt) } · { new Date(commentary.createdAt).getHours() }:{ new Date(commentary.createdAt).getMinutes() } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
                                                     <p style={{
                                                         fontWeight: 300
                                                     }}>{ commentary.comment }</p>

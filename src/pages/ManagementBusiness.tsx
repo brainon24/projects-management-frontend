@@ -9,9 +9,12 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useDispatch, useSelector } from 'react-redux';
-import { findAllClients_thunk } from '../store/users/thunks';
-import { userFoundedReducer } from '../store/users/usersSlice';
 import { findAllBusiness_thunk } from '../store/business/thunks';
+import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { IoAddCircleOutline } from 'react-icons/io5'
+import { FormModal } from '../components/FormModal';
 
 interface Column {
     id: 'id' | 'businessName' | 'createdAt';
@@ -56,7 +59,8 @@ export const ManagementBusiness = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10); 
-
+    const [isFormModal, setIsFormModal] = useState(false); 
+    
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -88,7 +92,50 @@ export const ManagementBusiness = () => {
 
     return (
         <MainLayout>
-            <h1>Gestionar Negocios</h1>
+            {
+                isFormModal ? <FormModal /> : null
+            }
+            <Box style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            }}>
+                <Box
+                    component='section'
+                    style={{
+                        margin: '20px 0',
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Link to='/private/administrative-managment' style={{
+                        fontSize: 25, 
+                        marginRight: 15, 
+                        marginTop: 6
+                    }}>
+                        <AiOutlineArrowLeft />
+                    </Link>
+                    <h1>Gestionar Negocios</h1>
+                </Box>
+
+                <button 
+                    style={{
+                        border: 'none',
+                        padding: '10px 20px',
+                        borderRadius: 6,
+                        cursor: 'pointer',
+                        backgroundColor: '#EFEFEF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 10
+                    }}
+                    onClick={ () => setIsFormModal(true) }
+                >
+                    Crear Negocio
+                    <IoAddCircleOutline fontSize={18} />
+                </button>
+            </Box>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>

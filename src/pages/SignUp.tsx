@@ -148,7 +148,7 @@ export const SignUp = () => {
                                     onChange={ onInputChange }
                                 />                                
                                 <Input 
-                                    placeholder='Correo Electrínico'
+                                    placeholder='Correo Electrónico'
                                     className='form-input'
                                     type='email'
                                     autoComplete='off'

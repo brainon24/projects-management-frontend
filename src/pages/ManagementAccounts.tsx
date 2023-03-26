@@ -13,6 +13,9 @@ import { findAllClients_thunk } from '../store/users/thunks';
 import {UserModal} from '../components/UserModal';
 import { userFoundedReducer } from '../store/users/usersSlice';
 import Loading from '../components/Loading';
+import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 interface Column {
   id: '_id' | 'fullName' | 'phone' | 'role' | 'email' | 'businessName' | 'businessId' | 'createdAt';
@@ -153,7 +156,23 @@ export const ManagementAccounts = () => {
 
   return (
     <MainLayout>
-      <h1>Gestion de Usuarios</h1>
+      <Box
+        component='section'
+        style={{
+          margin: '20px 0',
+          display: 'flex',
+          alignItems: 'center'
+        }}
+      >
+        <Link to='/private/administrative-managment' style={{
+          fontSize: 25, 
+          marginRight: 15, 
+          marginTop: 6
+        }}>
+            <AiOutlineArrowLeft />
+        </Link>
+        <h1>Gestion de Usuarios</h1>
+      </Box>
 
       {
         mUser && <UserModal user={ mUser } />
