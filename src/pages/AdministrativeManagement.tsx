@@ -1,10 +1,11 @@
-import { Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { MainLayout } from '../layouts/MainLayout';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { IoMdBusiness } from 'react-icons/io';
 
 import '../styles/administrativeManagement.css';
-import { Link as LinkRRD } from 'react-router-dom';
+import { Link, Link as LinkRRD } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 export const AdministrativeManagement = () => {
     return (
@@ -14,7 +15,23 @@ export const AdministrativeManagement = () => {
                 alignItems: 'center',
                 justifyContent: 'flex-start'
             }}>
-                <h1>Gestión Administrativa</h1>
+                <Box
+                    component='section'
+                    style={{
+                        margin: '20px 0',
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}
+                    >
+                    <Link to='/private' style={{
+                        fontSize: 25, 
+                        marginRight: 15, 
+                        marginTop: 6
+                    }}>
+                        <AiOutlineArrowLeft />
+                    </Link>
+                    <h1>Gestión Administrativa</h1>
+                </Box>
                 <Chip
                     label='Only Admin'
                     className='fadeIn'

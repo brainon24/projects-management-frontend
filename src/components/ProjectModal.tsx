@@ -161,7 +161,6 @@ export const ProjectModal = ({ project }: any) => {
                     <DialogContent 
                         sx={{ 
                             margin: '0px',
-                            // height: 310,
                             maxHeight: 310,
                             overflow: 'scroll'
                         }}

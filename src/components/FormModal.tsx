@@ -5,17 +5,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  Select,
   Slide,
-  MenuItem,
   TextField,
   Box,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { closeModal } from "../store/ui/uiSlice";
+import { useForm } from '../hooks/useForm';
+import { createBussines_thunk } from '../store/business/thunks';
+import './projectModal.css';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,14 +29,24 @@ const Transition = React.forwardRef(function Transition(
 export const FormModal = () => {
   const [open, setOpen] = React.useState(true);
 
+  const { formState, onInputChange, onResetForm, bussinesName } = useForm({
+    bussinesName: '',
+  });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
 
-    // dispatch( clearUserReducer() );
+    dispatch( closeModal() );
   };
+
+  const handleSubmit = () => {
+    if( bussinesName.length <= 1 ) return;
+
+    dispatch( createBussines_thunk(bussinesName) );
+  }
 
   return (
     <Dialog
@@ -48,10 +58,7 @@ export const FormModal = () => {
       sx={{ backdropFilter: "blur(3px)", bgcolor: "rgba(0,0,0, 0.2)"}}
     >
         <Box
-            sx={{
-                width: 600,
-                padding: '10px 20px'
-            }}
+            className='container-modal'
         >
             <DialogTitle
                 sx={{
@@ -88,40 +95,43 @@ export const FormModal = () => {
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="name"
+                    id="bussinesName"
                     label="Nombre del negocio"
                     type="text"
                     fullWidth
                     variant="standard"
+                    name="bussinesName"
+                    onChange={ onInputChange }
+                    value={ bussinesName }
                 />
             </DialogContent>
 
             <DialogActions>
                 <button
-                onClick={handleClose}
-                style={{
-                    padding: "8px 20px",
-                    borderRadius: 6,
-                    border: "none",
-                    backgroundColor: "var(--red)",
-                    color: "var(--white)",
-                    cursor: "pointer",
-                }}
+                    onClick={handleClose}
+                    style={{
+                        padding: "8px 20px",
+                        borderRadius: 6,
+                        border: "none",
+                        backgroundColor: "var(--red)",
+                        color: "var(--white)",
+                        cursor: "pointer",
+                    }}
                 >
-                Cancelar
+                    Cancelar
                 </button>
                 <button
-                // onClick={updateRole}
-                style={{
-                    padding: "8px 20px",
-                    borderRadius: 6,
-                    border: "none",
-                    backgroundColor: "var(--blue)",
-                    color: "var(--white)",
-                    cursor: "pointer",
-                }}
+                    onClick={handleSubmit}
+                    style={{
+                        padding: "8px 20px",
+                        borderRadius: 6,
+                        border: "none",
+                        backgroundColor: "var(--blue)",
+                        color: "var(--white)",
+                        cursor: "pointer",
+                    }}
                 >
-                Continuar
+                    Continuar
                 </button>
             </DialogActions>
         </Box>

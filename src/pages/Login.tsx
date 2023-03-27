@@ -55,7 +55,7 @@ export const Login = () => {
                         {
                             errorMessage ? (
                                 <ModalError
-                                    title='Error al Iniciar Sesión'
+                                    title='Ocurrió un error...'
                                     descriptionError={ errorMessage }
                                 />
                             ) : null

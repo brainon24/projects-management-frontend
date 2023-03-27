@@ -15,6 +15,9 @@ import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { FormModal } from '../components/FormModal';
+import { openModal } from '../store/ui/uiSlice';
+import { SuccessModal } from '../components/SuccessModal';
+import Loading from '../components/Loading';
 
 interface Column {
     id: 'id' | 'businessName' | 'createdAt';
@@ -59,7 +62,6 @@ export const ManagementBusiness = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10); 
-    const [isFormModal, setIsFormModal] = useState(false); 
     
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -71,14 +73,14 @@ export const ManagementBusiness = () => {
     };
 
     const dispatch = useDispatch();
-    const { user } = useSelector((state: any) => state.auth);
-    const { allBusiness } = useSelector((state: any) => state.business);
+    const { allBusiness, isRequestSuccess, textRequestSuccess, isLoadingBusiness } = useSelector((state: any) => state.business);
+    const { isOpenModal } = useSelector((state: any) => state.ui);
 
     useEffect(() => {
         // if( allProjectsByUserId.length > 0 ) return;
 
         dispatch( findAllBusiness_thunk() );
-    }, []);
+    }, [ isRequestSuccess ]);
 
     const rows: Business[] = allBusiness.map((business: Business) => {
         return createRow(
@@ -87,14 +89,14 @@ export const ManagementBusiness = () => {
             business.createdAt,
         );
     });
-    // console.log(rows)
-    console.log('business: ', allBusiness)
+
+    if( isLoadingBusiness ) return <Loading />
 
     return (
         <MainLayout>
-            {
-                isFormModal ? <FormModal /> : null
-            }
+            { isOpenModal && <FormModal /> }
+            { isRequestSuccess && <SuccessModal textRequestSuccess={ textRequestSuccess } /> }
+            
             <Box style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -130,7 +132,7 @@ export const ManagementBusiness = () => {
                         justifyContent: 'space-between',
                         gap: 10
                     }}
-                    onClick={ () => setIsFormModal(true) }
+                    onClick={ () => dispatch(openModal()) }
                 >
                     Crear Negocio
                     <IoAddCircleOutline fontSize={18} />

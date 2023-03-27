@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface InitialState {
-    isLoadingBusiness: boolean,
+    isLoadingBusiness: boolean;
     businessName: string | undefined;
     businessId: string | undefined;
     businessErrorMessage: string | undefined;
-    allBusiness: undefined | [],
+    allBusiness: undefined | [];
+
+    isRequestSuccess: boolean;
+    textRequestSuccess: string | undefined;
 }
 
 const initialState: InitialState = {
@@ -13,8 +16,10 @@ const initialState: InitialState = {
     businessName: undefined,
     businessId: undefined,
     businessErrorMessage: undefined,
-
     allBusiness: [],
+
+    isRequestSuccess: false,
+    textRequestSuccess: undefined,
 }
 
 export const businessSlice = createSlice({
@@ -55,6 +60,12 @@ export const businessSlice = createSlice({
             state.isLoadingBusiness = false;
             state.allBusiness = payload;
         },
+
+        changeRequestSuccess: ( state, { payload } ) => {
+            state.isLoadingBusiness = false;
+            state.isRequestSuccess = payload.isRequestSuccess;
+            state.textRequestSuccess = payload.textRequestSuccess;
+        }
     }
 });
 
@@ -65,4 +76,5 @@ export const {
     addErrorReducer,
     clearErrorBusinessReducer,
     allBusinessFoundedReducer,
+    changeRequestSuccess,
 } = businessSlice.actions;
