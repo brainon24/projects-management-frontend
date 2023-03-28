@@ -129,7 +129,7 @@ export const CreateProject = () => {
                             <div className='container-input-form'>
                                 <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
                                     <Chip
-                                        label='Only Admin'
+                                        label='Solo Admin'
                                         className='fadeIn'
                                         style={{ color: '#3483fa', backgroundColor: '#4189e626', marginRight: 10, width: 93, height: 22 }}
                                     />

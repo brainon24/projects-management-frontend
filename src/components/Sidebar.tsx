@@ -315,8 +315,19 @@ export const Sidebar = () => {
                     }
                 </List>
                 <Box sx={{ bottom: 100, position: 'absolute', width: '100%' }}>
-                    <p style={{textAlign: 'center', fontSize: 17}}>by. David Diaz H</p>
-                    <p style={{textAlign: 'center', fontSize: 13}}>{new Date().getFullYear()}</p>
+                    <a 
+                        href='https://www.linkedin.com/in/david-diaz-herrera-2777ba1a8/' 
+                        target='_blank'
+                    >
+                        <p 
+                            style={{
+                                textAlign: 'center', fontSize: 17, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: 'var(--lightBlue)',
+                            }}
+                        >
+                            by. David Diaz H.
+                        </p>
+                    </a>
+                    <p style={{textAlign: 'center', fontSize: 13, marginTop: 5}}>{new Date().getFullYear()}.</p>
                 </Box>
             </Box>
         </Drawer> 

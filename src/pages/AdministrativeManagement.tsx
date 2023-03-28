@@ -33,7 +33,7 @@ export const AdministrativeManagement = () => {
                     <h1>Gestión Administrativa</h1>
                 </Box>
                 <Chip
-                    label='Only Admin'
+                    label='Solo Admin'
                     className='fadeIn'
                     style={{ color: '#3483fa', backgroundColor: '#4189e626', marginLeft: 10, width: 93, height: 22 }}
                 />

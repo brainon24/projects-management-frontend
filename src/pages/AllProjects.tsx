@@ -28,7 +28,7 @@ export const AllProjects = () => {
             }}>
                 <h1>Todos los Proyectos</h1>
                 <Chip
-                    label='Only Admin'
+                    label='Solo Admin'
                     className='fadeIn'
                     style={{ color: '#3483fa', backgroundColor: '#4189e626', marginLeft: 10, width: 93, height: 22 }}
                 />
