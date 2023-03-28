@@ -5,7 +5,6 @@ import { clientsFoundedReducer, employeesFoundedReducer, loadingUsersReducer, us
 
 export const findAllClients_thunk = (): any => {
     return async ( dispatch: Dispatch ) => {
-        console.log('findUsersByRole_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.get('/user/findAll')
@@ -26,7 +25,6 @@ export const findAllClients_thunk = (): any => {
 
 export const findEmployeesByRole_thunk = ( role: string ): any => {
     return async ( dispatch: Dispatch ) => {
-        console.log('findEmployeesByRole_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.get(`/user/findAllByRole/${ role }`)
@@ -46,7 +44,6 @@ export const findEmployeesByRole_thunk = ( role: string ): any => {
 
 export const findClientsByRole_thunk = ( role: string ): any => {
     return async ( dispatch: Dispatch ) => {
-        console.log('findUsersByRole_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.get(`/user/findAllByRole/${ role }`)
@@ -67,7 +64,6 @@ export const findClientsByRole_thunk = ( role: string ): any => {
 
 export const updateRole_thunk = ({ userId, role }: any): any => {
     return async ( dispatch: Dispatch ) => {
-        console.log('findAll_thunk')
         dispatch( loadingUsersReducer() );
 
         projectsManagement.patch(`/user/updateRole/${ userId }`, {role})

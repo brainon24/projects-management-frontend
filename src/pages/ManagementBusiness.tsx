@@ -184,13 +184,14 @@ export const ManagementBusiness = () => {
                 </Table>
                 </TableContainer>
                 <TablePagination
-                rowsPerPageOptions={[5, 15, 25, 50]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={[10, 25, 50]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage="Filas por página"
                 />
             </Paper>
         </MainLayout>

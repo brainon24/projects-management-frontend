@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Suspense } from 'react';
 import { useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -22,6 +23,7 @@ import '../styles/createProject.css';
 import './projectModal.css';
 import { TbExternalLink } from 'react-icons/tb';
 import { ProjectStatus } from './ProjectStatus';
+import { Loading100p } from './Loading100p';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -64,7 +66,6 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export const ProjectModal = ({ project }: any) => {
-    // console.log('project: ', project)
 
     const navigate = useNavigate();
 
@@ -88,8 +89,8 @@ export const ProjectModal = ({ project }: any) => {
     }
 
     const getFormattedTime = (date: Date) => {
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const hours = new Date(date).getHours().toString().padStart(2, '0');
+        const minutes = new Date(date).getMinutes().toString().padStart(2, '0');
 
         return `${hours}:${minutes}`;
     }
@@ -175,97 +176,114 @@ export const ProjectModal = ({ project }: any) => {
                         >
                             Descripción
                         </DialogContentText>
-                        <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'left',
-                                fontSize: 13,
-                            }}
-                        >
-                            <div dangerouslySetInnerHTML={{ __html: project.description }} />
-                        </DialogContentText>
+                        <Suspense fallback={ <Loading100p /> }>
+                            <DialogContentText 
+                                id="alert-dialog-slide-description"
+                                style={{
+                                    textAlign: 'left',
+                                    fontSize: 13,
+                                }}
+                            >
+                                <div dangerouslySetInnerHTML={{ __html: project.description }} />
+                            </DialogContentText>
+                        </Suspense>
                     </DialogContent>
 
                     <DialogContent>
-                        <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                fontSize: 13,
-                                marginTop: 0
-                            }}
-                        >
-                            Comprobante No. (ID)
-                        </DialogContentText>
-                        <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                fontSize: 15,
-                                fontWeight: 500,
-                                color: '#59585a'
-                            }}
-                        >
-                            { project._id }
-                        </DialogContentText>
+                        <Suspense fallback={ <Loading100p /> }>
+                            <DialogContentText 
+                                id="alert-dialog-slide-description"
+                                style={{
+                                    textAlign: 'center',
+                                    fontSize: 13,
+                                    marginTop: 0
+                                }}
+                            >
+                                Comprobante No. (ID)
+                            </DialogContentText>
+                            <DialogContentText 
+                                id="alert-dialog-slide-description"
+                                style={{
+                                    textAlign: 'center',
+                                    fontSize: 15,
+                                    fontWeight: 500,
+                                    color: '#59585a'
+                                }}
+                            >
+                                { project._id }
+                            </DialogContentText>
 
-                        <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'left',
-                                fontSize: 17,
-                                fontWeight: 500,
-                                color: '#000',
-                                paddingTop: 20
-                            }}
-                        >
-                            Comentarios:
+                            </Suspense>
+
                             {
-                                commentariesByProjectID?.length > 0 ? (
-                                    <Box
-                                        sx={{ 
-                                            margin: '0px 10px',
-                                            // height: 200,
-                                            maxHeight: 200,
-                                            overflow: 'scroll'
+                                isLoadingCommentaries 
+                                ? (
+                                    <Box 
+                                        sx={{
+                                            marginY: 4
                                         }}
                                     >
-                                        {
-                                            commentariesByProjectID?.map(({user, commentary}: any) => (
-                                                <div style={{
-                                                    padding: '8px 0'
-                                                }}>
-                                                    <p style={{
-                                                        fontWeight: 500,
-                                                        margin: 0
-                                                    }}>{ user.fullName }</p>
-                                                    <p style={{
-                                                        fontWeight: 300,
-                                                        fontSize: 13,
-                                                        marginTop: -5,
-                                                        paddingBottom: 2
-                                                    }}>{ formatDate(commentary.createdAt) } · { new Date(commentary.createdAt).getHours() }:{ new Date(commentary.createdAt).getMinutes() } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
-                                                    <p style={{
-                                                        fontWeight: 300
-                                                    }}>{ commentary.comment }</p>
-                                                </div>
-                                            ))
-                                        }
-                                    </Box>
-                                ) : (
-                                    <Box>
-                                        <span style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            padding: '15px 0'
-                                        }}>
-                                            <AiOutlineExclamationCircle />
-                                        </span>
-                                        <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay comentarios en este proyecto.</Typography>
+                                        <Loading100p />
                                     </Box>
                                 )
+                                : <DialogContentText 
+                                    id="alert-dialog-slide-description"
+                                    style={{
+                                        textAlign: 'left',
+                                        fontSize: 17,
+                                        fontWeight: 500,
+                                        color: '#000',
+                                        paddingTop: 20
+                                    }}
+                                >
+                                    Comentarios:
+                                    {
+                                        commentariesByProjectID?.length > 0 ? (
+                                            <Box
+                                                sx={{ 
+                                                    margin: '0px 10px',
+                                                    // height: 200,
+                                                    maxHeight: 200,
+                                                    overflow: 'scroll'
+                                                }}
+                                            >
+                                                {
+                                                    commentariesByProjectID?.map(({user, commentary}: any) => (
+                                                        <div style={{
+                                                            padding: '8px 0'
+                                                        }}>
+                                                            <p style={{
+                                                                fontWeight: 500,
+                                                                margin: 0
+                                                            }}>{ user.fullName }</p>
+                                                            <p style={{
+                                                                fontWeight: 300,
+                                                                fontSize: 13,
+                                                                marginTop: -5,
+                                                                paddingBottom: 2
+                                                            }}>{ formatDate(commentary.createdAt) } · { getFormattedTime(commentary.createdAt) } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
+                                                            <p style={{
+                                                                fontWeight: 300
+                                                            }}>{ commentary.comment }</p>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </Box>
+                                        ) : (
+                                            <Box>
+                                                <span style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    padding: '15px 0'
+                                                }}>
+                                                    <AiOutlineExclamationCircle />
+                                                </span>
+                                                <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay comentarios en este proyecto.</Typography>
+                                            </Box>
+                                        )
+                                    }
+                                </DialogContentText>
                             }
-                        </DialogContentText>
                     </DialogContent>
 
                     <DialogActions>

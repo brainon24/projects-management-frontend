@@ -78,13 +78,19 @@ export const Login = () => {
                             <a href='https://brainon24.com/' style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 15
+                                gap: 15,
                             }}>
-                                <Link className='go-to-back-icon'>
+                                <Link 
+                                    className='go-to-back-icon' 
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    }}
+                                >
                                     <AiOutlineArrowLeft />
                                 </Link>
                                 <p style={{
-                                    fontSize: 25
+                                    fontSize: 20
                                 }}>Inicio</p>
                             </a>
                         </Box>

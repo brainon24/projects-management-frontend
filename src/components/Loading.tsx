@@ -5,8 +5,11 @@ import CircularProgress, {
   CircularProgressProps,
 } from '@mui/material/CircularProgress';
 
+interface CircularProgressPropsMine extends CircularProgressProps {
+  spinnerSize?: number;
+}
 
-function Spinner(props: CircularProgressProps) {
+export const Spinner = (props: CircularProgressPropsMine) => {
   return (
     <Box sx={{ position: 'relative' }}>
       <CircularProgress
@@ -15,7 +18,7 @@ function Spinner(props: CircularProgressProps) {
           color: (theme) =>
             theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
         }}
-        size={40}
+        size={props.spinnerSize ? props.spinnerSize : 40}
         thickness={4}
         {...props}
         value={100}
@@ -32,7 +35,7 @@ function Spinner(props: CircularProgressProps) {
             strokeLinecap: 'round',
           },
         }}
-        size={40}
+        size={props.spinnerSize ? props.spinnerSize : 40}
         thickness={4}
         {...props}
       />

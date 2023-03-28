@@ -14,8 +14,8 @@ export const commentariesSlice = createSlice({
         },
 
         findAllCommentariesByProjectIDReducer: ( state, { payload } ) => {
-            state.commentariesByProjectID = payload;
             state.isLoadingCommentaries = false;
+            state.commentariesByProjectID = payload;
         }
     }
 });
