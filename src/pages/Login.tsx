@@ -1,14 +1,15 @@
+import { useEffect } from 'react';
 import { Link as LinkRRD, Navigate, useNavigate } from 'react-router-dom';
 import { Box, Link, Input, Typography } from '@mui/material';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from '@reduxjs/toolkit';
+import { useForm } from '../hooks/useForm';
+import { login_thunk } from '../store/auth/thunks';
+import ModalError from '../components/ModalError';
 
 import '../styles/login.css';
-import { login_thunk } from '../store/auth/thunks';
-import { Dispatch } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from '../hooks/useForm';
-import ModalError from '../components/ModalError';
-import { useEffect } from 'react';
+import gestionImage from '../assets/Gestion-1.png';
 
 
 export const Login = () => {
@@ -72,27 +73,49 @@ export const Login = () => {
                             </LinkRRD>
                         </Box> */}
                         <Box
-                            component='section'
-                            className='go-to-back-container'
-                        >
-                            <a href='https://brainon24.com/' style={{
+                            sx={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 15,
+                                justifyContent: 'space-between',
+                                width: '100%',
+                            }}
+                        >
+                            <Box
+                                component='section'
+                                className='go-to-back-container'
+                            >
+                                <a href='https://brainon24.com/' style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 15,
+                                }}>
+                                    <Link 
+                                        className='go-to-back-icon' 
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <AiOutlineArrowLeft />
+                                    </Link>
+                                    <p style={{
+                                        fontSize: 20
+                                    }}>Inicio</p>
+                                </a>
+                            </Box>
+
+                            <Box sx={{
+                                marginRight: 7
                             }}>
-                                <Link 
-                                    className='go-to-back-icon' 
+                                <img 
+                                    src={ gestionImage } 
+                                    alt="Gestion | brainon24" 
                                     style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
+                                      width: 110,
+                                      paddingTop: 30
                                     }}
-                                >
-                                    <AiOutlineArrowLeft />
-                                </Link>
-                                <p style={{
-                                    fontSize: 20
-                                }}>Inicio</p>
-                            </a>
+                                />
+                            </Box>
                         </Box>
 
                         <Box 
@@ -110,7 +133,7 @@ export const Login = () => {
                                     <h1>Iniciar Sesión</h1>
                                 </Box>
                                 <Input 
-                                    placeholder='Correo Electrínico'
+                                    placeholder='Correo Electrónico'
                                     className='form-input'
                                     type='email'
                                     autoComplete='off'

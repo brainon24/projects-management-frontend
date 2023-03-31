@@ -2,7 +2,7 @@ import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListS
 import { Link as LinkRRD, } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
-import { closeSidemenu } from '../store/ui/uiSlice';
+import { closeSidemenu, openModal } from '../store/ui/uiSlice';
 import { logout_thunk } from '../store/auth/thunks';
 import { FiLogIn } from 'react-icons/fi';
 import { VscHome } from 'react-icons/vsc';
@@ -14,9 +14,10 @@ import { MdAddBusiness, MdManageAccounts, MdOutlineBusinessCenter, MdOutlineCrea
 import { GrProjects } from 'react-icons/gr';
 import { BiUserCircle } from 'react-icons/bi';
 import { FcPrivacy } from 'react-icons/fc';
+import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
+import profilePicture from '../assets/profile-picture.png';
 
 import './styles/sidebar.css';
-import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 
 export const Sidebar = () => {
 
@@ -25,6 +26,12 @@ export const Sidebar = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
 
+    const handleBussines = () => {
+        dispatch(openModal())
+        
+        dispatch( closeSidemenu() )
+    }
+
     return (
         <Drawer
             open={ sidemenuOpen }
@@ -32,7 +39,7 @@ export const Sidebar = () => {
             anchor='right'
             sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }} 
         >
-            <Box sx={{ width: 250, paddingTop: 3 }}>
+            <Box sx={{ width: 250, paddingTop: 1 }}>
                 <List>
                     <ListItem>
                         <ListItemIcon>
@@ -42,6 +49,9 @@ export const Sidebar = () => {
                             />
                         </ListItemIcon>
                     </ListItem>
+                    <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30, width: '100%', }}>
+                        <img src={ profilePicture } alt="Foto de perfil" width={100} style={{ borderRadius: 100}}/>
+                    </div>
 
                     {/* <Divider /> */}
 
@@ -256,8 +266,8 @@ export const Sidebar = () => {
                                     </LinkRRD>
                                 </ListItem>
                                 
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/create-business' className='link'>
+                                <ListItem className='list-item' onClick={ handleBussines  }>
+                                    <LinkRRD to='/private/management-business' className='link'>
                                             <ListItemIcon>
                                                 <MdAddBusiness className='icon' />
                                             </ListItemIcon>
@@ -314,20 +324,22 @@ export const Sidebar = () => {
                         ) : null
                     }
                 </List>
-                <Box sx={{ bottom: 100, position: 'absolute', width: '100%' }}>
-                    <a 
-                        href='https://www.linkedin.com/in/david-diaz-herrera-2777ba1a8/' 
-                        target='_blank'
-                    >
-                        <p 
-                            style={{
-                                textAlign: 'center', fontSize: 17, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: 'var(--lightBlue)',
-                            }}
+                <Box sx={{ position: 'relative', backgroundColor: '#fff', height: '10%' }}>
+                    <Box sx={{ bottom: 0, position: 'absolute', width: '100%', backgroundColor: '#fff' }}>
+                        <a 
+                            href='https://www.linkedin.com/in/david-diaz-herrera-2777ba1a8/' 
+                            target='_blank'
                         >
-                            by. David Diaz H.
-                        </p>
-                    </a>
-                    <p style={{textAlign: 'center', fontSize: 13, marginTop: 5}}>{new Date().getFullYear()}.</p>
+                            <p 
+                                style={{
+                                    textAlign: 'center', fontSize: 16, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: 'var(--lightBlue)',
+                                }}
+                            >
+                                by. David Diaz H.
+                            </p>
+                        </a>
+                        <p style={{textAlign: 'center', fontSize: 13, marginTop: 5}}>{new Date().getFullYear()}.</p>
+                    </Box>
                 </Box>
             </Box>
         </Drawer> 

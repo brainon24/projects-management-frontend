@@ -124,14 +124,11 @@ export const findProjectsByResponsibleI_thunk = ( responsibleId: string ): any =
 }
 
 
-export const findProjectsById_thunk = ( projectId: string ): any => {
+export const findProjectById_thunk = ( projectId: string ): any => {
     return async ( dispatch: Dispatch ) => {
-        // console.log('findProjectsByResponsibleI_thunk');
-        dispatch( loadingProjectsReducer() );
-
+        dispatch( loadingProjectsReducer() ); 
         projectsManagement.get(`/project/findById/${ projectId }`)
             .then(({ data, status }) => {
-                // console.log('DATA en THEN: ', data)
                 return dispatch( findProjectByIdReducer( data ) );
             })
             .catch(error => {

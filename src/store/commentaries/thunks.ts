@@ -2,12 +2,12 @@ import projectsManagement from '../../api/api';
 import { addErrorReducer } from '../auth/authSlice';
 import { findAllCommentariesByProjectIDReducer, loadingCommentariesReducer } from './commentarySlice';
 
-export const findAllCommentariesByProjectID_thunk = (projectId: string): any => {
+export const findAllCommentariesByProjectID_thunk = (projectId: string, queryParams: string = ''): any => {
     return async ( dispatch: any ) => {
 
         dispatch( loadingCommentariesReducer() );
         
-        projectsManagement.get(`/commentary/findAllByProject/${ projectId }?limit=5`)
+        projectsManagement.get(`/commentary/findAllByProject/${ projectId }?${ queryParams }`)
         .then(({ data, status }) => {
             if (status !== 200) {
                 throw new Error(data.message);

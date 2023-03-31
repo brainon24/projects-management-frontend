@@ -1,17 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
-import { findProjectsById_thunk } from '../store/projects/thunks';
+import { findProjectById_thunk } from '../store/projects/thunks';
 
 import '../styles/projectId.css';
 import { useForm } from '../hooks/useForm';
 import { findEmployeesByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
-import { Chip } from '@mui/material';
+import { Box, Chip, Typography } from '@mui/material';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import { TagsInputWithAutoComplete } from '../components/TagsInputWithAutoComplete';
 import TextEditor from '../components/TextEditor';
-import { AiOutlineZoomOut, AiOutlineZoomIn } from 'react-icons/ai';
+import { AiOutlineZoomOut, AiOutlineZoomIn, AiOutlineExclamationCircle } from 'react-icons/ai';
+import { findAllCommentariesByProjectID_thunk } from '../store/commentaries/thunks';
+import { Loading100p } from '../components/Loading100p';
+import useFormatDate from '../hooks/useFormatDate';
+import { getFormattedTime, getComplementHours } from '../helpers/dates';
+import { useCounter } from '../hooks/useCounter';
 
 export const ProjectId = () => {
 
@@ -20,19 +25,25 @@ export const ProjectId = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
     const { projectById, errorNotFoundProject } = useSelector((state: any) => state.projects);
-    // console.log(projectById)
+    const { commentariesByProjectID, isLoadingCommentaries } = useSelector((state: any) => state.commentaries);
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
 
     const { formState, title, onInputChange, onResetForm, } = useForm({
         title: projectById?.title,
     });
 
+    const [ projectId, setProjectId ] = useState(projectById?.businessId);
     const [ businessId, setBusinessId ] = useState(projectById?.businessId);
     const [ authorId, setAuthorId ] = useState(projectById?.authorId);
     const [ responsiblesId, setResponsiblesId ] = useState(projectById?.responsiblesId);
     const [ description, setDescription ] = useState(projectById?.description);
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState(projectById?.acceptanceCriteria);
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
+
+    const commentsRef = useRef<any>(null);
+
+    const { formatDate } = useFormatDate();
+    const { counter, incrementCounter } = useCounter();
 
     const selectedTags = (tags: any = []) => {
         // console.log('selectedTags: ', tags.map((tag: any) => tag._id))
@@ -85,12 +96,25 @@ export const ProjectId = () => {
         // console.log('location.pathname.split(): ', location.pathname.split('/')[3])
         const projectId = location.pathname.split('/')[3];
 
-        dispatch( findProjectsById_thunk( projectId ) );
+        dispatch( findProjectById_thunk( projectId ) );
     }, []);
+
+    useEffect(() => {
+        setProjectId(projectById?._id);
+        setBusinessId(projectById?.businessId);
+        setAuthorId(projectById?.authorId);
+        setResponsiblesId(projectById?.responsiblesId);
+        setDescription(projectById?.description);
+        setAcceptanceCriteria(projectById?.acceptanceCriteria);
+    }, [ projectById ]);
+
+    useEffect(() => {
+        if( !projectId ) return;
+        dispatch( findAllCommentariesByProjectID_thunk(projectId, 'limit=3') );
+    }, [ projectId ]);
 
     return (
        <MainLayout>
-            
             <form className='container-form-cp' onSubmit={ onSubmit }>
                 <h1>Detalle del Proyecto o Editar</h1>
                 {/* <input type="date" />
@@ -167,6 +191,76 @@ export const ProjectId = () => {
                             </div>
                         </div>
                     )
+                }
+
+                {
+                    isLoadingCommentaries 
+                    ? (
+                        <Box
+                            sx={{
+                                marginY: 4
+                            }}
+                        >
+                            <Loading100p />
+                        </Box>
+                    )
+                    : <div
+                        style={{
+                            textAlign: 'left',
+                            fontSize: 17,
+                            fontWeight: 500,
+                            color: '#000',
+                            paddingTop: 20
+                        }}
+                    >
+                        Comentarios:
+                        {
+                            commentariesByProjectID?.length > 0 ? (
+                                <Box
+                                    sx={{ 
+                                        margin: '0px 10px',
+                                        // height: 200,
+                                        maxHeight: 200,
+                                        overflow: 'scroll'
+                                    }}
+                                    ref={ commentsRef }
+                                >
+                                    {
+                                        commentariesByProjectID?.map(({user, commentary}: any) => (
+                                            <div style={{
+                                                padding: '8px 0'
+                                            }}>
+                                                <p style={{
+                                                    fontWeight: 500,
+                                                    margin: 0
+                                                }}>{ user.fullName }</p>
+                                                <p style={{
+                                                    fontWeight: 300,
+                                                    fontSize: 13,
+                                                    marginTop: -5,
+                                                    paddingBottom: 2
+                                                }}>{ formatDate(commentary.createdAt) } · { getFormattedTime(commentary.createdAt) } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
+                                                <p style={{
+                                                    fontWeight: 300
+                                                }}>{ commentary.comment }</p>
+                                            </div>
+                                        ))
+                                    }
+                                </Box>
+                            ) : (
+                                <Box>
+                                    <span style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        padding: '15px 0'
+                                    }}>
+                                        <AiOutlineExclamationCircle />
+                                    </span>
+                                    <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay comentarios en este proyecto.</Typography>
+                                </Box>
+                            )
+                        }
+                    </div>
                 }
             </form>
        </MainLayout>

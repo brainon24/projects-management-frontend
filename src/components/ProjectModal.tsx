@@ -24,6 +24,7 @@ import './projectModal.css';
 import { TbExternalLink } from 'react-icons/tb';
 import { ProjectStatus } from './ProjectStatus';
 import { Loading100p } from './Loading100p';
+import { getFormattedTime, getComplementHours } from '../helpers/dates';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -88,25 +89,10 @@ export const ProjectModal = ({ project }: any) => {
         navigate(`/private/project/${ project._id }`)
     }
 
-    const getFormattedTime = (date: Date) => {
-        const hours = new Date(date).getHours().toString().padStart(2, '0');
-        const minutes = new Date(date).getMinutes().toString().padStart(2, '0');
-
-        return `${hours}:${minutes}`;
-    }
-
-    const getComplementHours = (time = 0) => {
-        let complement;
-
-        return time < 12 
-            ? complement = 'a.m' 
-            : complement = 'p.m';
-    }
-
     useEffect(() => {
         // if( allProjectsByUserId.length > 0 ) return;
     
-        dispatch( findAllCommentariesByProjectID_thunk(project._id) );
+        dispatch( findAllCommentariesByProjectID_thunk(project._id, 'limit=5') );
     }, []);
 
     return (
