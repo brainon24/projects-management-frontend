@@ -18,10 +18,20 @@ export const useForm = ( initialState = {} ) => {
         setFormState( initialState );
     }
 
+    const onChange = (newState: any) => {
+        const { name, value } = newState;
+
+        setFormState({
+            ...formState,
+            [ name ]: value,
+        })
+    }
+
     return {
         ...formState,
         formState,
         onInputChange,
         onResetForm,
+        onChange,
     }
 }

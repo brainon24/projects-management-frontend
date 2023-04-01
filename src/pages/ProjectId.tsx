@@ -32,7 +32,7 @@ export const ProjectId = () => {
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
 
-    const { formState, title, onInputChange, onResetForm, } = useForm({
+    const { formState, title, onInputChange, onChange } = useForm({
         title: projectById?.title,
     });
 
@@ -113,6 +113,10 @@ export const ProjectId = () => {
         setResponsiblesId(projectById?.responsiblesId);
         setDescription(projectById?.description);
         setAcceptanceCriteria(projectById?.acceptanceCriteria);
+        onChange({
+            name: 'title',
+            value: projectById?.title,
+        });
     }, [ projectById ]);
 
     useEffect(() => {
