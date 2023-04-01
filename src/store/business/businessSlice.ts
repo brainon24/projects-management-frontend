@@ -30,8 +30,6 @@ export const businessSlice = createSlice({
             state.isLoadingBusiness = true;
         },
 
-        createBusinessReducer: () => {},
-
         findByIdReducer: ( state, { payload } ) => {
             state.isLoadingBusiness = false;
             state.businessName = payload.name;

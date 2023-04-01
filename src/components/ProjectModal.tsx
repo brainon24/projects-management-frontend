@@ -92,7 +92,7 @@ export const ProjectModal = ({ project }: any) => {
     useEffect(() => {
         // if( allProjectsByUserId.length > 0 ) return;
     
-        dispatch( findAllCommentariesByProjectID_thunk(project._id, 'limit=5') );
+        dispatch( findAllCommentariesByProjectID_thunk(project._id) );
     }, []);
 
     return (
@@ -248,9 +248,12 @@ export const ProjectModal = ({ project }: any) => {
                                                                 marginTop: -5,
                                                                 paddingBottom: 2
                                                             }}>{ formatDate(commentary.createdAt) } · { getFormattedTime(commentary.createdAt) } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
-                                                            <p style={{
-                                                                fontWeight: 300
-                                                            }}>{ commentary.comment }</p>
+                                                            <div 
+                                                                style={{
+                                                                    fontWeight: 300
+                                                                }} 
+                                                                dangerouslySetInnerHTML={{ __html: commentary.comment }} 
+                                                            />
                                                         </div>
                                                     ))
                                                 }

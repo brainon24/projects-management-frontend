@@ -15,6 +15,7 @@ import { changeRequestSuccess } from '../store/business/businessSlice';
 
 import './projectModal.css';
 import { TransitionProps } from '@mui/material/transitions';
+import { changeRequestSuccessReducer } from '../store/commentaries/commentarySlice';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -70,6 +71,11 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
             isRequestSuccess: false,
             textRequestSuccess: undefined,
         }) );
+
+        dispatch( changeRequestSuccessReducer({
+          isRequestSuccess: false,
+          textRequestSuccess: undefined,
+      }) );
     };
 
     return (

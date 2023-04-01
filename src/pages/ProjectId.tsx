@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
@@ -9,14 +9,17 @@ import { useForm } from '../hooks/useForm';
 import { findEmployeesByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
 import { Box, Chip, Typography } from '@mui/material';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
-import { TagsInputWithAutoComplete } from '../components/TagsInputWithAutoComplete';
 import TextEditor from '../components/TextEditor';
 import { AiOutlineZoomOut, AiOutlineZoomIn, AiOutlineExclamationCircle } from 'react-icons/ai';
 import { findAllCommentariesByProjectID_thunk } from '../store/commentaries/thunks';
 import { Loading100p } from '../components/Loading100p';
 import useFormatDate from '../hooks/useFormatDate';
 import { getFormattedTime, getComplementHours } from '../helpers/dates';
-import { useCounter } from '../hooks/useCounter';
+import { IoAddCircleOutline } from 'react-icons/io5';
+import { closeSidemenu, openModal } from '../store/ui/uiSlice';
+import { FormCommentModal } from '../components/FormCommentModal';
+import { SuccessModal } from '../components/SuccessModal';
+import Loading from '../components/Loading';
 
 export const ProjectId = () => {
 
@@ -25,8 +28,9 @@ export const ProjectId = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
     const { projectById, errorNotFoundProject } = useSelector((state: any) => state.projects);
-    const { commentariesByProjectID, isLoadingCommentaries } = useSelector((state: any) => state.commentaries);
+    const { commentariesByProjectID, isLoadingCommentaries, isRequestSuccess, textRequestSuccess, } = useSelector((state: any) => state.commentaries);
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
+    const { isOpenModal } = useSelector((state: any) => state.ui);
 
     const { formState, title, onInputChange, onResetForm, } = useForm({
         title: projectById?.title,
@@ -40,10 +44,7 @@ export const ProjectId = () => {
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState(projectById?.acceptanceCriteria);
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
 
-    const commentsRef = useRef<any>(null);
-
     const { formatDate } = useFormatDate();
-    const { counter, incrementCounter } = useCounter();
 
     const selectedTags = (tags: any = []) => {
         // console.log('selectedTags: ', tags.map((tag: any) => tag._id))
@@ -84,6 +85,12 @@ export const ProjectId = () => {
         await dispatch( findAllClients_thunk() );
     }
 
+    const handleComment = () => {
+        dispatch(openModal())
+        
+        dispatch( closeSidemenu() )
+    }
+
     useEffect(() => {
         fetchEmployee('EMPLOYEE');
         
@@ -110,11 +117,16 @@ export const ProjectId = () => {
 
     useEffect(() => {
         if( !projectId ) return;
-        dispatch( findAllCommentariesByProjectID_thunk(projectId, 'limit=3') );
+        dispatch( findAllCommentariesByProjectID_thunk(projectId) );
     }, [ projectId ]);
+
+    if( isLoadingCommentaries ) return <Loading />
 
     return (
        <MainLayout>
+            { isOpenModal && <FormCommentModal projectId={ projectId } /> }
+            { isRequestSuccess && <SuccessModal textRequestSuccess={ textRequestSuccess } /> }
+
             <form className='container-form-cp' onSubmit={ onSubmit }>
                 <h1>Detalle del Proyecto o Editar</h1>
                 {/* <input type="date" />
@@ -156,7 +168,7 @@ export const ProjectId = () => {
                 </div> */}
 
                 <div className='container-input-form'>
-                    <label>Añade una descripción:</label>
+                    <label>Descripción:</label>
                     <TextEditor value={ description } setValue={ setDescription } /> 
                 </div>
 
@@ -179,7 +191,7 @@ export const ProjectId = () => {
                         </div>
                     ) : (
                         <div>
-                            <label>Agregar criterios al proyecto:</label>
+                            <label>Criterios al proyecto:</label>
                             <div 
                                 onClick={ changeVisibilityCA }
                                 className='container-show-ca'
@@ -204,32 +216,64 @@ export const ProjectId = () => {
                             <Loading100p />
                         </Box>
                     )
-                    : <div
-                        style={{
-                            textAlign: 'left',
-                            fontSize: 17,
-                            fontWeight: 500,
-                            color: '#000',
-                            paddingTop: 20
-                        }}
-                    >
-                        Comentarios:
+                    : <div>
+                        <div
+                            style={{
+                                paddingTop: 20,
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <p 
+                                style={{
+                                    textAlign: 'left',
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    color: '#000',
+                                    paddingTop: 20
+                                }}
+                            >
+                                Actualizaciones:
+                            </p>
+                            <button
+                                style={{
+                                    border: 'none',
+                                    padding: '10px 20px',
+                                    borderRadius: 6,
+                                    cursor: 'pointer',
+                                    backgroundColor: '#1259c3',
+                                    color: '#fff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    gap: 10
+                                }}
+                                onClick={ handleComment }
+                            >
+                                Nueva actualización
+                                <IoAddCircleOutline size={17} />
+                            </button>
+                        </div>
                         {
                             commentariesByProjectID?.length > 0 ? (
-                                <Box
-                                    sx={{ 
+                                <div
+                                    style={{ 
                                         margin: '0px 10px',
                                         // height: 200,
-                                        maxHeight: 200,
+                                        // maxHeight: 340,
                                         overflow: 'scroll'
                                     }}
-                                    ref={ commentsRef }
                                 >
                                     {
                                         commentariesByProjectID?.map(({user, commentary}: any) => (
-                                            <div style={{
-                                                padding: '8px 0'
-                                            }}>
+                                            <div 
+                                                style={{
+                                                    padding: '12px 0'
+                                                }}
+                                                className='comment'
+                                                key={ commentary._id }
+                                            >
                                                 <p style={{
                                                     fontWeight: 500,
                                                     margin: 0
@@ -240,13 +284,17 @@ export const ProjectId = () => {
                                                     marginTop: -5,
                                                     paddingBottom: 2
                                                 }}>{ formatDate(commentary.createdAt) } · { getFormattedTime(commentary.createdAt) } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
-                                                <p style={{
-                                                    fontWeight: 300
-                                                }}>{ commentary.comment }</p>
+                                                <div
+                                                    style={{
+                                                        fontWeight: 300,
+                                                        marginTop: 5
+                                                    }} 
+                                                    dangerouslySetInnerHTML={{ __html: commentary.comment }} 
+                                                />
                                             </div>
                                         ))
                                     }
-                                </Box>
+                                </div>
                             ) : (
                                 <Box>
                                     <span style={{
@@ -256,7 +304,24 @@ export const ProjectId = () => {
                                     }}>
                                         <AiOutlineExclamationCircle />
                                     </span>
-                                    <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay comentarios en este proyecto.</Typography>
+                                    <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 0.4 }}>Aún no hay actualizaciones en este proyecto.</Typography>
+                                    <p
+                                        style={{
+                                            border: 'none',
+                                            padding: '2px 0',
+                                            borderRadius: 6,
+                                            cursor: 'pointer',
+                                            backgroundColor: 'transparent',
+                                            color: '#000',
+                                            textDecoration: 'underline',
+                                            textAlign: 'center',
+                                            textUnderlineOffset: 5,
+                                            fontSize: 14.5,
+                                        }}
+                                        onClick={ handleComment }
+                                    >
+                                        ¡Crea una!
+                                    </p>
                                 </Box>
                             )
                         }
