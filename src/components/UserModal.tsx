@@ -65,15 +65,15 @@ export const UserModal = ({ user }: any) => {
                 aria-describedby="alert-dialog-slide-description"
                 sx={{ backdropFilter: 'blur(3px)', bgcolor: 'rgba(0,0,0, 0.2)' }}
             >
-            <DialogTitle
-                        sx={{
-                            color: 'var(--dark)',
-                            fontWeight: 600,
-                            textAlign: 'left'
-                        }}
-                    >
-                        Actualizar Rol del Usuario
-                    </DialogTitle>
+                <DialogTitle
+                    sx={{
+                        color: 'var(--dark)',
+                        fontWeight: 600,
+                        textAlign: 'left'
+                    }}
+                >
+                    Actualizar Rol del Usuario
+                </DialogTitle>
                 <Box
                     sx={{ 
                         textAlign: 'center', 
@@ -105,17 +105,17 @@ export const UserModal = ({ user }: any) => {
                         { user.fullName } · { user.businessName }
                     </DialogTitle>
                     <DialogContentText
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                fontSize: 13,
-                                marginTop: -15
-                            }}
+                        id="alert-dialog-slide-description"
+                        style={{
+                            textAlign: 'center',
+                            fontSize: 13,
+                            marginTop: -15
+                        }}
                     >
-                            <span style={{
-                            fontWeight: 500
-                            }}>Registro en la plataforma:</span> { user.createdAt }
-                        </DialogContentText>
+                        <span style={{
+                        fontWeight: 500
+                        }}>Registro en la plataforma:</span> { user.createdAt }
+                    </DialogContentText>
 
 
                     <DialogContent
@@ -133,7 +133,7 @@ export const UserModal = ({ user }: any) => {
                         >
                             Rol Actual.
                         </DialogContentText>
-                        <FormControl fullWidth sx={{ mb: 2 }} variant="outlined">
+                            <FormControl fullWidth sx={{ mb: 2 }} variant="outlined">
                                 <InputLabel id="demo-simple-select-label">{ user.role }</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-label"
@@ -185,7 +185,7 @@ export const UserModal = ({ user }: any) => {
                     </DialogContent>
 
                     <DialogActions>
-                    <button 
+                        <button 
                             onClick={handleClose}
                             style={{
                                 padding: '8px 20px',

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
-import { findProjectById_thunk } from '../store/projects/thunks';
+import { findProjectById_thunk, patchStatusProject_thunk } from '../store/projects/thunks';
 
 import '../styles/projectId.css';
 import { useForm } from '../hooks/useForm';
 import { findEmployeesByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
-import { Box, Chip, Typography } from '@mui/material';
+import { Box, Chip, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import TextEditor from '../components/TextEditor';
 import { AiOutlineZoomOut, AiOutlineZoomIn, AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -20,20 +20,22 @@ import { closeSidemenu, openModal } from '../store/ui/uiSlice';
 import { FormCommentModal } from '../components/FormCommentModal';
 import { SuccessModal } from '../components/SuccessModal';
 import Loading from '../components/Loading';
+import { ProjectStatus } from '../components/ProjectStatus';
 
 export const ProjectId = () => {
 
     const location = useLocation();
 
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
     const { projectById, errorNotFoundProject } = useSelector((state: any) => state.projects);
     const { commentariesByProjectID, isLoadingCommentaries, isRequestSuccess, textRequestSuccess, } = useSelector((state: any) => state.commentaries);
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
 
-    const { formState, title, onInputChange, onChange } = useForm({
+    const { formState, title, status, onInputChange, onChange } = useForm({
         title: projectById?.title,
+        status: projectById?.status,
     });
 
     const [ projectId, setProjectId ] = useState(projectById?.businessId);
@@ -67,6 +69,20 @@ export const ProjectId = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
     }
 
+    const onStatusChanged = async (event: any) => { 
+        await onChange({
+            name: 'status',
+            value: event.target.value
+        });
+    };
+    
+    const updateStatusOnServer = () => {
+        dispatch( patchStatusProject_thunk({
+            projectId,
+            newStatus: status,
+        }) );
+    }
+
     const onSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -90,6 +106,12 @@ export const ProjectId = () => {
         
         dispatch( closeSidemenu() )
     }
+
+    const statusAll = [
+        "Pendiente",
+        "En progreso",
+        "Completado",
+    ];
 
     useEffect(() => {
         fetchEmployee('EMPLOYEE');
@@ -117,6 +139,10 @@ export const ProjectId = () => {
             name: 'title',
             value: projectById?.title,
         });
+        // onChange({
+        //     name: 'status',
+        //     value: projectById?.status,
+        // });
     }, [ projectById ]);
 
     useEffect(() => {
@@ -132,7 +158,39 @@ export const ProjectId = () => {
             { isRequestSuccess && <SuccessModal textRequestSuccess={ textRequestSuccess } /> }
 
             <form className='container-form-cp' onSubmit={ onSubmit }>
-                <h1>Detalle del Proyecto o Editar</h1>
+                <Box 
+                    sx={{ 
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <h1>Detalle del Proyecto o Editar</h1>
+                    <FormControl sx={{ width: 180 }} variant="outlined">
+                        <InputLabel id="demo-simple-select-label"><ProjectStatus status={projectById?.status} /></InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={status}
+                            label="Estado del proyecto"
+                            onChange={onStatusChanged}
+                            color='info'
+                            onBlur={ updateStatusOnServer }
+                        >
+                            {
+                                statusAll.map(status => (
+                                    <MenuItem
+                                        key={status}
+                                        value={status}
+                                    >
+                                        {status}
+                                    </MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </FormControl>
+                </Box>
+
                 {/* <input type="date" />
                 <input type="date" />
                 <br /> */}

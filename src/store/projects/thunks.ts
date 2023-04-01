@@ -144,12 +144,36 @@ export const findProjectById_thunk = ( projectId: string ): any => {
 }
 
 
+export const patchStatusProject_thunk = ({ projectId, newStatus }: any) => {
+    return async ( dispatch: Dispatch ) => {
+
+        dispatch( loadingProjectsReducer() );
+
+        try {
+            projectsManagement.patch(`/project/patchStatus/${projectId}`, {newStatus})
+                .then(({ data }) => data)
+                .catch(error => {
+                    try {
+                        // console.log('ERROR en TRY: ', error.response.data.message);
+
+                        return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
+                    } catch (error) {
+                        console.error(error);
+                    }
+                });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+
 export const updateProject_thunk = (projectData: any) => {
     return async ( dispatch: Dispatch ) => {
         dispatch( loadingProjectsReducer() );
 
         try {
-            const {  } = projectsManagement.put(`/project/update/${projectData._id}`)
+            projectsManagement.put(`/project/update/${projectData._id}`)
                 .then(({ data }) => dispatch( updateProjectReducer(data) ))
                 .catch(error => {
                     try {
