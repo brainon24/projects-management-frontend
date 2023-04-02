@@ -24,8 +24,6 @@ export const CreateProject = () => {
 
     const dispatch = useDispatch();
 
-    // console.log('lastUpdateProject: ', lastUpdateProject);
-
     const { formState, title, onInputChange, onResetForm, } = useForm({
         title: '',
     });
@@ -41,20 +39,21 @@ export const CreateProject = () => {
     // console.log('title: ', title)
 
     const selectedTags = (tags: any = []) => {
-        // console.log('selectedTags: ', tags.map((tag: any) => tag._id))
+        // console.log('selectedTags: ', tags.map((tag: any) => console.log(tag)))
+        // console.log('selectedTags: ', tags)
         const tag = tags.map((tag: any) => tag._id)
         setResponsiblesId( tag );
         // console.log('responsiblesId: ', responsiblesId)
     }
 
     const selectedTagAuthorId = (tag: any = {}) => {
-        console.log('selectedTagAuthorId: ', tag)
+        // console.log('selectedTagAuthorId: ', tag)
         const authorId = tag._id;
         setAuthorId( authorId );
         // console.log('authorId: ', authorId)
         
         setBusinessId( tag.businessId );
-        console.log('businessId: ', businessId)
+        // console.log('businessId: ', businessId)
     }
 
     const changeVisibilityCA = () => {
@@ -98,7 +97,6 @@ export const CreateProject = () => {
         user.role === 'ADMIN' ? fetchAllUsers() : null
     }, []);
 
-
     return (
         <>
             {
@@ -118,7 +116,7 @@ export const CreateProject = () => {
 
             <MainLayout>
 
-                <form className='container-form-cp' onSubmit={ onSubmit }>
+                <div className='container-form-cp'>
                     <h1>Crear Proyecto</h1>
                     {/* <input type="date" />
                     <input type="date" />
@@ -207,13 +205,13 @@ export const CreateProject = () => {
                             </button>
                         </LinkRRD>
                         <button
-                            type='submit'
                             className='btn-confirm-cp'
+                            onClick={ onSubmit }
                         >
                             Crear Proyecto
                         </button>
                     </div>
-                </form>
+                </div>
             </MainLayout>
         </>
     );

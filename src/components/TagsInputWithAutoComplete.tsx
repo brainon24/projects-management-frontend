@@ -49,17 +49,16 @@ export const TagsInputWithAutoComplete = (props: any) => {
 
     const addTagsById = (user: any) => {
         // console.log('DENTRO DE ADD TAGS BY ID: ', user)
-        setTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
+        setTags([ ...tags, {fullName: user.fullName, _id: user._id, bussinesName: user.bussinesName} ]);
         props?.selectedTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
-
-        userInput = '';
+        
+        // setTags([ ...tags, `${user.fullName} (${user.bussinesName})` ]);
     }
-
+    
     const onSubmitSearch = (event: any) => {
         event?.preventDefault();
-
     }
-
+    
     useEffect(() => {
         props?.selectedTags([...tags]);
     }, [ tags ]);
@@ -71,7 +70,8 @@ export const TagsInputWithAutoComplete = (props: any) => {
                     {
                         tags?.map((tag: any, index: any) => (
                             <li key={index} className='tag'>
-                                <span className='tag-title'>{tag}</span>
+                                <p className='tag-title'>{tag.fullName} · <span style={{ fontWeight: 300 }}>
+                                    { tag.bussinesName }</span></p>
                                 <span 
                                     className='tag-close-icon'
                                     onClick={ () => removeTags(index) }
@@ -118,12 +118,13 @@ export const TagsInputWithAutoComplete = (props: any) => {
                                     className="autocomplete-element"
                                     onClick={ (e) => {
                                         e.preventDefault();
-                                        addTagsById({fullName: user.fullName, _id: user._id})
+                                        addTagsById({fullName: user.fullName, _id: user._id, bussinesName: user.businessId.businessName})
                                         handleOnBlur();
                                     } }
                                 >
                                     <span style={{ color: '#cecece', paddingRight: 10, paddingTop: 3 }}><FiSearch /></span>
-                                    <p className='text-autocomplete'>{user?.fullName?.length > 30 ? user?.fullName?.substring(0, 30) + '...' : user?.fullName?.substring(0, 30)}</p>
+                                    <p className='text-autocomplete'>{user?.fullName?.length > 30 ? user?.fullName?.substring(0, 30) + '...' : user?.fullName?.substring(0, 30)} · <span style={{ fontWeight: 300 }}>
+                                    { user.businessId.businessName }</span></p>
                                 </button>
                             ))
                         }

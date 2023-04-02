@@ -40,7 +40,7 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
         // console.log('DENTRO DE ADD TAGS BY ID: ', user)
         setTag({fullName: user.fullName, _id: user._id, businessId: user.businessId} );
         props.selectedTagAuthorId({fullName: user.fullName, _id: user._id, businessId: user.businessId});
-
+        
         userInput = '';
     }
 
@@ -50,6 +50,7 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
     }
 
     useEffect(() => {
+        userInput = '';
         props.selectedTagAuthorId(tag);
     }, [ tag ]);
 
@@ -112,7 +113,8 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
                                     } }
                                 >
                                     <span style={{ color: '#cecece', paddingRight: 10, paddingTop: 3 }}><FiSearch /></span>
-                                    <p className='text-autocomplete'>{user?.fullName?.length > 30 ? user?.fullName?.substring(0, 30) + '...' : user?.fullName?.substring(0, 30)}</p>
+                                    <p className='text-autocomplete'>{user?.fullName?.length > 30 ? user?.fullName?.substring(0, 30) + '...' : user?.fullName?.substring(0, 30)} · <span style={{ fontWeight: 300 }}>
+                                    { user.businessId.businessName }</span></p>
                                 </button>
                             ))
                         }

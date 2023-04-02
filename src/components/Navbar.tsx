@@ -13,11 +13,9 @@ export const Navbar = () => {
 
     return (
         <div className="container-navbar">
-            <LinkRRD to={ user ? '/private' : '/' }>
-                <Link display='flex' alignItems='center' style={{ cursor: 'pointer' }}>
-                    <Typography variant='h6' color='var(--blue)'>Gestor Proyectos |</Typography>
-                    <Typography sx={{ ml: 0.5 }}>brainon24</Typography>
-                </Link>
+            <LinkRRD to={ user ? '/private' : '/' } style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                <Typography variant='h6' color='var(--blue)'>Gestor Proyectos |</Typography>
+                <Typography sx={{ ml: 0.5 }}>brainon24</Typography>
             </LinkRRD> 
 
             

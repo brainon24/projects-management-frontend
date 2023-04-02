@@ -26,7 +26,9 @@ export const ProjectsList = ({projects = [], title = ''}: any) => {
                 <h3>{ title }</h3>
                 {
                     projects.filter((project: any) => project.status === title).map((project: any) => (
-                        <ProjectCard project={ project } />
+                        <div key={project._id}>
+                            <ProjectCard project={ project } />
+                        </div>
                     ))
                 }
             </div>

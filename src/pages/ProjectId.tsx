@@ -86,7 +86,7 @@ export const ProjectId = () => {
     const onSubmit = async (e: any) => {
         e.preventDefault();
 
-        if( responsiblesId.length < 0 || title.length < 5 || description.length < 5 ) return;
+        // if( responsiblesId.length < 0 || title.length < 5 || description.length < 5 ) return;
 
         //TODO: Complete it
     }
@@ -157,7 +157,7 @@ export const ProjectId = () => {
             { isOpenModal && <FormCommentModal projectId={ projectId } /> }
             { isRequestSuccess && <SuccessModal textRequestSuccess={ textRequestSuccess } /> }
 
-            <form className='container-form-cp' onSubmit={ onSubmit }>
+            <div className='container-form-cp'>
                 <Box 
                     sx={{ 
                         display: 'flex',
@@ -266,6 +266,8 @@ export const ProjectId = () => {
                         </div>
                     )
                 }
+
+                <button onClick={ onSubmit }>Actualizar Proyecto</button>
 
                 {
                     isLoadingCommentaries 
@@ -389,7 +391,7 @@ export const ProjectId = () => {
                         }
                     </div>
                 }
-            </form>
+            </div>
        </MainLayout>
     );
 }

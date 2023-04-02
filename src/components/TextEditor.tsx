@@ -5,16 +5,14 @@ import './styles/textEditor.css';
 
 const TextEditor = ({ value, setValue }: any) => {
     return (
-        <form>
-            <ReactQuill 
-                placeholder='Escribe acá'
-                value={ value } 
-                onChange={ setValue }
-                modules={TextEditor.modules}
-                formats={TextEditor.formats}
-                className='text-editor-quill'
-            />
-        </form>
+        <ReactQuill 
+            placeholder='Escribe acá'
+            value={ value } 
+            onChange={ setValue }
+            modules={TextEditor.modules}
+            formats={TextEditor.formats}
+            className='text-editor-quill'
+        />
     )
 }
 
