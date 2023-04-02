@@ -1,12 +1,11 @@
 import { MainLayout } from '../layouts/MainLayout'
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { findAllProjects_thunk, updateProject_thunk } from '../store/projects/thunks';
+import { useEffect } from 'react';
+import { findAllProjects_thunk, } from '../store/projects/thunks';
 import { ProjectsList } from '../components/ProjectsList';
 import { NoContent } from '../components/NoContent';
 import { BiTime } from 'react-icons/bi';
 import { Chip } from '@mui/material';
-import { ProjectCard } from '../components/ProjectCard';
 
 export const AllProjects = () => {
 

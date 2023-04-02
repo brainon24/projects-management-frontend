@@ -12,10 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { findAllClients_thunk } from '../store/users/thunks';
 import {UserModal} from '../components/UserModal';
 import { userFoundedReducer } from '../store/users/usersSlice';
-import Loading from '../components/Loading';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import Loading from '../components/Loading';
 
 interface Column {
   id: '_id' | 'fullName' | 'phone' | 'role' | 'email' | 'businessName' | 'businessId' | 'createdAt';
@@ -73,13 +73,6 @@ interface User {
   role: string;
   businessName: string,
   businessId: string,
-  // profilePicture: string;
-  // businessId: {
-  //   businessName: string,
-  //   createdAt: Date,
-  //   updatedAt: Date,
-  //   id: string
-  // }
   createdAt: any;
 }
 
@@ -92,7 +85,6 @@ function createRow(
   phone: number,
   email: string,
   role: string,
-  // profilePicture: string,
   businessName: string,
   businessId: any,
   createdAt: Date, 
@@ -103,7 +95,6 @@ function createRow(
     phone,
     email,
     role,
-    // profilePicture,
     businessName: businessId.businessName,
     businessId: businessId.id,
     createdAt: eventDate(new Date(createdAt).getFullYear(), new Date(createdAt).getMonth() + 1, new Date(createdAt).getDate()).toLocaleDateString('es-ES', options).slice(0, 1).toUpperCase() + eventDate(new Date(createdAt).getFullYear(), new Date(createdAt).getMonth() + 1, new Date(createdAt).getDate()).toLocaleDateString('es-ES', options).slice(1),
@@ -125,7 +116,6 @@ export const ManagementAccounts = () => {
   };
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.auth);
   const { mUsers, mUser, isLoadingUsers } = useSelector((state: any) => state.users);
 
   const handleUserModal = (user: any) => {
@@ -133,8 +123,6 @@ export const ManagementAccounts = () => {
   }
 
   useEffect(() => {
-    // if( allProjectsByUserId.length > 0 ) return;
-
     dispatch( findAllClients_thunk() );
   }, []);
 
@@ -145,14 +133,13 @@ export const ManagementAccounts = () => {
       user.phone,
       user.email,
       user.role,
-      // user.profilePicture,
       user.businessName,
       user.businessId,
       user.createdAt,
     );
   });
-  // console.log(rows)
-  // console.log('mUser: ', mUser)
+
+  if( isLoadingUsers ) return <Loading />
 
   return (
     <MainLayout>

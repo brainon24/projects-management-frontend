@@ -15,12 +15,13 @@ import { Chip } from '@mui/material';
 import { createProject_thunk } from '../store/projects/thunks';
 import ModalError from '../components/ModalError';
 import { TransitionModal } from '../components/TransitionModal';
+import Loading from '../components/Loading';
 
 export const CreateProject = () => {
 
     const { user } = useSelector((state: any) => state.auth);
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
-    const { lastUpdateProject } = useSelector((state: any) => state.projects);
+    const { lastUpdateProject, isLoadingProjects } = useSelector((state: any) => state.projects);
 
     const dispatch = useDispatch();
 
@@ -34,26 +35,17 @@ export const CreateProject = () => {
     const [ description, setDescription ] = useState('');
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState('');
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
-    
-    // console.log({description, acceptanceCriteria})
-    // console.log('title: ', title)
 
     const selectedTags = (tags: any = []) => {
-        // console.log('selectedTags: ', tags.map((tag: any) => console.log(tag)))
-        // console.log('selectedTags: ', tags)
         const tag = tags.map((tag: any) => tag._id)
         setResponsiblesId( tag );
-        // console.log('responsiblesId: ', responsiblesId)
     }
 
-    const selectedTagAuthorId = (tag: any = {}) => {
-        // console.log('selectedTagAuthorId: ', tag)
+    const selectedTagAuthorId = (tag: any = {}) => { 
         const authorId = tag._id;
         setAuthorId( authorId );
-        // console.log('authorId: ', authorId)
         
         setBusinessId( tag.businessId );
-        // console.log('businessId: ', businessId)
     }
 
     const changeVisibilityCA = () => {
@@ -76,26 +68,22 @@ export const CreateProject = () => {
     }
 
     const fetchEmployee = async (role: string): Promise<any> => {
-        if( mEmployees.length > 0 ) return; //TODO: Change this conditional
+        if( mEmployees.length > 0 ) return;
         await dispatch( findEmployeesByRole_thunk(role) );
     }
 
-    const fetchClients = async (role: string): Promise<any> => {
-        if( mClients.length > 0 ) return; //TODO: Change this conditional
-        await dispatch( findClientsByRole_thunk(role) );
-    }
-
     const fetchAllUsers = async (): Promise<any> => {
-        if( mClients.length > 0 ) return; //TODO: Change this conditional
+        if( mClients.length > 0 ) return;
         await dispatch( findAllClients_thunk() );
     }
 
     useEffect(() => {
         fetchEmployee('EMPLOYEE');
         
-        // user.role === 'ADMIN' ? fetchClients('CLIENT') : null
         user.role === 'ADMIN' ? fetchAllUsers() : null
     }, []);
+
+    if( isLoadingProjects ) return <Loading />
 
     return (
         <>

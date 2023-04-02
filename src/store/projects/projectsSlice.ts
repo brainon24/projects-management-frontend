@@ -83,6 +83,7 @@ export const projectsSlice = createSlice({
         },
 
         updateProjectReducer: (state, { payload }) => {
+            state.isLoadingProjects = false;
             const updatedProject = payload;
             const index = state.allProjects.findIndex(
               (project: any) => project._id === updatedProject.id
