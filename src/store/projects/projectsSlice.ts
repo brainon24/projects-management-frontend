@@ -12,6 +12,9 @@ const initialState: any = {
     errorNotFoundProject: undefined,
     clearErrorNotFoundProject: undefined,
     isLoadingProjects: false,
+
+    isRequestSuccess: false,
+    textRequestSuccess: undefined,
 }
 
 export const projectsSlice = createSlice({
@@ -92,6 +95,13 @@ export const projectsSlice = createSlice({
               state.allProjects[index] = updatedProject;
             }
         },
+
+        changeRequestSuccessReducerProjects: ( state, { payload } ) => {
+            console.log(payload)
+            state.isLoadingCommentaries = false;
+            state.isRequestSuccess = payload.isRequestSuccess;
+            state.textRequestSuccess = payload.textRequestSuccess;
+        },
     }
 });
 
@@ -110,4 +120,5 @@ export const {
     findProjectsByBusinessIdReducer,
     findProjectsByResponsibleIdReducer,
     updateProjectReducer,
+    changeRequestSuccessReducerProjects,
 } = projectsSlice.actions;

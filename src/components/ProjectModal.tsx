@@ -222,7 +222,7 @@ export const ProjectModal = ({ project }: any) => {
                                         paddingTop: 20
                                     }}
                                 >
-                                    Comentarios:
+                                    Actualizaciones:
                                     {
                                         commentariesByProjectID?.length > 0 ? (
                                             <Box
@@ -267,7 +267,7 @@ export const ProjectModal = ({ project }: any) => {
                                                 }}>
                                                     <AiOutlineExclamationCircle />
                                                 </span>
-                                                <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay comentarios en este proyecto.</Typography>
+                                                <Typography sx={{ textAlign: 'center', fontSize: 14, paddingBottom: 1 }}>Aún no hay actualizaciones en este proyecto.</Typography>
                                             </Box>
                                         )
                                     }

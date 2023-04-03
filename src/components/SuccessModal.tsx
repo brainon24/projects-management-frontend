@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { RiCloseFill } from 'react-icons/ri';
 import checkIcon from '../assets/check-icon.svg';
 import { changeRequestSuccess } from '../store/business/businessSlice';
+import { changeRequestSuccessReducerProjects } from '../store/projects/projectsSlice';
 
 import './projectModal.css';
 import { TransitionProps } from '@mui/material/transitions';
@@ -65,16 +66,21 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
     const dispatch = useDispatch();
 
     const handleClose = () => {
-        setOpen(false);
+      setOpen(false);
 
-        dispatch( changeRequestSuccess({
-            isRequestSuccess: false,
-            textRequestSuccess: undefined,
-        }) );
+      dispatch( changeRequestSuccess({
+        isRequestSuccess: false,
+        textRequestSuccess: undefined,
+      }) );
 
-        dispatch( changeRequestSuccessReducer({
-          isRequestSuccess: false,
-          textRequestSuccess: undefined,
+      dispatch( changeRequestSuccessReducer({
+        isRequestSuccess: false,
+        textRequestSuccess: undefined,
+      }) );
+
+      dispatch( changeRequestSuccessReducerProjects({
+        isRequestSuccess: false,
+        textRequestSuccess: undefined,
       }) );
     };
 

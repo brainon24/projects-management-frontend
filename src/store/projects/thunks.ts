@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import projectsManagement from '../../api/api';
-import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer, findProjectsByResponsibleIdReducer, findAllProjectsReducer, findProjectByIdReducer, updateProjectReducer } from './projectsSlice';
+import { addErrorNotFoundProjectsReducer, findProjectsByUserIdReducer, lastUpdateProjectsReducer, loadingProjectsReducer, findProjectsByBusinessIdReducer, findProjectsByResponsibleIdReducer, findAllProjectsReducer, findProjectByIdReducer, updateProjectReducer, changeRequestSuccessReducerProjects } from './projectsSlice';
 
 export const createProject_thunk = ( payload: any ): any => {
     return async ( dispatch: Dispatch ) => {
@@ -126,9 +126,17 @@ export const findProjectsByResponsibleI_thunk = ( responsibleId: string ): any =
 
 export const findProjectById_thunk = ( projectId: string ): any => {
     return async ( dispatch: Dispatch ) => {
-        dispatch( loadingProjectsReducer() ); 
+
+        dispatch( loadingProjectsReducer() );
+
         projectsManagement.get(`/project/findById/${ projectId }`)
             .then(({ data, status }) => {
+
+                dispatch( changeRequestSuccessReducerProjects({
+                    isRequestSuccess: true,
+                    textRequestSuccess: 'Tu solicitud fue procesada exitosamente.',
+                }) );
+
                 return dispatch( findProjectByIdReducer( data ) );
             })
             .catch(error => {
@@ -170,16 +178,37 @@ export const patchStatusProject_thunk = ({ projectId, newStatus }: any) => {
 
 export const updateProject_thunk = (projectData: any) => {
     return async ( dispatch: Dispatch ) => {
+
         dispatch( loadingProjectsReducer() );
 
+        const { _id,
+            authorId,
+            businessId,
+            responsiblesId,
+            title,
+            description,
+            acceptanceCriteria,
+            status, 
+        } = projectData;
+
         try {
-            projectsManagement.put(`/project/update/${projectData._id}`)
-                .then(({ data }) => dispatch( updateProjectReducer(data) ))
+            projectsManagement.put(`/project/update/${_id}`, {
+                authorId,
+                businessId,
+                responsiblesId,
+                title,
+                description,
+                acceptanceCriteria,
+                status, 
+            })
+                .then(({ data }) => {
+                    return dispatch( updateProjectReducer(data) )
+                })
                 .catch(error => {
                     try {
-                        // console.log('ERROR en TRY: ', error.response.data.message);
+                        console.log('ERROR en TRY: ', error.response.data.message);
 
-                        return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
+                        // return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
                     } catch (error) {
                         console.error(error);
                     }

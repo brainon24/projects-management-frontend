@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
-import { findProjectById_thunk, patchStatusProject_thunk } from '../store/projects/thunks';
+import { findProjectById_thunk, patchStatusProject_thunk, updateProject_thunk } from '../store/projects/thunks';
 
 import '../styles/projectId.css';
 import { useForm } from '../hooks/useForm';
 import { findEmployeesByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
-import { Box, Chip, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
-import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
+import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import TextEditor from '../components/TextEditor';
 import { AiOutlineZoomOut, AiOutlineZoomIn, AiOutlineExclamationCircle } from 'react-icons/ai';
 import { findAllCommentariesByProjectID_thunk } from '../store/commentaries/thunks';
@@ -28,7 +27,7 @@ export const ProjectId = () => {
 
     const dispatch: any = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
-    const { projectById, errorNotFoundProject } = useSelector((state: any) => state.projects);
+    const { projectById, errorNotFoundProject, isLoadingProjects, isRequestSuccess: isRequestSuccessProjects, textRequestSuccess: textRequestSuccessProjects, } = useSelector((state: any) => state.projects);
     const { commentariesByProjectID, isLoadingCommentaries, isRequestSuccess, textRequestSuccess, } = useSelector((state: any) => state.commentaries);
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
@@ -39,31 +38,26 @@ export const ProjectId = () => {
     });
 
     const [ projectId, setProjectId ] = useState(projectById?.businessId);
-    const [ businessId, setBusinessId ] = useState(projectById?.businessId);
-    const [ authorId, setAuthorId ] = useState(projectById?.authorId);
-    const [ responsiblesId, setResponsiblesId ] = useState(projectById?.responsiblesId);
+    // const [ businessId, setBusinessId ] = useState(projectById?.businessId);
+    // const [ authorId, setAuthorId ] = useState(projectById?.authorId);
+    // const [ responsiblesId, setResponsiblesId ] = useState(projectById?.responsiblesId);
     const [ description, setDescription ] = useState(projectById?.description);
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState(projectById?.acceptanceCriteria);
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
 
     const { formatDate } = useFormatDate();
 
-    const selectedTags = (tags: any = []) => {
-        // console.log('selectedTags: ', tags.map((tag: any) => tag._id))
-        const tag = tags.map((tag: any) => tag._id)
-        setResponsiblesId( tag );
-        // console.log('responsiblesId: ', responsiblesId)
-    }
+    // const selectedTags = (tags: any = []) => {
+    //     const tag = tags.map((tag: any) => tag._id)
+    //     setResponsiblesId( tag );
+    // }
 
-    const selectedTagAuthorId = (tag: any = {}) => {
-        console.log('selectedTagAuthorId: ', tag)
-        const authorId = tag._id;
-        setAuthorId( authorId );
-        // console.log('authorId: ', authorId)
+    // const selectedTagAuthorId = (tag: any = {}) => {
+    //     const authorId = tag._id;
+    //     setAuthorId( authorId );
         
-        setBusinessId( tag.businessId );
-        console.log('businessId: ', businessId)
-    }
+    //     setBusinessId( tag.businessId );
+    // }
 
     const changeVisibilityCA = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
@@ -88,7 +82,18 @@ export const ProjectId = () => {
 
         // if( responsiblesId.length < 0 || title.length < 5 || description.length < 5 ) return;
 
-        //TODO: Complete it
+        dispatch(
+            updateProject_thunk({
+                _id: projectById?._id,
+                authorId: projectById?.authorId,
+                businessId: projectById?.businessId,
+                responsiblesId: projectById?.responsiblesId,
+                title,
+                description,
+                acceptanceCriteria,
+                status,
+            })
+        );
     }
 
     const fetchEmployee = async (role: string): Promise<any> => {
@@ -130,9 +135,9 @@ export const ProjectId = () => {
 
     useEffect(() => {
         setProjectId(projectById?._id);
-        setBusinessId(projectById?.businessId);
-        setAuthorId(projectById?.authorId);
-        setResponsiblesId(projectById?.responsiblesId);
+        // setBusinessId(projectById?.businessId);
+        // setAuthorId(projectById?.authorId);
+        // setResponsiblesId(projectById?.responsiblesId);
         setDescription(projectById?.description);
         setAcceptanceCriteria(projectById?.acceptanceCriteria);
         onChange({
@@ -151,21 +156,15 @@ export const ProjectId = () => {
     }, [ projectId ]);
 
     if( isLoadingCommentaries ) return <Loading />
+    if( isLoadingProjects ) return <Loading />
 
     return (
        <MainLayout>
             { isOpenModal && <FormCommentModal projectId={ projectId } /> }
             { isRequestSuccess && <SuccessModal textRequestSuccess={ textRequestSuccess } /> }
+            {/* { isRequestSuccessProjects && <SuccessModal textRequestSuccess={ textRequestSuccessProjects } /> } */}
 
             <div className='container-form-cp'>
-                <p 
-                    style={{
-                        fontSize: 15
-                    }}
-                >
-                    { formatDate(projectById?.createdAt) } 
-                    <span> · { getFormattedTime(projectById?.createdAt) } { getComplementHours(new Date(projectById?.createdAt).getHours()) }</span>
-                </p>
                 <Box 
                     sx={{ 
                         display: 'flex',
@@ -203,7 +202,7 @@ export const ProjectId = () => {
                 <input type="date" />
                 <br /> */}
                 
-                {
+                {/* {
                     user.role === 'ADMIN' ? (
                         <div className='container-input-form'>
                             <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
@@ -214,11 +213,10 @@ export const ProjectId = () => {
                                 />
                                 <label>Dueño del proyecto:</label>
                             </div>
-                            {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
                             <TagsInputWithAutoCompleteClients clients={mUsers} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
                         </div>
                     ) : null
-                }
+                } */}
 
                 <div className='container-input-form'>
                     <label>Titulo del proyecto:</label>
