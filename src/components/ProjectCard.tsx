@@ -6,6 +6,7 @@ import { findProjectOneReducer } from '../store/projects/projectsSlice';
 
 import { TbExternalLink } from 'react-icons/tb'
 import { Link as LinkRRD } from 'react-router-dom';
+import { getFormattedTime, getComplementHours } from '../helpers/dates';
 
 export const ProjectCard = ({ project }: any) => {
 
@@ -43,9 +44,8 @@ export const ProjectCard = ({ project }: any) => {
                     }}
                     onClick={ () => dispatch( findProjectOneReducer(project) ) }
                 >
-                    {
-                        formatDate(project.createdAt)
-                    }
+                    { formatDate(project?.createdAt) } 
+                    <span> · { getFormattedTime(project?.createdAt) } { getComplementHours(new Date(project?.createdAt).getHours()) }</span>
                 </p>
 
                 <div

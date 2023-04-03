@@ -158,6 +158,14 @@ export const ProjectId = () => {
             { isRequestSuccess && <SuccessModal textRequestSuccess={ textRequestSuccess } /> }
 
             <div className='container-form-cp'>
+                <p 
+                    style={{
+                        fontSize: 15
+                    }}
+                >
+                    { formatDate(projectById?.createdAt) } 
+                    <span> · { getFormattedTime(projectById?.createdAt) } { getComplementHours(new Date(projectById?.createdAt).getHours()) }</span>
+                </p>
                 <Box 
                     sx={{ 
                         display: 'flex',
@@ -267,7 +275,20 @@ export const ProjectId = () => {
                     )
                 }
 
-                <button onClick={ onSubmit }>Actualizar Proyecto</button>
+                <button 
+                    onClick={ onSubmit }
+                    style={{
+                        border: 'none',
+                        padding: '7px 25px',
+                        borderRadius: 6,
+                        marginTop: 20,
+                        cursor: 'pointer',
+                        backgroundColor: 'var(--blue)',
+                        color: '#fff'
+                    }}
+                >
+                    Actualizar Proyecto
+                </button>
 
                 {
                     isLoadingCommentaries 
@@ -324,7 +345,6 @@ export const ProjectId = () => {
                                 <div
                                     style={{ 
                                         margin: '0px 10px',
-                                        // height: 200,
                                         // maxHeight: 340,
                                         overflow: 'scroll'
                                     }}
