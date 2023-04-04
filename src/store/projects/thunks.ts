@@ -159,12 +159,12 @@ export const patchStatusProject_thunk = ({ projectId, newStatus }: any) => {
 
         try {
             projectsManagement.patch(`/project/patchStatus/${projectId}`, {newStatus})
-                .then(({ data }) => data)
+                .then(({ data }) => console.log(data))
                 .catch(error => {
                     try {
                         // console.log('ERROR en TRY: ', error.response.data.message);
 
-                        return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
+                        // return dispatch( addErrorNotFoundProjectsReducer(error.response.data.message) );
                     } catch (error) {
                         console.error(error);
                     }

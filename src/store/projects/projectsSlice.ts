@@ -97,10 +97,10 @@ export const projectsSlice = createSlice({
         },
 
         changeRequestSuccessReducerProjects: ( state, { payload } ) => {
-            console.log(payload)
+            // console.log(payload)
             state.isLoadingCommentaries = false;
-            state.isRequestSuccess = payload.isRequestSuccess;
-            state.textRequestSuccess = payload.textRequestSuccess;
+            // state.isRequestSuccess = payload.isRequestSuccess;
+            // state.textRequestSuccess = payload.textRequestSuccess;
         },
     }
 });

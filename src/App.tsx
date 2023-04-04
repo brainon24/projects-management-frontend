@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch} from "@reduxjs/toolkit";
 import {checkingReducer, clearErrorReducer} from "./store/auth/authSlice";
 import {checkToken_thunk, logout_thunk} from './store/auth/thunks';
-import {Home} from "./pages/Home"
 import {NotFound} from './pages/NotFound';
 import {Login} from './pages/Login';
 import {SignUp} from './pages/SignUp';
@@ -110,7 +109,7 @@ const App = () => {
         <Route 
           path="/private/my-projects-asigned"
           element={ 
-            <ProtectedRoute roles={[Role.EMPLOYEE, Role.ADMIN]}>
+            <ProtectedRoute roles={[Role.EMPLOYEE, Role.ADMIN,]}>
               <MyProjectsAsigned />
             </ProtectedRoute>
           } 

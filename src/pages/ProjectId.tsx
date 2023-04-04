@@ -5,7 +5,6 @@ import { MainLayout } from '../layouts/MainLayout';
 import { findProjectById_thunk, patchStatusProject_thunk, updateProject_thunk } from '../store/projects/thunks';
 
 import '../styles/projectId.css';
-import { useForm } from '../hooks/useForm';
 import { findEmployeesByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
 import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import TextEditor from '../components/TextEditor';
@@ -32,12 +31,9 @@ export const ProjectId = () => {
     const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
 
-    const { formState, title, status, onInputChange, onChange } = useForm({
-        title: projectById?.title,
-        status: projectById?.status,
-    });
-
     const [ projectId, setProjectId ] = useState(projectById?.businessId);
+    const [ status, setStatus ] = useState(projectById?.status);
+    const [ title, setTitle ] = useState(projectById?.title);
     // const [ businessId, setBusinessId ] = useState(projectById?.businessId);
     // const [ authorId, setAuthorId ] = useState(projectById?.authorId);
     // const [ responsiblesId, setResponsiblesId ] = useState(projectById?.responsiblesId);
@@ -64,18 +60,19 @@ export const ProjectId = () => {
     }
 
     const onStatusChanged = async (event: any) => { 
-        await onChange({
-            name: 'status',
-            value: event.target.value
-        });
+        setStatus(event?.target?.value);
+    };
+
+    const onTitleChanged = async (event: any) => { 
+        setTitle(event?.target?.value);
     };
     
-    const updateStatusOnServer = () => {
-        dispatch( patchStatusProject_thunk({
-            projectId,
-            newStatus: status,
-        }) );
-    }
+    // const updateStatusOnServer = () => {
+    //     dispatch( patchStatusProject_thunk({
+    //         projectId,
+    //         newStatus: status,
+    //     }) );
+    // }
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
@@ -135,19 +132,10 @@ export const ProjectId = () => {
 
     useEffect(() => {
         setProjectId(projectById?._id);
-        // setBusinessId(projectById?.businessId);
-        // setAuthorId(projectById?.authorId);
-        // setResponsiblesId(projectById?.responsiblesId);
+        setTitle(projectById?.title || '');
         setDescription(projectById?.description);
+        setStatus(projectById?.status || '');
         setAcceptanceCriteria(projectById?.acceptanceCriteria);
-        onChange({
-            name: 'title',
-            value: projectById?.title,
-        });
-        // onChange({
-        //     name: 'status',
-        //     value: projectById?.status,
-        // });
     }, [ projectById ]);
 
     useEffect(() => {
@@ -182,7 +170,7 @@ export const ProjectId = () => {
                             label="Estado del proyecto"
                             onChange={onStatusChanged}
                             color='info'
-                            onBlur={ updateStatusOnServer }
+                            // onBlur={ updateStatusOnServer }
                         >
                             {
                                 statusAll.map(status => (
@@ -225,7 +213,7 @@ export const ProjectId = () => {
                         type="text"
                         name='title'
                         value={title}
-                        onChange={ onInputChange }
+                        onChange={ onTitleChanged }
                         className='input-form-cp'
                     />
                 </div>
