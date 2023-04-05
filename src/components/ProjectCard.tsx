@@ -45,7 +45,7 @@ export const ProjectCard = ({ project }: any) => {
                     onClick={ () => dispatch( findProjectOneReducer(project) ) }
                 >
                     { formatDate(project?.createdAt) } 
-                    <span> · { getFormattedTime(project?.createdAt) } { getComplementHours(new Date(project?.createdAt).getHours()) }</span>
+                    <span> · { getComplementHours(new Date(project?.createdAt)) }</span>
                 </p>
 
                 <div
