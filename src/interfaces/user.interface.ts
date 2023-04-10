@@ -1,5 +1,5 @@
 
-export type Role = "USER" | "CLIENT" | "ADMIN" | "EMPLOYEE"
+export type Role = "USER" | "CLIENT" | "ADMIN" | "ALLY"
 
 export interface IUser {
     _id?: string;

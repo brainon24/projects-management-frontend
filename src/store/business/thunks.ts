@@ -8,7 +8,7 @@ export const findBusinessById_thunk = (businessId : any) => {
 
         dispatch( loadingBusinessReducer() );
 
-        projectsManagement.get(`/business/findById/${ businessId }`)
+            projectsManagement.get(`/business/findById/${ businessId }`)
             .then(({ data, status }) => {
                 if (status !== 200) {
                     throw new Error(data.message);

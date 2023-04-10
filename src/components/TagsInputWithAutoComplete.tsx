@@ -6,7 +6,7 @@ import './styles/tagsInput.css';
 
 export const TagsInputWithAutoComplete = (props: any) => {
     
-    const { employees = [] } = props;
+    const { ALLYs = [] } = props;
 
     let { formState, userInput, onInputChange, onResetForm } = useForm({
         userInput: '',
@@ -112,7 +112,7 @@ export const TagsInputWithAutoComplete = (props: any) => {
                         // onClick={ () => console.log('click') }
                     >
                         {
-                            employees && employees?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase()) && !props.responsiblesId.includes( user._id ) )?.slice(0, 5)?.map( (user: any) => (
+                            ALLYs && ALLYs?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase()) && !props.responsiblesId.includes( user._id ) )?.slice(0, 5)?.map( (user: any) => (
                                 <button 
                                     key={ user?._id } 
                                     className="autocomplete-element"

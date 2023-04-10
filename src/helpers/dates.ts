@@ -16,5 +16,5 @@ export const getComplementHours = (time: any = 0) => {
         ? complement = 'a.m' 
         : complement = 'p.m';
     
-        return `${hours.toString().padStart(2, '0')}:${minutes} ${amOrPm}`
-    }
+    return `${hours.toString().padStart(2, '0')}:${minutes} ${amOrPm}`
+}

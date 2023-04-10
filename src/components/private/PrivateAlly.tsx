@@ -4,11 +4,10 @@ import { Link as LinkRRD, } from 'react-router-dom';
 import { BiRightArrowAlt, BiUserCircle } from 'react-icons/bi';
 import { MdOutlineBusinessCenter } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
-import { GoCommentDiscussion } from 'react-icons/go';
 
 import '../styles/privateClient.css';
 
-export const PrivateEmployee = () => {
+export const PrivateAlly = () => {
 
     const { user } = useSelector((state: any) => state.auth);
 

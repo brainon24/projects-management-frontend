@@ -9,7 +9,7 @@ import { TagsInput } from '../components/TagsInput';
 import '../styles/createProject.css';
 import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { findEmployeesByRole_thunk, findClientsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
+import { findALLYsByRole_thunk, findClientsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import { Chip } from '@mui/material';
 import { createProject_thunk } from '../store/projects/thunks';
@@ -20,7 +20,7 @@ import Loading from '../components/Loading';
 export const CreateProject = () => {
 
     const { user } = useSelector((state: any) => state.auth);
-    const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
+    const { mALLYs = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { lastUpdateProject, isLoadingProjects } = useSelector((state: any) => state.projects);
 
     const dispatch = useDispatch();
@@ -67,9 +67,9 @@ export const CreateProject = () => {
         }) );
     }
 
-    const fetchEmployee = async (role: string): Promise<any> => {
-        if( mEmployees.length > 0 ) return;
-        await dispatch( findEmployeesByRole_thunk(role) );
+    const fetchALLY = async (role: string): Promise<any> => {
+        if( mALLYs.length > 0 ) return;
+        await dispatch( findALLYsByRole_thunk(role) );
     }
 
     const fetchAllUsers = async (): Promise<any> => {
@@ -78,7 +78,7 @@ export const CreateProject = () => {
     }
 
     useEffect(() => {
-        fetchEmployee('EMPLOYEE');
+        fetchALLY('ALLY');
         
         user.role === 'ADMIN' ? fetchAllUsers() : null
     }, []);
@@ -142,7 +142,7 @@ export const CreateProject = () => {
                     <div className='container-input-form'>
                         <label>Responsables del proyecto:</label>
                         {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
-                        <TagsInputWithAutoComplete employees={mEmployees} selectedTags={selectedTags} tags={[]} responsiblesId={responsiblesId} />
+                        <TagsInputWithAutoComplete ALLYs={mALLYs} selectedTags={selectedTags} tags={[]} responsiblesId={responsiblesId} />
                     </div>
 
                     <div className='container-input-form'>

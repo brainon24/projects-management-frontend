@@ -73,7 +73,7 @@ const App = () => {
         <Route 
           path="/private" 
           element={ 
-            <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.EMPLOYEE, Role.ADMIN]}>
+            <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.ALLY, Role.ADMIN]}>
               <Private />
             </ProtectedRoute>
          } 
@@ -82,7 +82,7 @@ const App = () => {
         <Route 
           path="/private/profile" 
           element={ 
-            <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.EMPLOYEE, Role.ADMIN]}>
+            <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.ALLY, Role.ADMIN]}>
               <Profile />
             </ProtectedRoute>
          } 
@@ -91,7 +91,7 @@ const App = () => {
         <Route 
           path="/private/my-business" 
           element={ 
-            <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.EMPLOYEE, Role.ADMIN]}>
+            <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.ALLY, Role.ADMIN]}>
               <MyBusiness />
             </ProtectedRoute>
           } 
@@ -109,7 +109,7 @@ const App = () => {
         <Route 
           path="/private/my-projects-asigned"
           element={ 
-            <ProtectedRoute roles={[Role.EMPLOYEE, Role.ADMIN,]}>
+            <ProtectedRoute roles={[Role.ALLY, Role.ADMIN,]}>
               <MyProjectsAsigned />
             </ProtectedRoute>
           } 
@@ -127,7 +127,7 @@ const App = () => {
         <Route
           path="/private/project/:projectId"
           element={
-              <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN, Role.EMPLOYEE]}>
+              <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN, Role.ALLY]}>
                 <ProjectId />
               </ProtectedRoute>
           }
@@ -136,7 +136,7 @@ const App = () => {
         <Route
           path="/private/my-business-projects"
           element={
-              <ProtectedRoute roles={[Role.CLIENT, Role.EMPLOYEE, Role.ADMIN]}>
+              <ProtectedRoute roles={[Role.CLIENT, Role.ALLY, Role.ADMIN]}>
                 <MyBusinessProjects />
               </ProtectedRoute>
           }

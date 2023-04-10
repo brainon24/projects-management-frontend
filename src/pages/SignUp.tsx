@@ -13,13 +13,14 @@ import { findBusinessById_thunk } from '../store/business/thunks';
 import { clearErrorBusinessReducer } from '../store/business/businessSlice';
 import ModalError from '../components/ModalError';
 import { BiErrorCircle } from 'react-icons/bi';
+import { Loading100p } from '../components/Loading100p';
 
 export const SignUp = () => {
 
     const navigate = useNavigate();
 
     const dispatch: Dispatch<any> = useDispatch();
-    const { businessName, businessId: businessID, businessErrorMessage } = useSelector((state: any) => state.business);
+    const { businessName, businessId: businessID, businessErrorMessage, isLoadingBusiness } = useSelector((state: any) => state.business);
 
     const { status, errorMessage } = useSelector((state: any) => state.auth);
 
@@ -126,6 +127,18 @@ export const SignUp = () => {
                                         </LinkRRD>
                                         <h1>Registro</h1>
                                     </Box>
+                                    {
+                                        isLoadingBusiness ? (
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'end'
+                                                }}
+                                            >
+                                                <Loading100p />
+                                            </div>
+                                        ) : null
+                                    }
                                     {
                                         typeof businessName === 'string' 
                                             ?   (

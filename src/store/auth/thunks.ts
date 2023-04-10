@@ -36,6 +36,7 @@ export const signUp_thunk = ({ fullName, email, password, phone, businessId }: S
             })
             .catch(error => {
                 try {
+                    console.log(error)
                     // console.log(error.response.data.message);
                     dispatch( clearBusinessIdAndName() );
                     dispatch( addErrorReducer(error.response.data.message) );

@@ -27,7 +27,7 @@ export const UserModal = ({ user }: any) => {
     const typeDocuments = [
         "USER",
         "CLIENT",
-        "EMPLOYEE",
+        "ALLY",
         "ADMIN",
     ];
 

@@ -5,7 +5,7 @@ import { MainLayout } from '../layouts/MainLayout';
 import { findProjectById_thunk, patchStatusProject_thunk, updateProject_thunk } from '../store/projects/thunks';
 
 import '../styles/projectId.css';
-import { findEmployeesByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
+import { findALLYsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
 import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import TextEditor from '../components/TextEditor';
 import { AiOutlineZoomOut, AiOutlineZoomIn, AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -28,7 +28,7 @@ export const ProjectId = () => {
     const { user } = useSelector((state: any) => state.auth);
     const { projectById, errorNotFoundProject, isLoadingProjects, isRequestSuccess: isRequestSuccessProjects, textRequestSuccess: textRequestSuccessProjects, } = useSelector((state: any) => state.projects);
     const { commentariesByProjectID, isLoadingCommentaries, isRequestSuccess, textRequestSuccess, } = useSelector((state: any) => state.commentaries);
-    const { mEmployees = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
+    const { mALLYs = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
 
     const [ projectId, setProjectId ] = useState(projectById?.businessId);
@@ -93,9 +93,9 @@ export const ProjectId = () => {
         );
     }
 
-    const fetchEmployee = async (role: string): Promise<any> => {
-        if( mEmployees.length > 0 ) return; //TODO: Change this conditional
-        await dispatch( findEmployeesByRole_thunk(role) );
+    const fetchALLY = async (role: string): Promise<any> => {
+        if( mALLYs.length > 0 ) return; //TODO: Change this conditional
+        await dispatch( findALLYsByRole_thunk(role) );
     }
 
     const fetchAllUsers = async (): Promise<any> => {
@@ -116,7 +116,7 @@ export const ProjectId = () => {
     ];
 
     useEffect(() => {
-        fetchEmployee('EMPLOYEE');
+        fetchALLY('ALLY');
         
         // user.role === 'ADMIN' ? fetchClients('CLIENT') : null
         user.role === 'ADMIN' ? fetchAllUsers() : null
@@ -220,7 +220,7 @@ export const ProjectId = () => {
 
                 {/* <div className='container-input-form'>
                     <label>Responsables del proyecto:</label>
-                    <TagsInputWithAutoComplete employees={mEmployees} selectedTags={selectedTags} tags={projectById?.responsiblesId || []} responsiblesId={responsiblesId} />
+                    <TagsInputWithAutoComplete ALLYs={mALLYs} selectedTags={selectedTags} tags={projectById?.responsiblesId || []} responsiblesId={responsiblesId} />
                 </div> */}
 
                 <div className='container-input-form'>
@@ -353,7 +353,7 @@ export const ProjectId = () => {
                                                     fontSize: 13,
                                                     marginTop: -5,
                                                     paddingBottom: 2
-                                                }}>{ formatDate(commentary.createdAt) } · { getFormattedTime(commentary.createdAt) } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
+                                                }}>{ formatDate(commentary.createdAt) } · { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
                                                 <div
                                                     style={{
                                                         fontWeight: 300,

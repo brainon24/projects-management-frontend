@@ -7,13 +7,20 @@ export const Profile = () => {
 
     const { user } = useSelector((state: any) => state.auth);
 
+    const usersRole: any = {
+        ADMIN: 'Administrador',
+        CLIENT: 'Cliente',
+        ALLY: 'Aliado',
+        USER: 'Usuario sin permisos',
+    }
+
     return (
         <MainLayout>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 100 }}>
                 <img src={ profilePicture } alt="Foto de perfil" width={150} style={{ borderRadius: 100, marginRight: 50 }}/>
                 <div>
                     <h1 style={{ textAlign: 'center' }}>{ user.fullName }</h1>
-                    <p style={{ textAlign: 'center' }}>Rol:<span style={{ marginLeft: 5, fontWeight: 500, }}>{ user.role }</span></p>
+                    <p style={{ textAlign: 'center' }}>Rol:<span style={{ marginLeft: 5, fontWeight: 500, }}>{ usersRole[user.role] }</span></p>
                 </div>
             </div>
             <Box sx={{

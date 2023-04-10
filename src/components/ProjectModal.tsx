@@ -247,7 +247,7 @@ export const ProjectModal = ({ project }: any) => {
                                                                 fontSize: 13,
                                                                 marginTop: -5,
                                                                 paddingBottom: 2
-                                                            }}>{ formatDate(commentary.createdAt) } · { getFormattedTime(commentary.createdAt) } { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
+                                                            }}>{ formatDate(commentary.createdAt) } · { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
                                                             <div 
                                                                 style={{
                                                                     fontWeight: 300

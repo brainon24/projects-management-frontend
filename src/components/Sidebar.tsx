@@ -157,11 +157,11 @@ export const Sidebar = () => {
 
 
                     {
-                        status === 'authenticated' && user.role === 'EMPLOYEE' ? (
+                        status === 'authenticated' && user.role === 'ALLY' ? (
                             <>
                                 <Divider />
 
-                                <ListSubheader>Panel de Empleados</ListSubheader>
+                                <ListSubheader>Panel de Aliados</ListSubheader>
 
                                 <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
                                     <LinkRRD to='/private' className='link'>
@@ -304,6 +304,24 @@ export const Sidebar = () => {
                             </>
                         ) : null
                     }
+
+                    {
+                        status === 'authenticated' && user.role === 'USER' ? (
+                            <>
+                                <Divider />
+
+                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
+                                    <LinkRRD to='/private/profile' className='link'>
+                                            <ListItemIcon>
+                                                <BiUserCircle className='icon' />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Mi perfil' />
+                                    </LinkRRD>
+                                </ListItem>
+
+                            </>
+                        ) : null
+                    }
                     
 
                     {
@@ -324,7 +342,7 @@ export const Sidebar = () => {
                         ) : null
                     }
                 </List>
-                <Box sx={{ position: 'relative', backgroundColor: '#fff', height: '10%' }}>
+                <Box sx={{ position: 'relative', backgroundColor: '#fff', height: '10%', mt: 2 }}>
                     <Box sx={{ bottom: 0, position: 'absolute', width: '100%', backgroundColor: '#fff' }}>
                         <a 
                             href='https://www.linkedin.com/in/david-diaz-herrera-2777ba1a8/' 
