@@ -8,8 +8,8 @@ const useFormatDate = () => {
         const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
         const date: Date = new Date(dateStr.toString());
-        // date.setHours(date.getHours() - 5);
-        // console.log('date: ', date + ' - ' + title)
+        date.setHours(date.getHours() - 5);
+        console.log('date: ', date)
 
         return eventDate(new Date(date).getFullYear(), new Date(date).getMonth() + 1, new Date(date).getDate()).toLocaleDateString('es-ES', options).slice(0, 1).toUpperCase() + eventDate(new Date(date).getFullYear(), new Date(date).getMonth() + 1, new Date(date).getDate()).toLocaleDateString('es-ES', options).slice(1)
     };
