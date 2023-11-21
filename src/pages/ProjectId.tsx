@@ -146,6 +146,8 @@ export const ProjectId = () => {
     if( isLoadingCommentaries ) return <Loading />
     if( isLoadingProjects ) return <Loading />
 
+    console.log(JSON.stringify(commentariesByProjectID, null, 4));
+
     return (
        <MainLayout>
             { isOpenModal && <FormCommentModal projectId={ projectId } /> }
@@ -353,7 +355,7 @@ export const ProjectId = () => {
                                                     fontSize: 13,
                                                     marginTop: -5,
                                                     paddingBottom: 2
-                                                }}>{ formatDate(commentary.createdAt) } · { getComplementHours(new Date(commentary.createdAt).getHours()) }</p>
+                                                }}>{ formatDate(commentary.createdAt) } · { getComplementHours(new Date(commentary.createdAt)) }</p>
                                                 <div
                                                     style={{
                                                         fontWeight: 300,
