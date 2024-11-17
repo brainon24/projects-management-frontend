@@ -6,6 +6,8 @@ import { MdOutlineCreateNewFolder } from 'react-icons/md';
 import { GrProjects } from 'react-icons/gr';
 import { RiOrganizationChart, RiGitRepositoryPrivateLine } from 'react-icons/ri';
 import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
+import { TbMessage } from 'react-icons/tb';
+import { VscFileSymlinkDirectory } from 'react-icons/vsc';
 
 export const PrivateAdmin = () => {
 
@@ -62,6 +64,18 @@ export const PrivateAdmin = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
+                            <LinkRRD to='/private/messages' className='card-client_title'>
+                                <p>Mensajes de WhatsApp</p>
+                            </LinkRRD>
+                            <BiRightArrowAlt className='icon-link' />
+                        </Box>
+                        <TbMessage className='icon-card' />
+                    </Box>
+                    <p className='card-client_description'>Acá podrás visualizar los mensajes recibidos por WhatsApp por cada cliente</p>
+                </Box>
+                <Box className='card-client'>
+                    <Box className='container-header-card'>
+                        <Box display='flex' alignItems='center'>
                             <LinkRRD to='/private/my-projects' className='card-client_title'>
                                 <p>Listar Mis Proyectos</p>
                             </LinkRRD>
@@ -94,6 +108,18 @@ export const PrivateAdmin = () => {
                         <GrProjects className='icon-card' />
                     </Box>
                     <p className='card-client_description'>Acá podrás listar todos los proyectos de tu empresa.</p>
+                </Box>
+                <Box className='card-client'>
+                    <Box className='container-header-card'>
+                        <Box display='flex' alignItems='center'>
+                            <LinkRRD to='' target='_blank' className='card-client_title'>
+                                <p>Google Drive</p>
+                            </LinkRRD>
+                            <BiRightArrowAlt className='icon-link' />
+                        </Box>
+                        <VscFileSymlinkDirectory className='icon-card' />
+                    </Box>
+                    <p className='card-client_description'>Ir a Google Drive</p>
                 </Box>
             </Box>
         </Box>

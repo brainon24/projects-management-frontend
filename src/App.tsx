@@ -23,6 +23,7 @@ import { ManagementAccounts } from './pages/ManagementAccounts';
 import { ManagementBusiness } from './pages/ManagementBusiness';
 import { AdministrativeManagement } from './pages/AdministrativeManagement';
 import { ProjectId } from './pages/ProjectId';
+import { Messages } from "./pages/Messages";
 
 const App = () => {
 
@@ -102,6 +103,15 @@ const App = () => {
           element={ 
             <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN]}>
               <CreateProject />
+            </ProtectedRoute>
+          } 
+        />
+
+        <Route 
+          path="/private/messages" 
+          element={ 
+            <ProtectedRoute roles={[Role.ADMIN]}>
+              <Messages />
             </ProtectedRoute>
           } 
         />
