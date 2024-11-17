@@ -4,6 +4,8 @@ import projectsManagement from '../api/api';
 import styles from '../styles/messages.module.css'
 import { HiOutlineFolderOpen } from 'react-icons/hi';
 import { MdOutlineOpenInNew } from 'react-icons/md';
+import useFormatDate from '../hooks/useFormatDate';
+import { getComplementHours } from '../helpers/dates';
 
 export const Messages = () => {
 
@@ -12,6 +14,8 @@ export const Messages = () => {
     const [users, setUsers] = useState([]);
     const [userId, setUserId] = useState(undefined);
     const [messages, setMessages] = useState([]);
+
+    const { formatDate } = useFormatDate();
 
     const getBusiness = async () => {
         const { data } = await projectsManagement.get(`/business/findAll`);
@@ -94,7 +98,7 @@ export const Messages = () => {
                                                     )
                                                 }
                                                 {
-                                                    message?.attachmentType === 'png' || message?.attachmentType === 'jpg' || message?.attachmentType === 'jpge' && (
+                                                    message?.attachmentType === 'png' || message?.attachmentType === 'jpg' || message?.attachmentType === 'jpeg' && (
                                                         <img src={message?.attachment} alt='Imagen' width={200} />
                                                     )
                                                 }
@@ -115,6 +119,19 @@ export const Messages = () => {
                                                 }
                                             </div>
                                         </div>
+                                        <p
+                                            style={{
+                                                fontWeight: 400,
+                                                fontSize: 13,
+                                                color: 'var(--grayDark)',
+                                                paddingTop: 0,
+                                                cursor: 'pointer',
+                                                textAlign: 'right',
+                                            }}
+                                        >
+                                            { formatDate(message?.createdAt) } 
+                                            <span> · { getComplementHours(new Date(message?.createdAt)) }</span>
+                                        </p>
                                     </div>
                                 ))
                             }
