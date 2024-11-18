@@ -4,12 +4,10 @@ import {MainLayout} from '../layouts/MainLayout';
 import { useForm } from '../hooks/useForm';
 import TextEditor from '../components/TextEditor';
 import { TagsInputWithAutoComplete } from '../components/TagsInputWithAutoComplete';
-import { TagsInput } from '../components/TagsInput';
 
 import '../styles/createProject.css';
-import { AiOutlineZoomIn, AiOutlineZoomOut } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { findALLYsByRole_thunk, findClientsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
+import { findALLYsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
 import { TagsInputWithAutoCompleteClients } from '../components/TagsInputAutoCompleteClients';
 import { Chip } from '@mui/material';
 import { createProject_thunk } from '../store/projects/thunks';
@@ -20,12 +18,12 @@ import Loading from '../components/Loading';
 export const CreateProject = () => {
 
     const { user } = useSelector((state: any) => state.auth);
-    const { mALLYs = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
+    const { mALLYs = [], mClients = [], mUsers } = useSelector((state: any) => state.users);
     const { lastUpdateProject, isLoadingProjects } = useSelector((state: any) => state.projects);
 
     const dispatch = useDispatch();
 
-    const { formState, title, onInputChange, onResetForm, } = useForm({
+    const { title, onInputChange, } = useForm({
         title: '',
     });
 
@@ -33,8 +31,6 @@ export const CreateProject = () => {
     const [ authorId, setAuthorId ] = useState('');
     const [ responsiblesId, setResponsiblesId ] = useState([]);
     const [ description, setDescription ] = useState('');
-    const [ acceptanceCriteria, setAcceptanceCriteria ] = useState('');
-    const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
 
     const selectedTags = (tags: any = []) => {
         const tag = tags.map((tag: any) => tag._id)
@@ -48,10 +44,6 @@ export const CreateProject = () => {
         setBusinessId( tag.businessId );
     }
 
-    const changeVisibilityCA = () => {
-        setShowAcceptanceCriteria( !showAcceptanceCriteria );
-    }
-
     const onSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -63,7 +55,7 @@ export const CreateProject = () => {
             title,
             responsiblesId,
             description,
-            acceptanceCriteria
+            acceptanceCriteria: '',
         }) );
     }
 
@@ -149,39 +141,6 @@ export const CreateProject = () => {
                         <label>Añade una descripción:</label>
                         <TextEditor value={ description } setValue={ setDescription } /> 
                     </div>
-
-                    {
-                        showAcceptanceCriteria ? (
-                            <div className='container-input-form'>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <label>Agregar criterios al proyecto:</label>
-                                    <div 
-                                        onClick={ changeVisibilityCA }
-                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', }}
-                                    >
-                                        <p>Minimizar</p>
-                                        <span>
-                                            <AiOutlineZoomOut style={{ fontSize: 16, marginLeft: 10 }} />
-                                        </span>
-                                    </div>
-                                </div>
-                                <TextEditor value={ acceptanceCriteria } setValue={ setAcceptanceCriteria } />
-                            </div>
-                        ) : (
-                            <div>
-                                <label>Agregar criterios al proyecto:</label>
-                                <div 
-                                    onClick={ changeVisibilityCA }
-                                    className='container-show-ca'
-                                >
-                                    <span className='icon-show-ca'>
-                                        <AiOutlineZoomIn />
-                                    </span>
-                                    <p className='pharagraph-show-ca'>Maximizar</p>
-                                </div>
-                            </div>
-                        )
-                    }
 
                     <div className='container-btns-cp'>
                         <LinkRRD to='/private'>

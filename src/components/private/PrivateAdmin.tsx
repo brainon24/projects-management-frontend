@@ -8,6 +8,7 @@ import { RiOrganizationChart, RiGitRepositoryPrivateLine } from 'react-icons/ri'
 import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 import { TbMessage } from 'react-icons/tb';
 import { VscFileSymlinkDirectory } from 'react-icons/vsc';
+import { IoCalendarNumberOutline } from 'react-icons/io5';
 
 export const PrivateAdmin = () => {
 
@@ -112,14 +113,26 @@ export const PrivateAdmin = () => {
                 <Box className='card-client'>
                     <Box className='container-header-card'>
                         <Box display='flex' alignItems='center'>
-                            <LinkRRD to='' target='_blank' className='card-client_title'>
-                                <p>Google Drive</p>
+                            <LinkRRD to='https://drive.google.com/drive/folders/1ZAZLeZKxY1vwoNgxD610vqLbAsNY55c_?usp=sharing' target='_blank' className='card-client_title'>
+                                <p>Mis archivos con brainon24</p>
                             </LinkRRD>
                             <BiRightArrowAlt className='icon-link' />
                         </Box>
                         <VscFileSymlinkDirectory className='icon-card' />
                     </Box>
-                    <p className='card-client_description'>Ir a Google Drive</p>
+                    <p className='card-client_description'>Ahora puedes acceder a tus archivos con brainon24 desde aquí.</p>
+                </Box>
+                <Box className='card-client'>
+                    <Box className='container-header-card'>
+                        <Box display='flex' alignItems='center'>
+                            <LinkRRD to='https://calendar.google.com/calendar/u/0/r/week' target='_blank' className='card-client_title'>
+                                <p>Mi agenda con brainon24</p>
+                            </LinkRRD>
+                            <BiRightArrowAlt className='icon-link' />
+                        </Box>
+                        <IoCalendarNumberOutline className='icon-card' />
+                    </Box>
+                    <p className='card-client_description'>Puedes ingresar a tu agenda con brainon24 desde aquí.</p>
                 </Box>
             </Box>
         </Box>
