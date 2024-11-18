@@ -69,7 +69,7 @@ export const Messages = () => {
                         users?.map((user: any) => (
                             <div key={user?.id} onClick={() => setUserId(user?.id)} className={`${styles.text} ${userId === user?.id && styles.active}`}>
                                 <p>{ user?.fullName }</p>
-                                <p>{ user?.phone }</p>
+                                <p>{ user?.role }</p>
                             </div>
                         ))
                     }
@@ -94,12 +94,17 @@ export const Messages = () => {
                                             <div>
                                                 {
                                                     message?.attachmentType === 'mp4' && (
-                                                        <video src={message?.attachment} width={200} controls />
+                                                        <video src={message?.attachment} width={300} controls />
+                                                    )
+                                                }
+                                                {
+                                                    message?.attachmentType === 'mpeg' && (
+                                                        <video src={message?.attachment} width={300} height={40} controls />
                                                     )
                                                 }
                                                 {
                                                     message?.attachmentType === 'png' || message?.attachmentType === 'jpg' || message?.attachmentType === 'jpeg' && (
-                                                        <img src={message?.attachment} alt='Imagen' width={200} />
+                                                        <img src={message?.attachment} alt='Imagen' width={300} />
                                                     )
                                                 }
                                                 {
