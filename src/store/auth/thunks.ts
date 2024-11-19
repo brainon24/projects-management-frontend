@@ -16,14 +16,12 @@ export const signUp_thunk = ({ fullName, email, password, phone, businessId }: S
     return async ( dispatch: any ) => {
 
         dispatch( checkingReducer() );
-        
-        const cellphone = parseInt( phone );
 
         projectsManagement.post(`/auth/signUp`, {
             fullName, 
             email, 
             password, 
-            phone: cellphone, 
+            phone, 
             businessId,
         })
             .then(({ data, status }) => {
