@@ -352,7 +352,7 @@ export const Sidebar = () => {
                                 style={{
                                     textAlign: 'center', fontSize: 16,
                                 }}
-                            >Desarrallo de brainon24</p>
+                            >Desarrollo de brainon24</p>
                             <p 
                                 style={{
                                     textAlign: 'center', fontSize: 16, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: 'var(--lightBlue)',
