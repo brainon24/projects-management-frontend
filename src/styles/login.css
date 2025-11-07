@@ -1,22 +1,17 @@
 .container-page {
     background-color: var(--gray);
     width: 100vw;
-    height: 100vh;
-}
-
-.go-to-back-container {
-    padding: 50px;
+    height: 100dvh;
 }
 
 .go-to-back-icon {
-    font-size: 30px;
-    font-weight: 600;
-    color: var(--black);
     cursor: pointer;
+    width: 20px;
+    padding: 30px 30px 0 30px;
 }
 
 .login-page-container {
-    height: 75vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +71,7 @@
     }
 
     .login-page-container {
-        height: 80vh;
+        /* height: 80vh; */
         /* height: 100%; */
         display: flex;
         justify-content: center;

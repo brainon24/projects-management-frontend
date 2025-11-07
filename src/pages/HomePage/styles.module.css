@@ -1,0 +1,66 @@
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 15px;
+
+    margin-top: var(--header-height, 0);
+}
+
+.desktopBanners {
+    display: block;
+    background-color: #fff8f3;
+}
+
+.mobileBanners {
+    display: none;
+}
+
+.connectionsSubtitle {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 2px;
+    /* color: #ff6a00; */
+}
+
+.sectionHead {
+    text-align: center;
+}
+
+.connectionText {
+    text-align: center;
+}
+
+.connectionButtonsContainer {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.aboutContainer {
+    margin-top: 55px;
+}
+
+.howWeDoItTimelineContainer {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+
+@media (max-width: 730px) {
+    .desktopBanners {
+        display: none;
+    }
+
+    .mobileBanners {
+        display: block;
+        background-color: #fff8f3;
+    }
+}
+
+@media (max-width: 650px) {
+    .connectionsSubtitl, .aboutContainer {
+        margin-top: 30px;
+    }
+}

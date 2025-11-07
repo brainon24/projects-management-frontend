@@ -1,23 +1,14 @@
-import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
+import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 import { Link as LinkRRD, } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { closeSidemenu, openModal } from '../store/ui/uiSlice';
 import { logout_thunk } from '../store/auth/thunks';
-import { FiLogIn } from 'react-icons/fi';
-import { VscHome } from 'react-icons/vsc';
-import { SlClose } from 'react-icons/sl';
-import { BsKey } from 'react-icons/bs';
-import { FaStoreAlt } from 'react-icons/fa';
-import { RiGitRepositoryPrivateLine, RiLogoutBoxLine, RiOrganizationChart } from 'react-icons/ri';
-import { MdAddBusiness, MdManageAccounts, MdOutlineBusinessCenter, MdOutlineCreateNewFolder } from 'react-icons/md';
-import { GrProjects } from 'react-icons/gr';
-import { BiUserCircle } from 'react-icons/bi';
-import { FcPrivacy } from 'react-icons/fc';
-import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 import profilePicture from '../assets/profile-picture.png';
 
 import './styles/sidebar.css';
+import { Icon } from './Icons';
+import { useMemo } from 'react';
 
 export const Sidebar = () => {
 
@@ -32,6 +23,58 @@ export const Sidebar = () => {
         dispatch( closeSidemenu() )
     }
 
+    const options = useMemo(() => {
+        const menuItems = [];
+
+        if (status === 'not-authenticated') {
+            menuItems.push(
+                { text: 'Inicio', icon: <Icon name='home' size={17} />, to: '/' },
+                { text: 'Iniciar sesión', icon: <Icon name='lock-02' size={17} />, to: '/login' },
+                { text: 'Registrarme', icon: <Icon name='passcode-lock' size={17} />, to: '/sign-up' },
+            );
+        }
+
+        if (status === 'authenticated') {
+            const commonItems = [
+                { text: 'Mi panel', icon: <Icon name='lock-02' size={17} />, to: '/private', subheader: user.role },
+                { text: 'Mi perfil', icon: <Icon name='usuario-circulo' size={17} />, to: '/private/profile' },
+                { text: 'Mi negocio', icon: <Icon name='edificio-02' size={17} />, to: '/private/my-business' },
+            ];
+
+            const roleSpecific = {
+                CLIENT: [
+                    { text: 'Crear proyecto', icon: <Icon name='file-shield-02' size={17} />, to: '/private/create-project' },
+                    { text: 'Mis proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/my-projects' },
+                    { text: 'Proyectos de mi negocio', icon: <Icon name='archivo' size={17} />, to: '/private/my-business-projects' },
+                ],
+                ALLY: [
+                    { text: 'Mis Proyectos Asignados', icon: <Icon name='puntos' size={17} />, to: '/private/my-projects-asigned' },
+                ],
+                ADMIN: [
+                    { text: 'Crear proyecto', icon: <Icon name='file-shield-02' size={17} />, to: '/private/create-project' },
+                    { text: 'Todos los proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/all-projects' },
+                    { text: 'Mis proyectos asignados', icon: <Icon name='puntos' size={17} />, to: '/private/my-projects-asigned' },
+                    { text: 'Crear negocio', icon: <Icon name='edificio-02' size={17} />, to: '/private/management-business', onClick: handleBussines },
+                    { text: 'Gestión Administrativa', icon: <Icon name='users-edit' size={17} />, to: '/private/administrative-managment' },
+                    { text: 'Gestionar negocios', icon: <Icon name='edificio-06' size={17} />, to: '/private/management-business' },
+                ],
+                USER: [],
+            };
+
+            menuItems.push(...commonItems);
+            if (roleSpecific[user?.role]) menuItems.push(...roleSpecific[user?.role]);
+
+            menuItems.push({
+                text: 'Cerrar sesión',
+                icon: <Icon name='cerrar-sesion' size={17} />,
+                to: '/',
+                onClick: () => dispatch(logout_thunk()),
+            });
+
+            return menuItems;
+        }
+    }, [user?.role])
+
     return (
         <Drawer
             open={ sidemenuOpen }
@@ -43,10 +86,9 @@ export const Sidebar = () => {
                 <List>
                     <ListItem>
                         <ListItemIcon>
-                            <SlClose 
-                                className='close-sidebar-icon'
-                                onClick={ () => dispatch( closeSidemenu() ) }
-                            />
+                            <div onClick={ () => dispatch( closeSidemenu() ) }>
+                                <Icon name='x' size={15} />
+                            </div>
                         </ListItemIcon>
                     </ListItem>
                     <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30, width: '100%', }}>
@@ -55,292 +97,23 @@ export const Sidebar = () => {
 
                     {/* <Divider /> */}
 
-                    {
-                        status === 'not-authenticated'
-                        ? (
-                            <>
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/' className='link'>
-                                            <ListItemIcon>
-                                                <VscHome className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Inicio' />
-                                    </LinkRRD>
-                                </ListItem>
+                    {options?.map((item, idx) => (
+                        <div key={idx}>
+                            {item.subheader && <ListSubheader>{item.subheader === 'CLIENT' ? 'Panel de Clientes' : item.subheader === 'ALLY' ? 'Panel de Aliados' : item.subheader === 'ADMIN' ? 'Panel de Administración' : null}</ListSubheader>}
+                            <ListItem 
+                                className='list-item' 
+                                onClick={() =>{
+                                    dispatch( closeSidemenu() );
+                                    item.onClick();
+                                }}>
+                                <LinkRRD to={item.to} className='link'>
+                                    <ListItemIcon>{item.icon}</ListItemIcon>
+                                    <ListItemText primary={item.text} className={item.subheader ? 'item-text-sidebar' : undefined} />
+                                </LinkRRD>
+                            </ListItem>
+                        </div>
+                    ))}
 
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/login' className='link'>
-                                            <ListItemIcon>
-                                                <FiLogIn className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Iniciar sesión' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/sign-up' className='link'>
-                                            <ListItemIcon>
-                                                <BsKey className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Registrarme' />
-                                    </LinkRRD>
-                                </ListItem>
-                            </>
-                        ) : null
-                    }
-
-
-                    {
-                        status === 'authenticated' && user.role === 'CLIENT' ? (
-                            <>
-                                <Divider />
-
-                                <ListSubheader>Panel de Clientes</ListSubheader>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private' className='link'>
-                                            <ListItemIcon>
-                                                {/*<MdDashboardCustomize className='icon' />*/}
-                                                <FcPrivacy />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi panel' className='item-text-sidebar' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/profile' className='link'>
-                                            <ListItemIcon>
-                                                <BiUserCircle className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi perfil' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-business' className='link'>
-                                            <ListItemIcon>
-                                                <MdOutlineBusinessCenter className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi negocio' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/create-project' className='link'>
-                                            <ListItemIcon>
-                                                <MdOutlineCreateNewFolder className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Crear proyecto' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-projects' className='link'>
-                                            <ListItemIcon>
-                                                <GrProjects className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mis proyectos' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-business-projects' className='link'>
-                                            <ListItemIcon>
-                                                <RiOrganizationChart className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Proyectos de mi negocio' />
-                                    </LinkRRD>
-                                </ListItem>
-                            </>
-                        ) : null
-                    }
-
-
-                    {
-                        status === 'authenticated' && user.role === 'ALLY' ? (
-                            <>
-                                <Divider />
-
-                                <ListSubheader>Panel de Aliados</ListSubheader>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private' className='link'>
-                                            <ListItemIcon>
-                                                {/* <MdDashboardCustomize className='icon' /> */}
-                                                <FcPrivacy className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi panel' className='item-text-sidebar' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/profile' className='link'>
-                                            <ListItemIcon>
-                                                <BiUserCircle className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi perfil' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-business' className='link'>
-                                            <ListItemIcon>
-                                                <MdOutlineBusinessCenter className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi negocio' /> {/* CHANGE IT*/}
-                                    </LinkRRD>
-                                </ListItem> 
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-projects-asigned' className='link'>
-                                            <ListItemIcon>
-                                                <GrProjects className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mis Proyectos Asignados' />
-                                    </LinkRRD>
-                                </ListItem>
-                            </>
-                        ) : null
-                    }
-
-
-                    {
-                        status === 'authenticated' && user.role === 'ADMIN' ? (
-                            <>
-                                <Divider />
-
-                                <ListSubheader>Panel de Administración</ListSubheader>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private' className='link'>
-                                            <ListItemIcon>
-                                                {/* <MdDashboardCustomize className='icon' /> */}
-                                                <FcPrivacy className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi panel' className='item-text-sidebar' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/profile' className='link'>
-                                            <ListItemIcon>
-                                                <BiUserCircle className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi perfil' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-business' className='link'>
-                                            <ListItemIcon>
-                                                <MdOutlineBusinessCenter className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi negocio' /> {/* CHANGE IT*/}
-                                    </LinkRRD>
-                                </ListItem> 
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/create-project' className='link'>
-                                            <ListItemIcon>
-                                                <MdOutlineCreateNewFolder className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Crear proyecto' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/all-projects' className='link'>
-                                            <ListItemIcon>
-                                                <GrProjects className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Todos los proyectos' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/my-projects-asigned' className='link'>
-                                            <ListItemIcon>
-                                                <AiOutlineFundProjectionScreen className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mis proyectos asignados' />
-                                    </LinkRRD>
-                                </ListItem>
-                                
-                                <ListItem className='list-item' onClick={ handleBussines  }>
-                                    <LinkRRD to='/private/management-business' className='link'>
-                                            <ListItemIcon>
-                                                <MdAddBusiness className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Crear negocio' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/administrative-managment' className='link'>
-                                            <ListItemIcon>
-                                                <RiGitRepositoryPrivateLine className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Gestión Administrativa' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/management-accounts' className='link'>
-                                            <ListItemIcon>
-                                                <MdManageAccounts className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Gestionar usuarios' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/management-business' className='link'>
-                                            <ListItemIcon>
-                                                <FaStoreAlt className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Gestionar negocios' />
-                                    </LinkRRD>
-                                </ListItem>
-                            </>
-                        ) : null
-                    }
-
-                    {
-                        status === 'authenticated' && user.role === 'USER' ? (
-                            <>
-                                <Divider />
-
-                                <ListItem className='list-item' onClick={ () => dispatch( closeSidemenu() ) }>
-                                    <LinkRRD to='/private/profile' className='link'>
-                                            <ListItemIcon>
-                                                <BiUserCircle className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Mi perfil' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                            </>
-                        ) : null
-                    }
-                    
-
-                    {
-                        status === 'authenticated' ? (
-                            <>
-                                <Divider />
-
-                                <ListItem className='list-item' onClick={() => dispatch( logout_thunk() )}>
-                                    <LinkRRD to='/' className='link'>
-                                            <ListItemIcon>
-                                                <RiLogoutBoxLine className='icon' />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Cerrar sesión' />
-                                    </LinkRRD>
-                                </ListItem>
-
-                            </>
-                        ) : null
-                    }
                 </List>
                 <Box sx={{ position: 'relative', backgroundColor: '#fff', height: '10%', mt: 6 }}>
                     <Box sx={{ bottom: 0, position: 'absolute', width: '100%', backgroundColor: '#fff' }}>
@@ -355,7 +128,7 @@ export const Sidebar = () => {
                             >Desarrollo de brainon24</p>
                             <p 
                                 style={{
-                                    textAlign: 'center', fontSize: 16, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: 'var(--lightBlue)',
+                                    textAlign: 'center', fontSize: 16, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: '#000',
                                 }}
                             >
                                 por David Diaz H.

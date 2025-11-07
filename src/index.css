@@ -14,7 +14,6 @@
   --orange: #ff9500;
   --blue: #369EB3;
   --lightBlue: #7dd3fc;
-  --aquagreen: #12b39a;
   --red: #ef4444;
   --green: #00a650;
 
@@ -32,5 +31,13 @@ a {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.6rem;
+}
+
+h1, h2, h3, h4 {
+  color: #000;
+}
+
+p {
+  font-size: 14.5px;
 }

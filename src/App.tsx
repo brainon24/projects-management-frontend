@@ -24,6 +24,7 @@ import { ManagementBusiness } from './pages/ManagementBusiness';
 import { AdministrativeManagement } from './pages/AdministrativeManagement';
 import { ProjectId } from './pages/ProjectId';
 import { Messages } from "./pages/Messages";
+import { HomePage } from "./pages/HomePage";
 
 const App = () => {
 
@@ -67,8 +68,8 @@ const App = () => {
             ) : null
         }
       <Routes>
-        <Route path="/" element={ <Login /> }  />
-        {/* <Route path="/login" element={ <Login /> } /> */}
+        <Route path="/" element={ <HomePage /> }  />
+        <Route path="/login" element={ <Login /> } />
         <Route path="/sign-up" element={ <SignUp /> } />
 
         <Route 

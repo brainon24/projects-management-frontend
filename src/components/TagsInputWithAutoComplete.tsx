@@ -8,18 +8,14 @@ export const TagsInputWithAutoComplete = (props: any) => {
     
     const { ALLYs = [] } = props;
 
-    let { formState, userInput, onInputChange, onResetForm } = useForm({
+    let { userInput, onInputChange } = useForm({
         userInput: '',
     });
 
     const [ focus, setFocus ] = useState<boolean>(false);
     const [ blur, setBlur ] = useState<boolean>(false);
 
-    // console.log(props.tags)
     const [ tags, setTags ] = useState(props.tags);
-    // console.log(tags)
-
-    // console.log('users: ', users)
 
     const handleOnFocus = () => {
 
@@ -48,7 +44,6 @@ export const TagsInputWithAutoComplete = (props: any) => {
     }
 
     const addTagsById = (user: any) => {
-        // console.log('DENTRO DE ADD TAGS BY ID: ', user)
         setTags([ ...tags, {fullName: user.fullName, _id: user._id, bussinesName: user.bussinesName} ]);
         props?.selectedTags([ ...tags, {fullName: user.fullName, _id: user._id} ]);
         

@@ -6,15 +6,12 @@ import {
   DialogContentText,
   DialogTitle,
   Slide,
-  TextField,
   Box,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from "../store/ui/uiSlice";
-import { useForm } from '../hooks/useForm';
-import { createBussines_thunk } from '../store/business/thunks';
 import './projectModal.css';
 import TextEditor from "./TextEditor";
 import { useState } from 'react';
@@ -96,18 +93,6 @@ export const FormCommentModal = ({ projectId }: any) => {
                     marginTop: -20,
                 }}
             >
-                {/* <TextField
-                    autoFocus
-                    margin="dense"
-                    id="bussinesName"
-                    label="Nombre del negocio"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    name="bussinesName"
-                    onChange={ onInputChange }
-                    value={ bussinesName }
-                /> */}
                 <TextEditor value={ comment } setValue={ setComment } /> 
             </DialogContent>
 

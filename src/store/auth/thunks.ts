@@ -2,6 +2,7 @@ import { addErrorReducer, checkingReducer, logoutReducer, signInReducer } from "
 import { clearBusinessIdAndName } from "../business/businessSlice";
 import projectsManagement from '../../api/api';
 import { clearStateUsersReducer } from "../users/usersSlice";
+import { closeSidemenu } from "../ui/uiSlice";
 
 
 interface SignUpProps {
@@ -122,6 +123,7 @@ export const logout_thunk = () => {
         await localStorage.removeItem('token');
         
         dispatch( logoutReducer() );
+        dispatch( closeSidemenu() );
 
         return dispatch( clearStateUsersReducer() );
     }

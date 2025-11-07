@@ -3,7 +3,6 @@ import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dial
 import { RiCloseFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { clearErrorReducer } from '../store/auth/authSlice';
-import { clearlastUpdateProjectsReducer } from '../store/projects/projectsSlice';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {

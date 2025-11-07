@@ -10,6 +10,7 @@ import ModalError from '../components/ModalError';
 
 import '../styles/login.css';
 import gestionImage from '../assets/Gestion-1.png';
+import { Icon } from '../components/Icons';
 
 
 export const Login = () => {
@@ -80,42 +81,39 @@ export const Login = () => {
                                 width: '100%',
                             }}
                         >
-                            <Box
+                            {/* <Box
                                 component='section'
                                 className='go-to-back-container'
                             >
-                                <a href='https://brainon24.com/' style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 15,
-                                }}>
-                                    <Link 
-                                        className='go-to-back-icon' 
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <AiOutlineArrowLeft />
-                                    </Link>
-                                    <p style={{
-                                        fontSize: 20
-                                    }}>Inicio</p>
-                                </a>
-                            </Box>
+                                <Link 
+                                    component={LinkRRD} 
+                                    to="/" 
+                                    className='go-to-back-icon'
+                                    sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}
+                                >
+                                    <AiOutlineArrowLeft />
+                                    <Typography fontSize={20}>Inicio</Typography>
+                                </Link>
+                            </Box> */}
 
-                            <Box sx={{
+                            <div className='go-to-back-icon'>
+                                <LinkRRD to='/'>
+                                    <Icon name='flecha-derecha' />
+                                </LinkRRD>
+                            </div>
+
+                            {/* <Box sx={{
                                 marginRight: 7
                             }}>
                                 <img 
                                     src={ gestionImage } 
                                     alt="Gestion | brainon24" 
                                     style={{
-                                      width: 110,
+                                      width: 90,
                                       paddingTop: 30
                                     }}
                                 />
-                            </Box>
+                            </Box> */}
                         </Box>
 
                         <Box 
@@ -126,12 +124,7 @@ export const Login = () => {
                                 onSubmit={ onSubmit }
                                 className='form-container'
                             >
-                                <Box  sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                    <LinkRRD to='/' className='link-back-mobile'>
-                                        <AiOutlineArrowLeft />
-                                    </LinkRRD>
-                                    <h1>Iniciar Sesión</h1>
-                                </Box>
+                                <h1>Iniciar Sesión</h1>
                                 <Input 
                                     placeholder='Correo Electrónico'
                                     className='form-input'

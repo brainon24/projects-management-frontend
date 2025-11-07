@@ -1,0 +1,15 @@
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 18px;
+}
+
+.subtitle {
+    font-weight: 500;
+    color: #585656;
+}
+
+.description {
+    color: #2E2E2E;
+}
