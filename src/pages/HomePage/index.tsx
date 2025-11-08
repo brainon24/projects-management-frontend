@@ -83,17 +83,22 @@ export const HomePage = () => {
           <h2 className={styles.sectionHead}>Nosotros</h2>
           <p>Somos la Plataforma de Conexiones de Marca Brand-Connection Platform que conecta a las MiPymes con la estrategia y una ejecución profesional que necesitan para ser visibles, relevantes y rentables.</p>
           <p>Planeamos, conceptualizamos, diseñamos y producimos campañas ejecutables en medios on y offline y te acompañamos en la implementación para que cada inversión en comunicación se traduzca en reconocimiento y ventas.</p>
+        </div>
+      </div>
 
+      <div className={styles.howWeDoItTimelineContainerBg}>
+        <div className={styles.container}>
           <div className={styles.howWeDoItTimelineContainer}>
             <h3>Cómo lo hacemos</h3>
             <HowWeDoItTimeline />
           </div>
         </div>
+      </div>
 
+      <div className={styles.container}>
         <div id='contact'>
           <h2 className={styles.sectionHead}>Contacto</h2>
-
-          
+          <p>Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.</p>
         </div>
       </div>
     </div>

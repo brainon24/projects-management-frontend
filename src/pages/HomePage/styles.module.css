@@ -42,8 +42,13 @@
     margin-top: 55px;
 }
 
+.howWeDoItTimelineContainerBg {
+    background-color: #d9eaed;
+}
+
 .howWeDoItTimelineContainer {
     margin-top: 40px;
+    padding: 40px 0;
     margin-bottom: 20px;
 }
 
