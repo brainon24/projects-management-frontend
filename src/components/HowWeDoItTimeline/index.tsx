@@ -87,29 +87,29 @@ export const HowWeDoItTimeline = () => {
   return (
     <div style={{ width: "100%", height: "auto" }}>
         <Chrono
-            mode={mode as TimelineMode}
-            // mode='VERTICAL'
-            theme={{
-                primary: "#0F0F0F",
-                secondary: "#000",
-                cardBgColor: "#fff",
-                cardForeColor: '#000',
-            }}
-            enableOutline={false}
-            // cardHeight={120}
-            cardHeight='auto'
-            onItemSelected={() => {}}
-            disableAutoScrollOnClick
-            hideControls
-            activeItemIndex={999}
-            disableClickOnCircle
-            disableNavOnKey
+          mode={mode as TimelineMode}
+          // mode='VERTICAL'
+          theme={{
+              primary: "#000",
+              secondary: "#000",
+              cardBgColor: "#fff",
+              cardForeColor: '#000',
+          }}
+          enableOutline={false}
+          // cardHeight={120}
+          cardHeight='auto'
+          onItemSelected={() => {}}
+          disableAutoScrollOnClick
+          hideControls
+          activeItemIndex={999}
+          disableClickOnCircle
+          disableNavOnKey
         >
-            {
-                items.map((i, idx) => (
-                    <CustomCard key={i.title + idx} {...i}  />
-                ))
-            }
+          {
+            items.map((i, idx) => (
+              <CustomCard key={i.title + idx} {...i}  />
+            ))
+          }
         </Chrono>
     </div>
   )
