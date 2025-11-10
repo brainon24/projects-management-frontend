@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
 
@@ -14,15 +15,28 @@ import './styles.css'
 import { HowWeDoItTimeline } from '../../components/HowWeDoItTimeline';
 
 import desktopBanner1 from '../../assets/banners/desktop-banner-1.jpg'
+import desktopBanner2 from '../../assets/banners/desktop-banner-2.jpg'
 import mobileBanner1 from '../../assets/banners/mobile-banner-1.jpg'
 import { HomeServices } from '../../components/HomeServices';
 
 
 export const HomePage = () => {
-  
   // Desktop -> 1280px x 400px & Mobile -> 650px x 400px
-  const desktopBanners = [desktopBanner1];
+  const desktopBanners = [desktopBanner1, desktopBanner2];
   const mobileBanners = [mobileBanner1];
+
+  const [loadingBanners, setLoadingBanners] = useState<Record<string, boolean>>({});
+
+  const handleBannerLoad = (bannerSrc: string) => {
+    // Simular delay para testing (remover en producción)
+    setTimeout(() => {
+      setLoadingBanners(prev => ({ ...prev, [bannerSrc]: false }));
+    }, 2000); // 2 segundos de delay
+  };
+
+  const handleBannerLoadStart = (bannerSrc: string) => {
+    setLoadingBanners(prev => ({ ...prev, [bannerSrc]: true }));
+  };
 
   return (
     <div id='home'>
@@ -44,7 +58,23 @@ export const HomePage = () => {
             {
               desktopBanners.map((banner, idx) => (
                 <SwiperSlide key={idx+banner}>
-                  <img src={banner} alt="Banner" width={800} loading="lazy" style={{objectFit: 'contain'}} />
+                  <div className={styles.bannerContainer}>
+                    {loadingBanners[banner] && (
+                      <div className={styles.bannerLoadingPlaceholder} />
+                    )}
+                    <img 
+                      src={banner} 
+                      alt="Banner" 
+                      width={800} 
+                      loading="lazy" 
+                      className={styles.bannerImage}
+                      data-loading={loadingBanners[banner] || false}
+                      onLoadStart={() => handleBannerLoadStart(banner)}
+                      onLoad={() => handleBannerLoad(banner)}
+                      onError={() => handleBannerLoad(banner)}
+                      style={{objectFit: 'contain'}} 
+                    />
+                  </div>
                 </SwiperSlide>
               ))
             }
@@ -66,7 +96,23 @@ export const HomePage = () => {
             {
               mobileBanners.map((banner, idx) => (
                 <SwiperSlide key={idx+banner}>
-                  <img src={banner} alt="Banner" width={800} loading="lazy" style={{objectFit: 'contain'}} />
+                  <div className={styles.bannerContainer}>
+                    {loadingBanners[banner] && (
+                      <div className={styles.bannerLoadingPlaceholder} />
+                    )}
+                    <img 
+                      src={banner} 
+                      alt="Banner" 
+                      width={800} 
+                      loading="lazy" 
+                      className={styles.bannerImage}
+                      data-loading={loadingBanners[banner] || false}
+                      onLoadStart={() => handleBannerLoadStart(banner)}
+                      onLoad={() => handleBannerLoad(banner)}
+                      onError={() => handleBannerLoad(banner)}
+                      style={{objectFit: 'contain'}} 
+                    />
+                  </div>
                 </SwiperSlide>
               ))
             }

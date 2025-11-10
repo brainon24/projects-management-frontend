@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css'
 import { Icon } from '../Icons'
-import { useLocation } from 'react-router-dom';
+import logo from '../../assets/brainon24-logo.png'
 
 const navList = [
     {
@@ -53,7 +53,8 @@ export const Header = () => {
                 handleHashLinkClick(e, '/#home');
             }}
         >
-            <h1>brainon24</h1>
+            {/* <h1>brainon24</h1> */}
+            <img src={ logo } alt='Logo' width={150} />
         </a>
     )
   }

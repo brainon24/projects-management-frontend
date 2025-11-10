@@ -1,5 +1,5 @@
+import webDevelopmentImage from '../assets/services/web-development.jpg';
 
-// Enum con las keys de los servicios
 export enum ServiceKeys {
   SOCIAL_NETWORK = 'social-network',
   WEB_DEVELOPMENT = 'web-development',
@@ -13,7 +13,6 @@ export enum ServiceKeys {
   COMMERCIAL_IDENTIFICATION_DECORATION = 'commercial-identification-decoration'
 }
 
-// Tipos para la estructura de servicios
 export interface TextContent {
   text: string;
   bold: boolean;
@@ -65,7 +64,7 @@ export const services: Service[] = [
   {
     key: ServiceKeys.WEB_DEVELOPMENT,
     title: "Desarrollo Web",
-    image: ""
+    image: webDevelopmentImage
   },
   {
     key: ServiceKeys.PHOTOGRAPHIC_PRODUCTION,

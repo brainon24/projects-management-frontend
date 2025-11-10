@@ -98,9 +98,6 @@ export const CreateProject = () => {
 
                 <div className='container-form-cp'>
                     <h1>Crear Proyecto</h1>
-                    {/* <input type="date" />
-                    <input type="date" />
-                    <br /> */}
                     
                     {
                         user.role === 'ADMIN' ? (

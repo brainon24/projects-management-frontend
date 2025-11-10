@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
-import { findProjectById_thunk, patchStatusProject_thunk, updateProject_thunk } from '../store/projects/thunks';
+import { findProjectById_thunk, updateProject_thunk } from '../store/projects/thunks';
 
 import '../styles/projectId.css';
 import { findALLYsByRole_thunk, findAllClients_thunk } from '../store/users/thunks';
@@ -12,13 +12,13 @@ import { AiOutlineZoomOut, AiOutlineZoomIn, AiOutlineExclamationCircle } from 'r
 import { findAllCommentariesByProjectID_thunk } from '../store/commentaries/thunks';
 import { Loading100p } from '../components/Loading100p';
 import useFormatDate from '../hooks/useFormatDate';
-import { getFormattedTime, getComplementHours } from '../helpers/dates';
-import { IoAddCircleOutline } from 'react-icons/io5';
+import { getComplementHours } from '../helpers/dates';
 import { closeSidemenu, openModal } from '../store/ui/uiSlice';
 import { FormCommentModal } from '../components/FormCommentModal';
 import { SuccessModal } from '../components/SuccessModal';
 import Loading from '../components/Loading';
 import { ProjectStatus } from '../components/ProjectStatus';
+import { Button } from '../components/Button';
 
 export const ProjectId = () => {
 
@@ -28,10 +28,10 @@ export const ProjectId = () => {
     const { user } = useSelector((state: any) => state.auth);
     const { projectById, errorNotFoundProject, isLoadingProjects, isRequestSuccess: isRequestSuccessProjects, textRequestSuccess: textRequestSuccessProjects, } = useSelector((state: any) => state.projects);
     const { commentariesByProjectID, isLoadingCommentaries, isRequestSuccess, textRequestSuccess, } = useSelector((state: any) => state.commentaries);
-    const { mALLYs = [], mClients = [], isLoadingUsers, mUsers } = useSelector((state: any) => state.users);
+    const { mALLYs = [], mClients = [] } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
 
-    const [ projectId, setProjectId ] = useState(projectById?.businessId);
+    const [ projectId, setProjectId ] = useState(projectById?._id);
     const [ status, setStatus ] = useState(projectById?.status);
     const [ title, setTitle ] = useState(projectById?.title);
     // const [ businessId, setBusinessId ] = useState(projectById?.businessId);
@@ -146,8 +146,6 @@ export const ProjectId = () => {
     if( isLoadingCommentaries ) return <Loading />
     if( isLoadingProjects ) return <Loading />
 
-    console.log(JSON.stringify(commentariesByProjectID, null, 4));
-
     return (
        <MainLayout>
             { isOpenModal && <FormCommentModal projectId={ projectId } /> }
@@ -187,26 +185,6 @@ export const ProjectId = () => {
                         </Select>
                     </FormControl>
                 </Box>
-
-                {/* <input type="date" />
-                <input type="date" />
-                <br /> */}
-                
-                {/* {
-                    user.role === 'ADMIN' ? (
-                        <div className='container-input-form'>
-                            <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', margin: '20px 0 10px 0' }}>
-                                <Chip
-                                    label='Solo Admin'
-                                    className='fadeIn'
-                                    style={{ color: '#3483fa', backgroundColor: '#4189e626', marginRight: 10, width: 93, height: 22 }}
-                                />
-                                <label>Dueño del proyecto:</label>
-                            </div>
-                            <TagsInputWithAutoCompleteClients clients={mUsers} selectedTagAuthorId={selectedTagAuthorId} tag={{}} authorId={authorId} />
-                        </div>
-                    ) : null
-                } */}
 
                 <div className='container-input-form'>
                     <label>Titulo del proyecto:</label>
@@ -263,20 +241,14 @@ export const ProjectId = () => {
                     )
                 }
 
-                <button 
+                <Button 
                     onClick={ onSubmit }
                     style={{
-                        border: 'none',
-                        padding: '7px 25px',
-                        borderRadius: 6,
                         marginTop: 20,
-                        cursor: 'pointer',
-                        backgroundColor: 'var(--blue)',
-                        color: '#fff'
                     }}
                 >
                     Actualizar Proyecto
-                </button>
+                </Button>
 
                 {
                     isLoadingCommentaries 
@@ -313,9 +285,9 @@ export const ProjectId = () => {
                                 style={{
                                     border: 'none',
                                     padding: '10px 20px',
-                                    borderRadius: 6,
+                                    borderRadius: 20,
                                     cursor: 'pointer',
-                                    backgroundColor: '#1259c3',
+                                    backgroundColor: 'var(--blue-dark)',
                                     color: '#fff',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -325,7 +297,6 @@ export const ProjectId = () => {
                                 onClick={ handleComment }
                             >
                                 Nueva actualización
-                                <IoAddCircleOutline size={17} />
                             </button>
                         </div>
                         {

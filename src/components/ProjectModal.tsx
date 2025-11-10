@@ -3,7 +3,6 @@ import { Suspense } from 'react';
 import { useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
@@ -21,10 +20,14 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 import '../styles/createProject.css';
 import './projectModal.css';
-import { TbExternalLink } from 'react-icons/tb';
 import { ProjectStatus } from './ProjectStatus';
 import { Loading100p } from './Loading100p';
-import { getFormattedTime, getComplementHours } from '../helpers/dates';
+import { getComplementHours } from '../helpers/dates';
+import projectsManagement from '../api/api';
+import { toast } from 'react-toastify';
+import { Icon } from './Icons';
+import { Role } from '../enums/user-role.enum';
+import { findProjectsByUserId_thunk } from '../store/projects/thunks';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -68,10 +71,12 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 
 export const ProjectModal = ({ project }: any) => {
 
+    const [isLoading, setIsLoading] = React.useState(false);
+    
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
     const { commentariesByProjectID, isLoadingCommentaries } = useSelector((state: any) => state.commentaries);
+    const { user } = useSelector((state: any) => state.auth);
     const [open, setOpen] = React.useState(true);
 
     const { formatDate } = useFormatDate();
@@ -82,6 +87,20 @@ export const ProjectModal = ({ project }: any) => {
         dispatch( clearProjectOneReducer() );
     };
 
+    const handleRemoveProject = async () => {
+        setIsLoading(true);
+        const { status } = await projectsManagement.delete(`/project/remove/${ project._id }`);
+        if (status === 200) {
+            dispatch( clearProjectOneReducer() );
+            dispatch( findProjectsByUserId_thunk( user._id ) );
+            toast('Proyecto eliminado con éxito', { type: 'success' });
+        } else {
+            toast('Error al eliminar el proyecto', { type: 'error' });
+        }
+        setOpen(false);
+        setIsLoading(false);
+    }
+
     const openProject = () => {
         setOpen(false);
         dispatch( clearProjectOneReducer() );
@@ -90,8 +109,6 @@ export const ProjectModal = ({ project }: any) => {
     }
 
     useEffect(() => {
-        // if( allProjectsByUserId.length > 0 ) return;
-    
         dispatch( findAllCommentariesByProjectID_thunk(project._id) );
     }, []);
 
@@ -111,45 +128,47 @@ export const ProjectModal = ({ project }: any) => {
                     <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} status={project.status}>
                         { project.title }
                     </BootstrapDialogTitle>
-                    <p
+                    <div
                         style={{
                             fontWeight: 400,
                             fontSize: 13,
                             color: 'var(--grayDark)',
                             paddingTop: 0,
                             textAlign: 'left',
-                            margin: '5px 23px',
+                            margin: '0',
                             textDecoration: 'underline',
-                            textUnderlineOffset: 3,
-                            textDecorationColor: '#ccc'
+                            textUnderlineOffset: 2,
+                            textDecorationThickness: '0.6px',
+                            textDecorationColor: '#ccc',
+
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
                         }}
                     >
                         <LinkRRD to={`/private/project/${ project._id }`}>
-                            <span style={{ fontWeight: 500, cursor: 'pointer' }}>Fecha de creación:</span> {''}
-                            {
-                                formatDate(project.createdAt)
-                            }
+                            <span>Creado el { formatDate(project.createdAt) }</span>
                         </LinkRRD>
 
-                        <LinkRRD to={`/private/project/${ project._id }`}>
-                            <span>
-                                <TbExternalLink
-                                    style={{
-                                        fontSize: 30,
-                                        cursor: 'pointer',
-                                        paddingTop: 17,
-                                        paddingLeft: 10
-                                    }}
-                                />
-                            </span>
-                        </LinkRRD>
-                    </p>
+                        {
+                            user?.role === Role.ADMIN && (
+                                <button 
+                                    onClick={() => handleRemoveProject()} 
+                                    style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+                                    disabled={ isLoading }
+                                >
+                                    <Icon name='basura' color='var(--red)' size={19} />
+                                </button>
+                            )
+                        }
+                    </div>
 
-                    <DialogContent 
-                        sx={{ 
+                    <div 
+                        style={{ 
                             margin: '0px',
-                            maxHeight: 310,
-                            overflow: 'scroll'
+                            maxHeight: 320,
+                            overflow: 'scroll',
+                            paddingTop: 15
                         }}
                     >
                         <DialogContentText 
@@ -173,34 +192,10 @@ export const ProjectModal = ({ project }: any) => {
                                 <div dangerouslySetInnerHTML={{ __html: project.description }} />
                             </DialogContentText>
                         </Suspense>
-                    </DialogContent>
+                    </div>
 
-                    <DialogContent>
+                    <div>
                         <Suspense fallback={ <Loading100p /> }>
-                            <DialogContentText 
-                                id="alert-dialog-slide-description"
-                                style={{
-                                    textAlign: 'center',
-                                    fontSize: 13,
-                                    marginTop: 0
-                                }}
-                            >
-                                Comprobante No. (ID)
-                            </DialogContentText>
-                            <DialogContentText 
-                                id="alert-dialog-slide-description"
-                                style={{
-                                    textAlign: 'center',
-                                    fontSize: 15,
-                                    fontWeight: 500,
-                                    color: '#59585a'
-                                }}
-                            >
-                                { project._id }
-                            </DialogContentText>
-
-                            </Suspense>
-
                             {
                                 isLoadingCommentaries 
                                 ? (
@@ -219,7 +214,7 @@ export const ProjectModal = ({ project }: any) => {
                                         fontSize: 17,
                                         fontWeight: 500,
                                         color: '#000',
-                                        paddingTop: 20
+                                        paddingTop: 25
                                     }}
                                 >
                                     Actualizaciones:
@@ -274,7 +269,8 @@ export const ProjectModal = ({ project }: any) => {
                                     }
                                 </DialogContentText>
                             }
-                    </DialogContent>
+                        </Suspense>
+                    </div>
 
                     <DialogActions>
                         <button 
@@ -286,7 +282,6 @@ export const ProjectModal = ({ project }: any) => {
                                 backgroundColor: 'var(--red)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
-                                // margin: 20
                             }}
                         >
                             Cerrar
@@ -297,13 +292,12 @@ export const ProjectModal = ({ project }: any) => {
                                 padding: '8px 20px',
                                 borderRadius: 6,
                                 border: 'none',
-                                backgroundColor: 'var(--blue)',
+                                backgroundColor: 'var(--blue-dark)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
-                                // margin: 20
                             }}
                         >
-                            Expandir o Editar
+                            Editar
                         </button>
                     </DialogActions>
                 </Box>

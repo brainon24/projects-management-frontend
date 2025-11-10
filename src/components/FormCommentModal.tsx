@@ -16,6 +16,7 @@ import './projectModal.css';
 import TextEditor from "./TextEditor";
 import { useState } from 'react';
 import { createCommentByProjectID_thunk } from '../store/commentaries/thunks';
+import { Button } from "./Button";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -101,7 +102,7 @@ export const FormCommentModal = ({ projectId }: any) => {
                     onClick={handleClose}
                     style={{
                         padding: "8px 20px",
-                        borderRadius: 6,
+                        borderRadius: 20,
                         border: "none",
                         backgroundColor: "var(--red)",
                         color: "var(--white)",
@@ -110,19 +111,11 @@ export const FormCommentModal = ({ projectId }: any) => {
                 >
                     Cancelar
                 </button>
-                <button
+                <Button
                     onClick={handleSubmit}
-                    style={{
-                        padding: "8px 20px",
-                        borderRadius: 6,
-                        border: "none",
-                        backgroundColor: "var(--blue)",
-                        color: "var(--white)",
-                        cursor: "pointer",
-                    }}
                 >
                     Continuar
-                </button>
+                </Button>
             </DialogActions>
         </Box>
     </Dialog>

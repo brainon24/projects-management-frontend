@@ -16,6 +16,50 @@
     display: none;
 }
 
+.bannerContainer {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    background-color: var(--gray);
+}
+
+.bannerImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+
+.bannerImage[data-loading="true"] {
+    opacity: 0;
+}
+
+.bannerImage[data-loading="false"] {
+    opacity: 1;
+}
+
+.bannerLoadingPlaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    z-index: 1;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
 .connectionsSubtitle {
     text-align: center;
     margin-top: 50px;
@@ -44,7 +88,7 @@
 }
 
 .howWeDoItTimelineContainerBg {
-    background-color: var(--blue-light);
+    background-color: #f5f4f4;
 }
 
 .howWeDoItTimelineContainer {
@@ -62,6 +106,10 @@
     .mobileBanners {
         display: block;
         background-color: #fff8f3;
+    }
+
+    .bannerContainer {
+        height: 300px;
     }
 }
 

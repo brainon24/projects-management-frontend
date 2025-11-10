@@ -16,6 +16,7 @@ import { closeModal } from "../store/ui/uiSlice";
 import { useForm } from '../hooks/useForm';
 import { createBussines_thunk } from '../store/business/thunks';
 import './projectModal.css';
+import { Button } from "./Button";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -111,7 +112,7 @@ export const FormModal = () => {
                     onClick={handleClose}
                     style={{
                         padding: "8px 20px",
-                        borderRadius: 6,
+                        borderRadius: 20,
                         border: "none",
                         backgroundColor: "var(--red)",
                         color: "var(--white)",
@@ -120,19 +121,11 @@ export const FormModal = () => {
                 >
                     Cancelar
                 </button>
-                <button
-                    onClick={handleSubmit}
-                    style={{
-                        padding: "8px 20px",
-                        borderRadius: 6,
-                        border: "none",
-                        backgroundColor: "var(--blue)",
-                        color: "var(--white)",
-                        cursor: "pointer",
-                    }}
+                <Button
+                  onClick={handleSubmit}
                 >
-                    Continuar
-                </button>
+                  Continuar
+                </Button>
             </DialogActions>
         </Box>
     </Dialog>
