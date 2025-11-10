@@ -21,8 +21,8 @@ const items = [
     description: "Plan de comunicación práctico y calendarizado, adaptado a las necesidades de la empresa." ,
     trailingItem: {
         icon: 'rocket-02',
-        bgColor: '#faf0eaff',
-        color: '#FF6B00'
+        bgColor: 'var(--orange-lighter)',
+        color: 'var(--orange-dark)'
     }
   },
   { 
@@ -31,8 +31,8 @@ const items = [
     description: "Colaboración con aliados certificados para creatividad, pauta y producción.",
     trailingItem: {
         icon: 'line-chart-up-02',
-        bgColor: '#e3fef2ff',
-        color: '#1c6837',
+        bgColor: 'var(--green-light)',
+        color: 'var(--green-dark)',
     }
   },
   { 
@@ -41,8 +41,8 @@ const items = [
     description: "Seguimiento con indicadores clave y mejoras iterativas para optimizar resultados.",
     trailingItem: {
         icon: 'presentation-chart-01',
-        bgColor: '#e3fef2ff',
-        color: '#1c6837',
+        bgColor: 'var(--green-light)',
+        color: 'var(--green-dark)',
     }
   },
   { 
@@ -61,8 +61,8 @@ const items = [
     description: "Evaluaciones frente a resultados y pilotaje con objetivos medibles.",
     trailingItem: {
         icon: 'corazon-mano',
-        bgColor: '#faf0eaff',
-        color: '#FF6B00'
+        bgColor: 'var(--orange-lighter)',
+        color: 'var(--orange-dark)'
     }
   },
 ];

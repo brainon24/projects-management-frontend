@@ -15,6 +15,7 @@ import { HowWeDoItTimeline } from '../../components/HowWeDoItTimeline';
 
 import desktopBanner1 from '../../assets/banners/desktop-banner-1.jpg'
 import mobileBanner1 from '../../assets/banners/mobile-banner-1.jpg'
+import { HomeServices } from '../../components/HomeServices';
 
 
 export const HomePage = () => {
@@ -96,8 +97,19 @@ export const HomePage = () => {
       </div>
 
       <div className={styles.container}>
+        <div>
+          <h2 
+            className={styles.sectionHead}
+          >Servicios de brainon24</h2>
+          <HomeServices />
+        </div>
+      </div>
+
+      <div className={styles.container}>
         <div id='contact'>
-          <h2 className={styles.sectionHead}>Contacto</h2>
+          <h2 
+            className={styles.sectionHead}
+          >Contacto</h2>
           <p>Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.</p>
         </div>
       </div>

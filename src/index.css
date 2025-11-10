@@ -17,6 +17,19 @@
   --red: #ef4444;
   --green: #00a650;
 
+  /* Nuevos colores del branding */
+  --orange-dark: #FF6B00;
+  --orange-light: #fddfd3;
+  --orange-lighter: #faf0eaff;
+  
+  --blue-dark: #00aeef;
+  --blue-medium: #00aeef;
+  --blue-light: #d9eaed;
+  
+  --green-dark: #1c6837;
+  --green-medium: #24c871;
+  --green-light: #e3fef2ff;
+
   --borderRadius: 6px;
 }
 
@@ -32,6 +45,18 @@ a {
 
 h1 {
   font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+h4 {
+  font-size: 1rem;
 }
 
 h1, h2, h3, h4 {

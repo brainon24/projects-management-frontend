@@ -31,7 +31,7 @@
 }
 
 .active {
-    background-color: #369eb3;
+    background-color: var(--blue);
     color: #fff;
     padding: 10px;
 }

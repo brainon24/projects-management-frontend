@@ -3,7 +3,8 @@ import styles from './styles.module.css'
 
 export const Button = ({
     children,
-    variant = 'filled'
+    variant = 'filled',
+    ...rest
 }: ButtonProps) => {
   const CLASS_MAP = {
     filled: {
@@ -15,6 +16,6 @@ export const Button = ({
   }
 
   return (
-    <button className={CLASS_MAP[variant].button}>{children}</button>
+    <button className={CLASS_MAP[variant].button} {...rest}>{children}</button>
   )
 }

@@ -1,6 +1,6 @@
 .filledVariantButton {
     /* background-color: #0F0F0F; */
-    background-color: #FF6B00;
+    background-color: var(--orange-dark);
     color: #fff;
     padding: 9px 20px;
     border-radius: 50px;
@@ -15,8 +15,8 @@
 }
 
 .borderVariantButton {
-    background-color: #faf0eaff;
-    color: #FF6B00;
+    background-color: var(--orange-lighter);
+    color: var(--orange-dark);
     padding: 9px 20px;
     border-radius: 50px;
     cursor: pointer;
@@ -28,6 +28,10 @@
 .borderVariantButton:hover {
     opacity: .75;
     transition: all 0.3s ease;
+}
+
+.btn-borderVariantButton:focus, .btn-filledVariantButton:focus {
+    outline: none;
 }
 
 @media (max-width: 650px) {

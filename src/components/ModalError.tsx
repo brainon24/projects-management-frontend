@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog, styled, Button } from '@mui/material';
+import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog, styled } from '@mui/material';
 import { RiCloseFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { clearErrorReducer } from '../store/auth/authSlice';
+import { Button } from './Button';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -73,17 +74,9 @@ export default function ModalError({ title, descriptionError }: any) {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button 
+          <Button
             autoFocus 
             onClick={handleClose}
-            sx={{ 
-              backgroundColor: 'var(--blue)',
-              padding: '3px 25px',
-              borderRadius: 1,
-              '&:hover': { 
-                  backgroundColor: 'var(--blue)',
-              }, 
-            }}
           >
             Cerrar
           </Button>

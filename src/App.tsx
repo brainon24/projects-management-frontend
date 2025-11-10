@@ -25,6 +25,10 @@ import { AdministrativeManagement } from './pages/AdministrativeManagement';
 import { ProjectId } from './pages/ProjectId';
 import { Messages } from "./pages/Messages";
 import { HomePage } from "./pages/HomePage";
+import { ServicePage } from "./pages/ServicePage";
+import { ForgotPassword } from "./pages/forgot/ForgotPassword";
+import { NewPassword } from "./pages/forgot/NewPassword/NewPassword";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
 
@@ -38,7 +42,7 @@ const App = () => {
     const token: string = localStorage.getItem('token')!;
 
     if( !token ) {
-      dispatch( logout_thunk() );
+      return dispatch( logout_thunk() );
     }
 
     dispatch( checkToken_thunk( token ) );
@@ -59,18 +63,23 @@ const App = () => {
 
   return (
     <>
-        {
-            errorMessage ? (
-                <ModalError
-                    title='Sesión expirada'
-                    descriptionError={ errorMessage }
-                />
-            ) : null
-        }
+      {
+        errorMessage ? (
+            <ModalError
+                title='Sesión expirada'
+                descriptionError={ errorMessage }
+            />
+        ) : null
+      }
       <Routes>
         <Route path="/" element={ <HomePage /> }  />
         <Route path="/login" element={ <Login /> } />
         <Route path="/sign-up" element={ <SignUp /> } />
+
+        <Route path="/service/:id" element={ <ServicePage /> } />
+
+        <Route path="/forgot-password" element={ <ForgotPassword /> } />
+        <Route path="/forgot-password/:id" element={ <NewPassword /> } />
 
         <Route 
           path="/private" 
@@ -191,6 +200,8 @@ const App = () => {
 
         <Route path="/*" element={ <NotFound /> } />
       </Routes>
+
+      <ToastContainer />
     </>
   );
 }

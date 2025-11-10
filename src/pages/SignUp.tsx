@@ -14,6 +14,7 @@ import ModalError from '../components/ModalError';
 import { BiErrorCircle } from 'react-icons/bi';
 import { Loading100p } from '../components/Loading100p';
 import { Icon } from '../components/Icons';
+import { Button } from '../components/Button';
 
 export const SignUp = () => {
 
@@ -24,7 +25,7 @@ export const SignUp = () => {
 
     const { status, errorMessage } = useSelector((state: any) => state.auth);
 
-    const { formState, onInputChange, onResetForm, fullName, email, password, phone, businessId } = useForm({
+    const { onInputChange, onResetForm, fullName, email, password, phone, businessId } = useForm({
         fullName: '',
         email: '',
         password: '',
@@ -132,7 +133,7 @@ export const SignUp = () => {
                                         ) : null
                                     }
                                     {
-                                        typeof businessName === 'string' 
+                                        typeof businessName === 'string'
                                             ?   (
                                                     <Box className='container-business-name'>
                                                         <p className='business-name'>{ businessName.length >= 15 ? businessName.substring(0, 15) + '...' : businessName }</p>
@@ -191,7 +192,6 @@ export const SignUp = () => {
                                     onBlur={ searchBusiness }
                                     disabled={ businessName }
                                 />
-                                {/* <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography> */}
                                 <Input 
                                     placeholder='Celular'
                                     className='form-input'
@@ -202,14 +202,10 @@ export const SignUp = () => {
                                     onChange={ onInputChange }
                                 />
 
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <button
-                                        className='btn-sign-up'
-                                        type='submit'
-                                        // disabled={}
-                                    >
+                                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
+                                    <Button type='submit' style={{width: '100%', padding: '12px 0'}}>
                                         Registrarme
-                                    </button>
+                                    </Button>
                                 </Box>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '1.5rem 0'}}>

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Link as LinkRRD, Navigate, useNavigate } from 'react-router-dom';
-import { Box, Link, Input, Typography } from '@mui/material';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { Box, Input, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { useForm } from '../hooks/useForm';
@@ -9,8 +8,8 @@ import { login_thunk } from '../store/auth/thunks';
 import ModalError from '../components/ModalError';
 
 import '../styles/login.css';
-import gestionImage from '../assets/Gestion-1.png';
 import { Icon } from '../components/Icons';
+import { Button } from '../components/Button';
 
 
 export const Login = () => {
@@ -20,7 +19,7 @@ export const Login = () => {
     const dispatch: Dispatch<any> = useDispatch();
     const { status, errorMessage } = useSelector((state: any) => state.auth);
 
-    const { formState, onInputChange, onResetForm, email, password } = useForm({
+    const { onInputChange, onResetForm, email, password } = useForm({
         email: '',
         password: '',
     });
@@ -62,17 +61,6 @@ export const Login = () => {
                                 />
                             ) : null
                         }
-
-                        {/* <Box
-                            component='section'
-                            className='go-to-back-container'
-                        >
-                            <LinkRRD to='https://brainon24.com/'>
-                                <Link className='go-to-back-icon'>
-                                    <AiOutlineArrowLeft />
-                                </Link>
-                            </LinkRRD>
-                        </Box> */}
                         <Box
                             sx={{
                                 display: 'flex',
@@ -81,39 +69,11 @@ export const Login = () => {
                                 width: '100%',
                             }}
                         >
-                            {/* <Box
-                                component='section'
-                                className='go-to-back-container'
-                            >
-                                <Link 
-                                    component={LinkRRD} 
-                                    to="/" 
-                                    className='go-to-back-icon'
-                                    sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}
-                                >
-                                    <AiOutlineArrowLeft />
-                                    <Typography fontSize={20}>Inicio</Typography>
-                                </Link>
-                            </Box> */}
-
                             <div className='go-to-back-icon'>
                                 <LinkRRD to='/'>
                                     <Icon name='flecha-derecha' />
                                 </LinkRRD>
                             </div>
-
-                            {/* <Box sx={{
-                                marginRight: 7
-                            }}>
-                                <img 
-                                    src={ gestionImage } 
-                                    alt="Gestion | brainon24" 
-                                    style={{
-                                      width: 90,
-                                      paddingTop: 30
-                                    }}
-                                />
-                            </Box> */}
                         </Box>
 
                         <Box 
@@ -143,13 +103,14 @@ export const Login = () => {
                                     value={ password }
                                     onChange={ onInputChange }
                                 />
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <button
-                                        className='btn-login'
-                                        type='submit'
-                                    >
+                                <LinkRRD to='/forgot-password'>
+                                    <p className='sign-up-link'>Olvidaste tu contraseña? ¡Recuperala!</p>
+                                </LinkRRD>
+
+                                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
+                                    <Button type='submit' style={{width: '100%', padding: '12px 0'}}>
                                         Ingresar
-                                    </button>
+                                    </Button>
                                 </Box>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '2rem 0'}}>

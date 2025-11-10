@@ -115,8 +115,8 @@ export const Sidebar = () => {
                     ))}
 
                 </List>
-                <Box sx={{ position: 'relative', backgroundColor: '#fff', height: '10%', mt: 6 }}>
-                    <Box sx={{ bottom: 0, position: 'absolute', width: '100%', backgroundColor: '#fff' }}>
+                <Box sx={{ position: 'relative', backgroundColor: 'var(--white)', height: '10%', mt: 6 }}>
+                    <Box sx={{ bottom: 0, position: 'absolute', width: '100%', backgroundColor: 'var(--white)' }}>
                         <a 
                             href='https://www.linkedin.com/in/david-diaz-herrera-2777ba1a8/' 
                             target='_blank'
@@ -128,7 +128,7 @@ export const Sidebar = () => {
                             >Desarrollo de brainon24</p>
                             <p 
                                 style={{
-                                    textAlign: 'center', fontSize: 16, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: '#000',
+                                    textAlign: 'center', fontSize: 16, textDecoration: 'underline', textUnderlineOffset: 5, textDecorationColor: 'var(--black)',
                                 }}
                             >
                                 por David Diaz H.

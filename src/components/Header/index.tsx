@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
 import { Icon } from '../Icons'
 import { useLocation } from 'react-router-dom';
@@ -25,6 +25,7 @@ const navList = [
 export const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const headerRef = useRef<any>(null);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -48,8 +49,8 @@ export const Header = () => {
         <a
             href={'/#home'}
             onClick={(e) => {
-                setShowMobileMenu(false)
-                handleHashLinkClick(e, '/#home')
+                setShowMobileMenu(false);
+                handleHashLinkClick(e, '/#home');
             }}
         >
             <h1>brainon24</h1>
@@ -79,6 +80,21 @@ export const Header = () => {
     }
   }, [pathname]);
 
+  // useEffect to handle scrolling to anchor links with hash
+  useEffect(() => {
+    if (pathname === '/' && window.location.hash) {
+      const timeoutId = setTimeout(() => {
+        const targetId = window.location.hash.substring(1);
+        const el = document.getElementById(targetId);
+        if (el) {
+          scrollWithOffset(el);
+        }
+      }, 220);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [pathname]);
+
   const scrollWithOffset = (el: any) => {
         const headerHeight = parseInt(
             document.documentElement.style.getPropertyValue('--header-height') || 
@@ -90,13 +106,24 @@ export const Header = () => {
         window.scrollTo({ top: yCoordinate, behavior: 'smooth' });
     };
 
-    const handleHashLinkClick = (e, to) => {
+    const handleHashLinkClick = (e: React.MouseEvent, to: string) => {
+        e.preventDefault();
         const targetId = to.split("#")[1];
-        const el = document.getElementById(targetId);
-        if (el) {
-            e.preventDefault();
-            scrollWithOffset(el);
-            window.history.pushState(null, "", `#${targetId}`);
+
+        if (pathname === '/') {
+            const el = document.getElementById(targetId);
+            if (el) {
+                scrollWithOffset(el);
+                window.history.pushState(null, "", `#${targetId}`);
+            }
+        } else {
+            navigate(`/#${targetId}`);
+            setTimeout(() => {
+                const el = document.getElementById(targetId);
+                if (el) {
+                    scrollWithOffset(el);
+                }
+            }, 120);
         }
     };
 
@@ -149,8 +176,6 @@ export const Header = () => {
                         <button
                             className={styles.mobileCloseMenuBtn}
                             onClick={() => {
-                                // navigation(pathname)
-                                // setShowMobileMenu(false)
                                 closeMenu()
                             }}
                         >
@@ -169,8 +194,8 @@ export const Header = () => {
                                         key={to+label}
                                         href={to}
                                         onClick={(e) => {
-                                            setShowMobileMenu(false)
-                                            handleHashLinkClick(e, to)
+                                            setShowMobileMenu(false);
+                                            handleHashLinkClick(e, to);
                                         }}
                                     >
                                         <p className={styles.nav}>{label}</p>
