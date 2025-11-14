@@ -1,7 +1,7 @@
 import { MainLayout } from "../layouts/MainLayout"
 import {useSelector} from "react-redux";
 import profilePicture from '../assets/profile-picture.png';
-import { Box, Input } from "@mui/material";
+import { Box } from "@mui/material";
 
 export const Profile = () => {
 

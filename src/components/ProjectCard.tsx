@@ -6,7 +6,7 @@ import { findProjectOneReducer } from '../store/projects/projectsSlice';
 
 import { TbExternalLink } from 'react-icons/tb'
 import { Link as LinkRRD } from 'react-router-dom';
-import { getFormattedTime, getComplementHours } from '../helpers/dates';
+import { getComplementHours } from '../helpers/dates';
 
 export const ProjectCard = ({ project }: any) => {
 

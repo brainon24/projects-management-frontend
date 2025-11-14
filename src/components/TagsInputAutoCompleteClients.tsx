@@ -8,7 +8,7 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
     
     const { clients = [] } = props;
 
-    let { formState, userInput, onInputChange, onResetForm } = useForm({
+    let { userInput, onInputChange } = useForm({
         userInput: '',
     });
 
@@ -16,9 +16,6 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
     const [ blur, setBlur ] = useState<boolean>(false);
 
     const [ tag, setTag ] = useState(props.tag);
-    // console.log('tag: ', tag)
-
-    // console.log('users: ', users)
 
     const handleOnFocus = () => {
 
@@ -37,7 +34,6 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
     }
 
     const addTagById = (user: any) => {
-        // console.log('DENTRO DE ADD TAGS BY ID: ', user)
         setTag({fullName: user.fullName, _id: user._id, businessId: user.businessId} );
         props.selectedTagAuthorId({fullName: user.fullName, _id: user._id, businessId: user.businessId});
         
@@ -99,7 +95,6 @@ export const TagsInputWithAutoCompleteClients = (props: any) => {
 
                     <div 
                         className={ blur === false && focus === true ? 'autocomplete' : 'autocomplete-off' }
-                        // onClick={ () => console.log('click') }
                     >
                         {
                             clients && clients?.filter((user: any) => user.fullName?.toLowerCase().includes(userInput.toLowerCase())).slice(0, 5).map( (user: any) => (

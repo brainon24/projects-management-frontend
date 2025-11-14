@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -40,18 +39,7 @@ export const TransitionModal = ({ title, data, }: any) => {
         navigate('/private');
     };
 
-    const eventDate = (year: any, month: any, day: any) => new Date(Date.UTC(year, month - 1, day));
-    const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-    // console.log(eventDate(2022, 12, 21).toLocaleDateString('es-ES', options).slice(0, 1).toUpperCase() + eventDate(2022, 12, 21).toLocaleDateString('es-ES', options).slice(1));
-
     const { createdAt } = data;
-    const year = new Date(createdAt).getFullYear();
-    const month = new Date(createdAt).getMonth() + 1;
-    const day = new Date(createdAt).getDate();
-    // console.log(day + ' ' + month + ' ' + year)
-
-    // console.log(eventDate(year, month, day).toLocaleDateString('es-ES', options).slice(0, 1).toUpperCase() + eventDate(year, month, day).toLocaleDateString('es-ES', options).slice(1));
 
     return (
         <div>
@@ -119,17 +107,6 @@ export const TransitionModal = ({ title, data, }: any) => {
                         >
                             { data._id }
                         </DialogContentText>
-
-                        {/* <DialogContentText 
-                            id="alert-dialog-slide-description"
-                            style={{
-                                textAlign: 'center',
-                                marginTop: 30,
-                                fontSize: 15
-                            }}
-                        >
-                            { eventDate(year, month, day).toLocaleDateString('es-ES', options).slice(0, 1).toUpperCase() + eventDate(year, month, day).toLocaleDateString('es-ES', options).slice(1) }
-                        </DialogContentText> */}
                     </DialogContent>
 
                     <DialogActions>

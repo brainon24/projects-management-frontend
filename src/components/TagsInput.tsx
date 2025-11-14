@@ -7,7 +7,6 @@ export const TagsInput = (props: any) => {
     console.log('Entro al componente <TagsInput />')
 
     const [ tags, setTags ] = useState(props.tags);
-    // console.log(tags)
 
     const removeTags = (indexToRemove: any) => {
         setTags([...tags.filter((_: any, index: any) => index !== indexToRemove)]);
