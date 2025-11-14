@@ -3,7 +3,6 @@ import { Link as LinkRRD, Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Box, Chip, Input, Typography } from '@mui/material';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { HiBadgeCheck } from 'react-icons/hi';
 
 import '../styles/signUp.css';
@@ -14,6 +13,8 @@ import { clearErrorBusinessReducer } from '../store/business/businessSlice';
 import ModalError from '../components/ModalError';
 import { BiErrorCircle } from 'react-icons/bi';
 import { Loading100p } from '../components/Loading100p';
+import { Icon } from '../components/Icons';
+import { Button } from '../components/Button';
 
 export const SignUp = () => {
 
@@ -24,7 +25,7 @@ export const SignUp = () => {
 
     const { status, errorMessage } = useSelector((state: any) => state.auth);
 
-    const { formState, onInputChange, onResetForm, fullName, email, password, phone, businessId } = useForm({
+    const { onInputChange, onResetForm, fullName, email, password, phone, businessId } = useForm({
         fullName: '',
         email: '',
         password: '',
@@ -92,14 +93,11 @@ export const SignUp = () => {
                                 />
                             ) : null
                         }
-                        <Box 
-                            component='section'
-                            className='go-to-back-container'
-                        >
-                            <LinkRRD to='/' className='go-to-back-icon'>
-                                <AiOutlineArrowLeft />
+                        <div className='go-to-back-icon'>
+                            <LinkRRD to='/'>
+                                <Icon name='flecha-derecha' />
                             </LinkRRD>
-                        </Box>
+                        </div>
 
                         <Box 
                             component='section'
@@ -121,12 +119,7 @@ export const SignUp = () => {
                                 </Box>
 
                                 <Box className='container-header-form'>
-                                    <Box  sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
-                                        <LinkRRD to='/' className='link-back-mobile'>
-                                            <AiOutlineArrowLeft />
-                                        </LinkRRD>
-                                        <h1>Registro</h1>
-                                    </Box>
+                                    <h1>Registro</h1>
                                     {
                                         isLoadingBusiness ? (
                                             <div
@@ -140,7 +133,7 @@ export const SignUp = () => {
                                         ) : null
                                     }
                                     {
-                                        typeof businessName === 'string' 
+                                        typeof businessName === 'string'
                                             ?   (
                                                     <Box className='container-business-name'>
                                                         <p className='business-name'>{ businessName.length >= 15 ? businessName.substring(0, 15) + '...' : businessName }</p>
@@ -199,7 +192,6 @@ export const SignUp = () => {
                                     onBlur={ searchBusiness }
                                     disabled={ businessName }
                                 />
-                                {/* <Typography sx={{ color: 'red' }}>{ businessErrorMessage ? businessErrorMessage : null }</Typography> */}
                                 <Input 
                                     placeholder='Celular'
                                     className='form-input'
@@ -210,14 +202,10 @@ export const SignUp = () => {
                                     onChange={ onInputChange }
                                 />
 
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <button
-                                        className='btn-sign-up'
-                                        type='submit'
-                                        // disabled={}
-                                    >
+                                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
+                                    <Button type='submit' style={{width: '100%', padding: '12px 0'}}>
                                         Registrarme
-                                    </button>
+                                    </Button>
                                 </Box>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'space-around', margin: '1.5rem 0'}}>
@@ -226,7 +214,7 @@ export const SignUp = () => {
                                     <hr style={{ width: '50%', height: '2px', margin: 'auto 0' }} />
                                 </Box>
                                 
-                                <LinkRRD to='/'>
+                                <LinkRRD to='/login'>
                                     <p className='login-link'>¿Ya tienes cuenta? ¡Inicia sesión!</p>                                    
                                 </LinkRRD>
                             </form>

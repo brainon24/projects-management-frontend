@@ -1,0 +1,41 @@
+.filledVariantButton {
+    /* background-color: #0F0F0F; */
+    background-color: var(--orange-dark);
+    color: #fff;
+    padding: 9px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+}
+
+.filledVariantButton:hover {
+    opacity: .88;
+    transition: all 0.3s ease;
+}
+
+.borderVariantButton {
+    background-color: var(--orange-lighter);
+    color: var(--orange-dark);
+    padding: 9px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    /* border: 1.5px solid #ff6a00; */
+    border: none;
+    font-weight: 600;
+}
+
+.borderVariantButton:hover {
+    opacity: .75;
+    transition: all 0.3s ease;
+}
+
+.btn-borderVariantButton:focus, .btn-filledVariantButton:focus {
+    outline: none;
+}
+
+@media (max-width: 650px) {
+    .filledVariantButton, .borderVariantButton {
+        padding: 9px 15px;
+    }
+}

@@ -204,7 +204,7 @@ export const UserModal = ({ user }: any) => {
                                 padding: '8px 20px',
                                 borderRadius: 6,
                                 border: 'none',
-                                backgroundColor: 'var(--blue)',
+                                backgroundColor: 'var(--blue-light)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
                             }}

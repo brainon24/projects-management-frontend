@@ -3,7 +3,6 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    styled,
     IconButton,
     Box,
     Slide,
@@ -59,7 +58,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 
-export const SuccessModal = ({ textRequestSuccess = '' }) => {
+export const SuccessModal = ({ textRequestSuccess = '', buttonText = 'Cerrar', onClose = () => {} }) => {
 
     const [open, setOpen] = React.useState(true);
 
@@ -82,6 +81,8 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
         isRequestSuccess: false,
         textRequestSuccess: undefined,
       }) );
+
+      onClose();
     };
 
     return (
@@ -100,26 +101,26 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} />
                 <DialogContent>
                     <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
                     >
                         <div>
                             <div 
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }} 
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }} 
                             >
                                 <img
-                                    className='logo' 
-                                    src={checkIcon} 
-                                    alt="Check Icon" 
-                                    width={90} 
-                                    height={90}
+                                  className='logo' 
+                                  src={checkIcon} 
+                                  alt="Check Icon" 
+                                  width={70}
+                                  height={70}
                                 />
 
                             </div>
@@ -128,7 +129,7 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
                                 fontSize: 30,
                                 color: '#030038',
                                 fontWeight: 600,
-                                marginTop: 50,
+                                marginTop: 40,
                                 textAlign: 'center'
                                 }}
                             >
@@ -139,7 +140,7 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
                                 fontSize: 20,
                                 color: '#030038',
                                 fontWeight: 400,
-                                margin: '20px 0 25px 0',
+                                margin: '0px 0 40px 0',
                                 textAlign: 'center'
                                 }}
                             >
@@ -147,20 +148,20 @@ export const SuccessModal = ({ textRequestSuccess = '' }) => {
                             </p>
 
                             <button 
-                                style={{
-                                    backgroundColor: '#030038',
-                                    color: '#fff',
-                                    padding: '10px 35px',
-                                    borderRadius: 6,
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    margin: '0 auto',
-                                    cursor: 'pointer',
-                                    border: 'none'
-                                }}
-                                onClick={handleClose}
+                              style={{
+                                backgroundColor: '#030038',
+                                color: '#fff',
+                                padding: '10px 35px',
+                                borderRadius: 6,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                margin: '0 auto',
+                                cursor: 'pointer',
+                                border: 'none'
+                              }}
+                              onClick={handleClose}
                             >
-                                Cerrar
+                                { buttonText }
                             </button>
                         </div>
                     </div>

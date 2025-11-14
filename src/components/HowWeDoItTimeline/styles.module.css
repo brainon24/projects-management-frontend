@@ -1,0 +1,56 @@
+/* Estilos globales para las cards del timeline de Chrono */
+:global(.timeline-card-content) {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    border-radius: 12px !important;
+}
+
+:global(.timeline-card-content:hover) {
+    transform: translateY(-2px) !important;
+}
+
+/* Selectores más específicos para react-chrono */
+:global(.chrono-timeline .timeline-card-content) {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    border-radius: 12px !important;
+}
+
+:global(.chrono-timeline .timeline-card-content:hover) {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Selector para el contenedor de la card */
+:global([class*="timeline-card"]) {
+    border-radius: 12px !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+:global([class*="timeline-card"]:hover) {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* Cancelar sombra en contenido interno para evitar doble efecto */
+:global([class*="timeline-card"]) :global(*) {
+    box-shadow: none !important;
+}
+
+:global([class*="timeline-card"]:hover) :global(*) {
+    box-shadow: none !important;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 18px;
+}
+
+.subtitle {
+    font-weight: 500;
+    color: #585656;
+}
+
+.description {
+    color: #2E2E2E;
+}

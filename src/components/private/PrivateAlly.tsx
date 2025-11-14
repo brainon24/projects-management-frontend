@@ -1,13 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Box, Chip, Typography } from '@mui/material'
 import { Link as LinkRRD, } from 'react-router-dom';
-import { BiRightArrowAlt, BiUserCircle } from 'react-icons/bi';
-import { MdOutlineBusinessCenter } from 'react-icons/md';
-import { GrProjects } from 'react-icons/gr';
+import { Icon } from '../Icons';
 
 import '../styles/privateClient.css';
-import { VscFileSymlinkDirectory } from 'react-icons/vsc';
-import { IoCalendarNumberOutline } from 'react-icons/io5';
 
 export const PrivateAlly = () => {
 
@@ -27,61 +23,46 @@ export const PrivateAlly = () => {
             <Box className='cards-client'>
                 <Box className='card-client'>
                     <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <LinkRRD to='/private/profile' className='card-client_title'>
-                                <p>Visitar Mi Perfil</p>
-                            </LinkRRD>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <BiUserCircle className='icon-card' />
+                        <LinkRRD to='/private/profile'>
+                            <p className='card-client_title'>Visitar Mi Perfil</p>
+                        </LinkRRD>
+                        <Icon name='usuario-circulo' size={17} />
                     </Box>
                     <p className='card-client_description'>Puedes visitar tu perfil y actualizar tus datos personales si así lo deseas.</p>
                 </Box>
                 <Box className='card-client'>
                     <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <LinkRRD to='/private/my-business' className='card-client_title'>
-                                <p>Ver Mi Compañia</p>
-                            </LinkRRD>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <MdOutlineBusinessCenter className='icon-card' />
+                        <LinkRRD to='/private/my-business'>
+                            <p className='card-client_title'>Ver mi compañia</p>
+                        </LinkRRD>
+                        <Icon name='edificio-02' size={17} />
                     </Box>
                     <p className='card-client_description'>Visita el perfil de la compañia donde trabajas.</p>
                 </Box>
                 <Box className='card-client'>
                     <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <LinkRRD to='/private/my-projects-asigned' className='card-client_title'>
-                                <p>Mis Proyectos Asignados</p>
-                            </LinkRRD>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <GrProjects className='icon-card' />
+                        <LinkRRD to='/private/my-projects-asigned'>
+                            <p className='card-client_title'>Mis royectos asignados</p>
+                        </LinkRRD>
+                        <Icon name='puntos' size={17} />
                     </Box>
                     <p className='card-client_description'>Acá podrás listar todos los proyectos que creaste.</p>
                 </Box>
                 <Box className='card-client'>
                     <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <LinkRRD to='https://drive.google.com/drive/folders/1ZAZLeZKxY1vwoNgxD610vqLbAsNY55c_?usp=sharing' target='_blank' className='card-client_title'>
-                                <p>Mis archivos con brainon24</p>
-                            </LinkRRD>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <VscFileSymlinkDirectory className='icon-card' />
+                        <LinkRRD to='https://drive.google.com/drive/folders/1ZAZLeZKxY1vwoNgxD610vqLbAsNY55c_?usp=sharing' target='_blank'>
+                            <p className='card-client_title'>Mis archivos con brainon24</p>
+                        </LinkRRD>
+                        <Icon name='usb-flash-drive' size={17} />
                     </Box>
                     <p className='card-client_description'>Ahora puedes acceder a tus archivos con brainon24 desde aquí.</p>
                 </Box>
                 <Box className='card-client'>
                     <Box className='container-header-card'>
-                        <Box display='flex' alignItems='center'>
-                            <LinkRRD to='https://calendar.google.com/calendar/u/0/r/week' target='_blank' className='card-client_title'>
-                                <p>Mi agenda con brainon24</p>
-                            </LinkRRD>
-                            <BiRightArrowAlt className='icon-link' />
-                        </Box>
-                        <IoCalendarNumberOutline className='icon-card' />
+                        <LinkRRD to='https://calendar.google.com/calendar/u/0/r/week' target='_blank'>
+                            <p className='card-client_title'>Mi agenda con brainon24</p>
+                        </LinkRRD>
+                        <Icon name='calendario' size={17} />
                     </Box>
                     <p className='card-client_description'>Puedes ingresar a tu agenda con brainon24 desde aquí.</p>
                 </Box>

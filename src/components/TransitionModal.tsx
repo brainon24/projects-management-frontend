@@ -8,7 +8,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { Box } from '@mui/material';
-import { AiOutlineCheck } from 'react-icons/ai';
 
 import '../styles/createProject.css';
 import { FiCheck } from 'react-icons/fi';
@@ -140,7 +139,7 @@ export const TransitionModal = ({ title, data, }: any) => {
                                 padding: '8px 20px',
                                 borderRadius: 6,
                                 border: 'none',
-                                backgroundColor: 'var(--blue)',
+                                backgroundColor: 'var(--blue-light)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
                             }}

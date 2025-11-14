@@ -1,0 +1,148 @@
+.fixedHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 25px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbarContainer {
+    display: flex;
+    align-items: center;
+}
+
+.mobileNavbar {
+    display: block;
+}
+
+.navbar {
+    display: flex;
+    gap: 30px;
+}
+
+.nav {
+    font-size: 15.5px;
+}
+
+.nav:hover {
+    font-weight: 600;
+}
+
+.desktopMenuBtn {
+    display: none;
+    background-color: transparent;
+    border: 0;
+}
+
+.loginButton {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* .mobileNavbarContainer {
+    height: 100dvh;
+    width: 100%;
+    z-index: 9999;
+    overflow: hidden;
+    background-color: #fff;
+
+    display: flex;
+    flex-direction: column;
+
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+} */
+
+.mobileNavbarContainer {
+    display: none;
+}
+ 
+.brainon24Centered {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.mobileNavbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 30px;
+}
+
+.closeMenuContainer {
+    padding: 30px 30px 0 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mobileCloseMenuBtn {
+    display: flex;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+@media (max-width: 630px) {
+    .container {
+        padding: 25px 15px;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .desktopMenuBtn {
+        display: block;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .loginButton {
+        margin-left: 10px;
+    }
+
+    .mobileNavbarContainer {
+        height: 100dvh;
+        width: 100%;
+        z-index: 9999999;
+        overflow: hidden;
+        background-color: #fff;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        z-index: 99999;
+        position: fixed;
+
+        transition: opacity 0.3s ease;
+    }
+    
+    .fadeIn {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .fadeOut {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    
+}

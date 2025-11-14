@@ -1,0 +1,112 @@
+.whatsappButton {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  color: white;
+}
+
+.whatsappButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+  background: linear-gradient(135deg, #128c7e 0%, #25d366 100%);
+}
+
+.whatsappButton:active {
+  transform: scale(1.05);
+  box-shadow: 0 2px 15px rgba(37, 211, 102, 0.4);
+}
+
+.whatsappIcon {
+  transition: transform 0.3s ease;
+}
+
+.whatsappButton:hover .whatsappIcon {
+  transform: rotate(5deg);
+}
+
+/* Animación de entrada */
+.whatsappButton {
+  animation: slideInFromBottom 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100px) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .whatsappButton {
+    width: 55px;
+    height: 55px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .whatsappIcon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsappButton {
+    width: 50px;
+    height: 50px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .whatsappIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Animación de pulso sutil para llamar la atención */
+.whatsappButton::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  z-index: -1;
+  animation: pulse 2s infinite;
+  opacity: 0.7;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
