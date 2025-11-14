@@ -85,12 +85,12 @@ export const services: Service[] = [
   },
   {
     key: ServiceKeys.AUDIOVISUAL_PRODUCTION,
-    title: "Producción audiovisual",
+    title: "Producción Audiovisual",
     image: audiovisualImage,
   },
   {
     key: ServiceKeys.GRAPHIC_ARTS_DESIGN,
-    title: "Artes gráficas y diseño",
+    title: "Artes gráficas y Diseño",
     image: graphicDesignImage,
   },
 //   {
