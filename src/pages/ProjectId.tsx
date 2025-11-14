@@ -34,26 +34,12 @@ export const ProjectId = () => {
     const [ projectId, setProjectId ] = useState(projectById?._id);
     const [ status, setStatus ] = useState(projectById?.status);
     const [ title, setTitle ] = useState(projectById?.title);
-    // const [ businessId, setBusinessId ] = useState(projectById?.businessId);
-    // const [ authorId, setAuthorId ] = useState(projectById?.authorId);
-    // const [ responsiblesId, setResponsiblesId ] = useState(projectById?.responsiblesId);
+
     const [ description, setDescription ] = useState(projectById?.description);
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState(projectById?.acceptanceCriteria);
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
 
     const { formatDate } = useFormatDate();
-
-    // const selectedTags = (tags: any = []) => {
-    //     const tag = tags.map((tag: any) => tag._id)
-    //     setResponsiblesId( tag );
-    // }
-
-    // const selectedTagAuthorId = (tag: any = {}) => {
-    //     const authorId = tag._id;
-    //     setAuthorId( authorId );
-        
-    //     setBusinessId( tag.businessId );
-    // }
 
     const changeVisibilityCA = () => {
         setShowAcceptanceCriteria( !showAcceptanceCriteria );
@@ -66,18 +52,9 @@ export const ProjectId = () => {
     const onTitleChanged = async (event: any) => { 
         setTitle(event?.target?.value);
     };
-    
-    // const updateStatusOnServer = () => {
-    //     dispatch( patchStatusProject_thunk({
-    //         projectId,
-    //         newStatus: status,
-    //     }) );
-    // }
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
-
-        // if( responsiblesId.length < 0 || title.length < 5 || description.length < 5 ) return;
 
         dispatch(
             updateProject_thunk({
@@ -117,14 +94,11 @@ export const ProjectId = () => {
 
     useEffect(() => {
         fetchALLY('ALLY');
-        
-        // user.role === 'ADMIN' ? fetchClients('CLIENT') : null
+
         user.role === 'ADMIN' ? fetchAllUsers() : null
     }, []);
 
     useEffect(() => {
-        // if( projectById !== undefined ) return;
-        // console.log('location.pathname.split(): ', location.pathname.split('/')[3])
         const projectId = location.pathname.split('/')[3];
 
         dispatch( findProjectById_thunk( projectId ) );
@@ -304,7 +278,6 @@ export const ProjectId = () => {
                                 <div
                                     style={{ 
                                         margin: '0px 10px',
-                                        // maxHeight: 340,
                                         overflow: 'scroll'
                                     }}
                                 >

@@ -10,7 +10,6 @@ import {
   Box,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/ui/uiSlice";
 import { useForm } from '../hooks/useForm';
@@ -30,11 +29,10 @@ const Transition = React.forwardRef(function Transition(
 export const FormModal = () => {
   const [open, setOpen] = React.useState(true);
 
-  const { formState, onInputChange, onResetForm, bussinesName } = useForm({
+  const { onInputChange, bussinesName } = useForm({
     bussinesName: '',
   });
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClose = () => {
