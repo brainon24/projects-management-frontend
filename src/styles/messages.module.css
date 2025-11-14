@@ -31,7 +31,7 @@
 }
 
 .active {
-    background-color: var(--blue-dark);
+    background-color: var(--blue-light);
     color: #fff;
     padding: 10px;
 }

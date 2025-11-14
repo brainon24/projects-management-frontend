@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLocation, Link } from 'react-router-dom';
+import { useAnchorNavigation } from '../../hooks/useAnchorNavigation';
 import styles from './styles.module.css'
 import { Icon } from '../Icons'
 import logo from '../../assets/brainon24-logo.png'
@@ -8,6 +9,11 @@ const navList = [
     {
         to: "/#about",
         label: "Nosotros",
+        isAncle: true
+    },
+    {
+        to: "/#services",
+        label: "Servicios",
         isAncle: true
     },
     {
@@ -25,8 +31,7 @@ const navList = [
 export const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const headerRef = useRef<any>(null);
+  const { handleAnchorClick } = useAnchorNavigation();
   const [isClosing, setIsClosing] = useState(false);
 
   const openMenu = () => {
@@ -38,9 +43,6 @@ export const Header = () => {
     setTimeout(() => {
         setShowMobileMenu(false);
         setIsClosing(false);
-
-        //TODO
-        // navigation(pathname)
     }, 300);
   };
 
@@ -50,7 +52,7 @@ export const Header = () => {
             href={'/#home'}
             onClick={(e) => {
                 setShowMobileMenu(false);
-                handleHashLinkClick(e, '/#home');
+                handleAnchorClick(e, '/#home');
             }}
         >
             {/* <h1>brainon24</h1> */}
@@ -71,65 +73,17 @@ export const Header = () => {
   }, [showMobileMenu]);
 
   useLayoutEffect(() => {
-    if (headerRef.current) {
-      const headerHeight = headerRef?.current?.offsetHeight;
-      
       document.documentElement.style.setProperty(
         '--header-height', 
-        `${headerHeight}px`
+        // `${headerHeight}px`
+        `100px`
       );
-    }
   }, [pathname]);
 
-  // useEffect to handle scrolling to anchor links with hash
-  useEffect(() => {
-    if (pathname === '/' && window.location.hash) {
-      const timeoutId = setTimeout(() => {
-        const targetId = window.location.hash.substring(1);
-        const el = document.getElementById(targetId);
-        if (el) {
-          scrollWithOffset(el);
-        }
-      }, 220);
-      
-      return () => clearTimeout(timeoutId);
-    }
-  }, [pathname]);
 
-  const scrollWithOffset = (el: any) => {
-        const headerHeight = parseInt(
-            document.documentElement.style.getPropertyValue('--header-height') || 
-            '0', 10
-        );
-
-        const yCoordinate = el.offsetTop - headerHeight - 3;
-        
-        window.scrollTo({ top: yCoordinate, behavior: 'smooth' });
-    };
-
-    const handleHashLinkClick = (e: React.MouseEvent, to: string) => {
-        e.preventDefault();
-        const targetId = to.split("#")[1];
-
-        if (pathname === '/') {
-            const el = document.getElementById(targetId);
-            if (el) {
-                scrollWithOffset(el);
-                window.history.pushState(null, "", `#${targetId}`);
-            }
-        } else {
-            navigate(`/#${targetId}`);
-            setTimeout(() => {
-                const el = document.getElementById(targetId);
-                if (el) {
-                    scrollWithOffset(el);
-                }
-            }, 120);
-        }
-    };
 
   return (
-    <header className={styles.fixedHeader} ref={headerRef}>
+    <header className={styles.fixedHeader}>
         <div className={styles.container}>
             { renderBrainon24() }
 
@@ -141,7 +95,7 @@ export const Header = () => {
                                 <a
                                     href={to}
                                     key={to + label + idx}
-                                    onClick={(e) => handleHashLinkClick(e, to)}
+                                    onClick={(e) => handleAnchorClick(e, to)}
                                 >
                                     <p className={styles.nav}>{label}</p>
                                 </a>
@@ -160,7 +114,8 @@ export const Header = () => {
                 </button>
                 <Link to="/login">
                     <div className={styles.loginButton}>
-                        <Icon name="lock-02" />
+                        {/* <Icon name="lock-02" /> */}
+                        <Icon name="usuario-check" />
                     </div>
                 </Link>
             </div>
@@ -196,7 +151,7 @@ export const Header = () => {
                                         href={to}
                                         onClick={(e) => {
                                             setShowMobileMenu(false);
-                                            handleHashLinkClick(e, to);
+                                            handleAnchorClick(e, to);
                                         }}
                                     >
                                         <p className={styles.nav}>{label}</p>

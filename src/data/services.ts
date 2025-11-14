@@ -1,4 +1,10 @@
+import socialMediaImage from '../assets/services/social-media.jpg';
 import webDevelopmentImage from '../assets/services/web-development.jpg';
+import photographyImage from '../assets/services/photography.jpg';
+import audiovisualImage from '../assets/services/audiovisual.jpg';
+import graphicDesignImage from '../assets/services/graphic-desing.jpg';
+import socialMediaBanner1 from '../assets/social-media/redes-sociales1.jpg';
+import socialMediaBanner2 from '../assets/social-media/redes-sociales2.jpg';
 
 export enum ServiceKeys {
   SOCIAL_NETWORK = 'social-network',
@@ -6,11 +12,9 @@ export enum ServiceKeys {
   PHOTOGRAPHIC_PRODUCTION = 'photographic-production',
   AUDIOVISUAL_PRODUCTION = 'audiovisual-production',
   GRAPHIC_ARTS_DESIGN = 'graphic-arts-design',
-  BPO = 'bpo',
-  LEADERSHIP_PERSONAL_DEVELOPMENT = 'leadership-personal-development',
-  COMMERCIAL_STRATEGY = 'commercial-strategy',
-  FAIR_EVENT_STANDS = 'fair-event-stands',
-  COMMERCIAL_IDENTIFICATION_DECORATION = 'commercial-identification-decoration'
+//   BPO = 'bpo',
+//   COMMERCIAL_STRATEGY = 'commercial-strategy',
+//   FAIR_EVENT_STANDS = 'fair-event-stands',
 }
 
 export interface TextContent {
@@ -26,8 +30,11 @@ export interface ListItem extends Array<TextContent | SublistItem> {}
 
 export interface LinkItem {
   text: string;
-  type: 'google-forms' | 'contact';
+  type: 'google-forms';
+  to: string;
 }
+
+export const diagnosticFormLink = "https://forms.gle/m5jiiPShTKdNafvi8";
 
 export interface ServiceSection {
   title?: string;
@@ -43,6 +50,11 @@ export interface ServiceSection {
 
 export interface ServiceDetail {
   sections: ServiceSection[];
+  bannerImages?: {
+    src: string;
+    alt: string;
+    backgroundColor?: string;
+  }[];
 }
 
 export interface Service {
@@ -59,57 +71,59 @@ export const services: Service[] = [
   {
     key: ServiceKeys.SOCIAL_NETWORK,
     title: "Redes Sociales",
-    image: ""
+    image: socialMediaImage,
   },
   {
     key: ServiceKeys.WEB_DEVELOPMENT,
     title: "Desarrollo Web",
-    image: webDevelopmentImage
+    image: webDevelopmentImage,
   },
   {
     key: ServiceKeys.PHOTOGRAPHIC_PRODUCTION,
     title: "Producción Fotográfica",
-    image: ""
+    image: photographyImage,
   },
   {
     key: ServiceKeys.AUDIOVISUAL_PRODUCTION,
     title: "Producción audiovisual",
-    image: ""
+    image: audiovisualImage,
   },
   {
     key: ServiceKeys.GRAPHIC_ARTS_DESIGN,
     title: "Artes gráficas y diseño",
-    image: ""
+    image: graphicDesignImage,
   },
-  {
-    key: ServiceKeys.BPO,
-    title: "BPO",
-    image: ""
-  },
-  {
-    key: ServiceKeys.LEADERSHIP_PERSONAL_DEVELOPMENT,
-    title: "Liderazgo y desarrollo personal",
-    image: ""
-  },
-  {
-    key: ServiceKeys.COMMERCIAL_STRATEGY,
-    title: "Estrategia comercial",
-    image: ""
-  },
-  {
-    key: ServiceKeys.FAIR_EVENT_STANDS,
-    title: "Stands para Ferias y Eventos",
-    image: ""
-  },
-  {
-    key: ServiceKeys.COMMERCIAL_IDENTIFICATION_DECORATION,
-    title: "Identificación y decoración comercial",
-    image: ""
-  }
+//   {
+//     key: ServiceKeys.BPO,
+//     title: "BPO",
+//     image: ""
+//   },
+//   {
+//     key: ServiceKeys.COMMERCIAL_STRATEGY,
+//     title: "Estrategia comercial",
+//     image: ""
+//   },
+//   {
+//     key: ServiceKeys.FAIR_EVENT_STANDS,
+//     title: "Stands para Ferias y Eventos",
+//     image: ""
+//   },
 ];
 
 export const servicesDetails: ServicesDetails = {
   [ServiceKeys.SOCIAL_NETWORK]: {
+    bannerImages: [
+      {
+        src: socialMediaBanner1,
+        alt: "Redes Sociales - Impulsa tu presencia digital",
+        backgroundColor: '#fff'
+      },
+      {
+        src: socialMediaBanner2,
+        alt: "Redes Sociales - Conecta con tu audiencia",
+        backgroundColor: '#fff'
+      }
+    ],
     sections: [
       {
         title: "Cómo FONOS conectó con sus mercados y dinamizó sus ventas",
@@ -280,9 +294,9 @@ export const servicesDetails: ServicesDetails = {
       {
         subtitle: "Presupuestos:",
         list: [
-          [{ text: "8 publicaciones al mes (Solicitar presupuesto)", bold: false }],
-          [{ text: "12 publicaciones al mes. (Solicitar presupuesto)", bold: false }],
-          [{ text: "16 publicaciones al mes. (Solicitar presupuesto)", bold: false }]
+          [{ text: "8 publicaciones al mes", bold: false }],
+          [{ text: "12 publicaciones al mes.", bold: false }],
+          [{ text: "16 publicaciones al mes.", bold: false }]
         ],
         conditions: [
           [{ text: "*Mínimo 3 meses de trabajo para verse resultados.", bold: false }],
@@ -307,12 +321,9 @@ export const servicesDetails: ServicesDetails = {
         links: [
           {
             text: "Empecemos con un diagnóstico sin costo.",
-            type: "google-forms"
+            type: "google-forms",
+            to: diagnosticFormLink
           },
-          {
-            text: "Contáctanos",
-            type: "contact"
-          }
         ]
       },
       {

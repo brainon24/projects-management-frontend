@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { services, servicesDetails, TextContent, ListItem, SublistItem } from '../../data/services';
 import { Icon } from '../../components/Icons';
 import { Header } from '../../components/Header';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { ImageSlider, SlideImage } from '../../components/ImageSlider';
+import { Footer } from '../../components/Footer';
 import styles from './styles.module.css'
 import { CSS_VARS } from '../../theme/colors';
 
@@ -11,6 +14,25 @@ export const ServicePage = () => {
   
   const service = services.find(service => service.key === id);
   const serviceDetail = servicesDetails[id as keyof typeof servicesDetails];
+
+  // Imágenes para el slider del servicio
+  const serviceImages: SlideImage[] = serviceDetail?.bannerImages || [
+    {
+      src: "/api/placeholder/800/400",
+      alt: `${service?.title} - Imagen 1`,
+      backgroundColor: '#f8f9fa'
+    },
+    {
+      src: "/api/placeholder/800/400", 
+      alt: `${service?.title} - Imagen 2`,
+      backgroundColor: '#e9ecef'
+    },
+    {
+      src: "/api/placeholder/800/400",
+      alt: `${service?.title} - Imagen 3`, 
+      backgroundColor: '#dee2e6'
+    }
+  ];
 
   if (!service?.key) {
     return (
@@ -73,18 +95,13 @@ export const ServicePage = () => {
             {service.title}
         </h1>
         
-        <div style={{ 
-            width: '100%', 
-            height: '300px', 
-            backgroundColor: '#f5f5f5', 
-            borderRadius: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '20px 0',
-            color: '#999'
-        }}>
-            Imagen del servicio próximamente
+        {/* Slider de imágenes del servicio */}
+        <div style={{ margin: '20px 0' }}>
+          <ImageSlider 
+            images={serviceImages}
+            autoplayDelay={4000}
+            className={styles.serviceSlider}
+          />
         </div>
 
         {serviceDetail && (
@@ -178,7 +195,7 @@ export const ServicePage = () => {
                             }}
                             onClick={() => {
                                 if (link.type === 'google-forms') {
-                                    return;
+                                    return window.open(link.to, '_blank');
                                 }
                                 if (link.type === 'contact') {
                                     return;
@@ -211,6 +228,14 @@ export const ServicePage = () => {
             </div>
         )}
       </div>
+      
+      {/* Footer */}
+      <Footer />
+      
+      {/* Botón flotante de WhatsApp */}
+      <WhatsAppButton 
+        message={`Hola, me interesa conocer más sobre el servicio: ${service.title}`}
+      />
     </div>
   );
 }

@@ -72,7 +72,7 @@
 .btn-confirm-cp {
     padding: 10px 30px;
     border: none;
-    background-color: var(--blue-dark);
+    background-color: var(--blue-light);
     color: var(--white);
     border-radius: 6px;
     cursor: pointer;

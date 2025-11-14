@@ -96,8 +96,7 @@ export const HowWeDoItTimeline = () => {
               cardForeColor: '#000',
           }}
           enableOutline={false}
-          // cardHeight={120}
-          cardHeight='auto'
+          cardHeight={10}
           onItemSelected={() => {}}
           disableAutoScrollOnClick
           hideControls
@@ -119,7 +118,7 @@ const CustomCard = (
     { title, subtitle, description, trailingItem }: 
     {title: string, subtitle: string, description: string, trailingItem: {icon: string, bgColor: string, color: string}}
 ) => (
-  <div style={{ color: "#000", width: '100%', }}>
+  <div className={styles.timelineCard} style={{ color: "#000", width: '100%' }}>
     <div className={styles.cardHeader}>
         <div>
             <h4>{title}</h4>

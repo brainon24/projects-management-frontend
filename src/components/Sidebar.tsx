@@ -62,7 +62,9 @@ export const Sidebar = () => {
             };
 
             menuItems.push(...commonItems);
-            if (roleSpecific[user?.role]) menuItems.push(...roleSpecific[user?.role]);
+            if (user?.role && roleSpecific[user.role as keyof typeof roleSpecific]) {
+                menuItems.push(...roleSpecific[user.role as keyof typeof roleSpecific]);
+            }
 
             menuItems.push({
                 text: 'Cerrar sesión',
@@ -99,16 +101,16 @@ export const Sidebar = () => {
 
                     {options?.map((item, idx) => (
                         <div key={idx}>
-                            {item.subheader && <ListSubheader>{item.subheader === 'CLIENT' ? 'Panel de Clientes' : item.subheader === 'ALLY' ? 'Panel de Aliados' : item.subheader === 'ADMIN' ? 'Panel de Administración' : null}</ListSubheader>}
+                            {(item as any)?.subheader && <ListSubheader>{(item as any).subheader === 'CLIENT' ? 'Panel de Clientes' : (item as any).subheader === 'ALLY' ? 'Panel de Aliados' : (item as any).subheader === 'ADMIN' ? 'Panel de Administración' : null}</ListSubheader>}
                             <ListItem 
                                 className='list-item' 
                                 onClick={() =>{
                                     dispatch( closeSidemenu() );
-                                    item.onClick();
+                                    (item as any).onClick?.();
                                 }}>
                                 <LinkRRD to={item.to} className='link'>
                                     <ListItemIcon>{item.icon}</ListItemIcon>
-                                    <ListItemText primary={item.text} className={item.subheader ? 'item-text-sidebar' : undefined} />
+                                    <ListItemText primary={item.text} className={(item as any).subheader ? 'item-text-sidebar' : undefined} />
                                 </LinkRRD>
                             </ListItem>
                         </div>

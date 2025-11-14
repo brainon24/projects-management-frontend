@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, Suspense, lazy} from "react";
 import {Route, Routes, useLocation} from "react-router-dom"
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch} from "@reduxjs/toolkit";
@@ -7,28 +7,41 @@ import {checkToken_thunk, logout_thunk} from './store/auth/thunks';
 import {NotFound} from './pages/NotFound';
 import {Login} from './pages/Login';
 import {SignUp} from './pages/SignUp';
-import {Private} from './pages/Private';
 import Loading from "./components/Loading";
 import {ProtectedRoute} from "./helpers/ProtectedRoute";
-import {Profile} from "./pages/Profile";
-import {MyBusiness} from "./pages/MyBusiness";
-import {CreateProject} from "./pages/CreateProject";
-import {MyProjectsAsigned} from "./pages/MyProjectsAsigned";
-import {MyProjects} from "./pages/MyProjects";
-import {MyBusinessProjects} from "./pages/MyBusinessProjects";
 import {Role} from "./enums/user-role.enum";
 import ModalError from "./components/ModalError";
-import { AllProjects } from './pages/AllProjects';
-import { ManagementAccounts } from './pages/ManagementAccounts';
-import { ManagementBusiness } from './pages/ManagementBusiness';
-import { AdministrativeManagement } from './pages/AdministrativeManagement';
-import { ProjectId } from './pages/ProjectId';
-import { Messages } from "./pages/Messages";
 import { HomePage } from "./pages/HomePage";
 import { ServicePage } from "./pages/ServicePage";
+
+// Lazy loading para páginas menos críticas
+const Private = lazy(() => import('./pages/Private').then(module => ({ default: module.Private })));
+const Profile = lazy(() => import('./pages/Profile').then(module => ({ default: module.Profile })));
+const MyBusiness = lazy(() => import('./pages/MyBusiness').then(module => ({ default: module.MyBusiness })));
+const CreateProject = lazy(() => import('./pages/CreateProject').then(module => ({ default: module.CreateProject })));
+const MyProjectsAsigned = lazy(() => import('./pages/MyProjectsAsigned').then(module => ({ default: module.MyProjectsAsigned })));
+const MyProjects = lazy(() => import('./pages/MyProjects').then(module => ({ default: module.MyProjects })));
+const MyBusinessProjects = lazy(() => import('./pages/MyBusinessProjects').then(module => ({ default: module.MyBusinessProjects })));
+const AllProjects = lazy(() => import('./pages/AllProjects').then(module => ({ default: module.AllProjects })));
+const ManagementAccounts = lazy(() => import('./pages/ManagementAccounts').then(module => ({ default: module.ManagementAccounts })));
+const ManagementBusiness = lazy(() => import('./pages/ManagementBusiness').then(module => ({ default: module.ManagementBusiness })));
+const AdministrativeManagement = lazy(() => import('./pages/AdministrativeManagement').then(module => ({ default: module.AdministrativeManagement })));
+const ProjectId = lazy(() => import('./pages/ProjectId').then(module => ({ default: module.ProjectId })));
+const Messages = lazy(() => import('./pages/Messages').then(module => ({ default: module.Messages })));
 import { ForgotPassword } from "./pages/forgot/ForgotPassword";
 import { NewPassword } from "./pages/forgot/NewPassword/NewPassword";
 import { ToastContainer } from "react-toastify";
+import { initGA, logPageView } from "./analytics";
+
+function AnalyticsTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
+
+  return null;
+}
 
 const App = () => {
 
@@ -58,8 +71,11 @@ const App = () => {
       checkToken();
   }, [location]);
 
-  if( status === 'checking' ) return <Loading />
+  useEffect(() => {
+    initGA();
+  }, []);
 
+  if( status === 'checking' ) return <Loading />
 
   return (
     <>
@@ -71,6 +87,7 @@ const App = () => {
             />
         ) : null
       }
+      <AnalyticsTracker />
       <Routes>
         <Route path="/" element={ <HomePage /> }  />
         <Route path="/login" element={ <Login /> } />
@@ -85,7 +102,9 @@ const App = () => {
           path="/private" 
           element={ 
             <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.ALLY, Role.ADMIN]}>
-              <Private />
+              <Suspense fallback={<Loading />}>
+                <Private />
+              </Suspense>
             </ProtectedRoute>
          } 
         />
@@ -94,7 +113,9 @@ const App = () => {
           path="/private/profile" 
           element={ 
             <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.ALLY, Role.ADMIN]}>
-              <Profile />
+              <Suspense fallback={<Loading />}>
+                <Profile />
+              </Suspense>
             </ProtectedRoute>
          } 
         />
@@ -103,7 +124,9 @@ const App = () => {
           path="/private/my-business" 
           element={ 
             <ProtectedRoute roles={[Role.USER, Role.CLIENT, Role.ALLY, Role.ADMIN]}>
-              <MyBusiness />
+              <Suspense fallback={<Loading />}>
+                <MyBusiness />
+              </Suspense>
             </ProtectedRoute>
           } 
         />
@@ -112,7 +135,9 @@ const App = () => {
           path="/private/create-project" 
           element={ 
             <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN]}>
-              <CreateProject />
+              <Suspense fallback={<Loading />}>
+                <CreateProject />
+              </Suspense>
             </ProtectedRoute>
           } 
         />
@@ -121,7 +146,9 @@ const App = () => {
           path="/private/messages" 
           element={ 
             <ProtectedRoute roles={[Role.ADMIN]}>
-              <Messages />
+              <Suspense fallback={<Loading />}>
+                <Messages />
+              </Suspense>
             </ProtectedRoute>
           } 
         />
@@ -130,7 +157,9 @@ const App = () => {
           path="/private/my-projects-asigned"
           element={ 
             <ProtectedRoute roles={[Role.ALLY, Role.ADMIN,]}>
-              <MyProjectsAsigned />
+              <Suspense fallback={<Loading />}>
+                <MyProjectsAsigned />
+              </Suspense>
             </ProtectedRoute>
           } 
         />
@@ -139,7 +168,9 @@ const App = () => {
           path="/private/my-projects"
           element={
               <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN]}>
-                <MyProjects />
+                <Suspense fallback={<Loading />}>
+                  <MyProjects />
+                </Suspense>
               </ProtectedRoute>
           }
         />
@@ -148,7 +179,9 @@ const App = () => {
           path="/private/project/:projectId"
           element={
               <ProtectedRoute roles={[Role.CLIENT, Role.ADMIN, Role.ALLY]}>
-                <ProjectId />
+                <Suspense fallback={<Loading />}>
+                  <ProjectId />
+                </Suspense>
               </ProtectedRoute>
           }
         />
@@ -157,7 +190,9 @@ const App = () => {
           path="/private/my-business-projects"
           element={
               <ProtectedRoute roles={[Role.CLIENT, Role.ALLY, Role.ADMIN]}>
-                <MyBusinessProjects />
+                <Suspense fallback={<Loading />}>
+                  <MyBusinessProjects />
+                </Suspense>
               </ProtectedRoute>
           }
         />
@@ -166,7 +201,9 @@ const App = () => {
           path="/private/all-projects"
           element={
               <ProtectedRoute roles={[Role.ADMIN]}>
-                <AllProjects />
+                <Suspense fallback={<Loading />}>
+                  <AllProjects />
+                </Suspense>
               </ProtectedRoute>
           }
         />
@@ -175,7 +212,9 @@ const App = () => {
           path="/private/management-accounts"
           element={
               <ProtectedRoute roles={[Role.ADMIN]}>
-                <ManagementAccounts />
+                <Suspense fallback={<Loading />}>
+                  <ManagementAccounts />
+                </Suspense>
               </ProtectedRoute>
           }
         />
@@ -184,7 +223,9 @@ const App = () => {
           path="/private/management-business"
           element={
               <ProtectedRoute roles={[Role.ADMIN]}>
-                <ManagementBusiness />
+                <Suspense fallback={<Loading />}>
+                  <ManagementBusiness />
+                </Suspense>
               </ProtectedRoute>
           }
         />
@@ -193,7 +234,9 @@ const App = () => {
           path="/private/administrative-managment"
           element={
               <ProtectedRoute roles={[Role.ADMIN]}>
-                <AdministrativeManagement />
+                <Suspense fallback={<Loading />}>
+                  <AdministrativeManagement />
+                </Suspense>
               </ProtectedRoute>
           }
         />
