@@ -26,7 +26,7 @@ interface ImageSliderProps {
 
 export const ImageSlider = ({ 
   images, 
-  autoplayDelay = 5000,
+  autoplayDelay = 90000,
   showDesktopOnly = false,
   showMobileOnly = false,
   className = ''
