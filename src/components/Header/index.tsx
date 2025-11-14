@@ -114,8 +114,8 @@ export const Header = () => {
                 </button>
                 <Link to="/login">
                     <div className={styles.loginButton}>
-                        {/* <Icon name="lock-02" /> */}
-                        <Icon name="usuario-check" />
+                        <Icon name="lock-02" />
+                        {/* <Icon name="usuario-check" /> */}
                     </div>
                 </Link>
             </div>
