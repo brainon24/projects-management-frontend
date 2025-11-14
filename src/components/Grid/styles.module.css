@@ -154,6 +154,8 @@
   color: #333;
   margin: 0 0 5px 0;
   line-height: 1.3;
+  display: flex;
+  align-items: center;
 }
 
 .aboutSubtitle {
@@ -169,6 +171,7 @@
   border-radius: 8px;
   margin-left: 15px;
   flex-shrink: 0;
+  align-self: flex-start;
 }
 
 .aboutDescription {
@@ -274,14 +277,17 @@
   }
 
   .aboutHeader {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 15px;
   }
 
   .aboutIcon {
-    margin-left: 0;
-    align-self: flex-end;
+    margin-left: 10px;
+    align-self: flex-start;
+    margin-top: 0;
   }
 
   .aboutTitle {
