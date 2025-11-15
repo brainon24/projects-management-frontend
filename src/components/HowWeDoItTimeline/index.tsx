@@ -48,7 +48,7 @@ const items = [
   { 
     title: "5. Gestiona tu proyecto", 
     subtitle: "Plataforma para gestión de proyectos", 
-    description: "Evaluaciones frente a resultados y pilotaje con objetivos medibles.",
+    description: "Organiza toda la información de tu proyecto en un solo lugar.",
     trailingItem: {
         icon: 'wallet-04',
         bgColor: 'rgba(244, 239, 239, 1)',

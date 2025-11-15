@@ -261,7 +261,7 @@ export const ProjectId = () => {
                                     padding: '10px 20px',
                                     borderRadius: 20,
                                     cursor: 'pointer',
-                                    backgroundColor: 'var(--blue-dark)',
+                                    backgroundColor: 'var(--orange)',
                                     color: '#fff',
                                     display: 'flex',
                                     alignItems: 'center',

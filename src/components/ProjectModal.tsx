@@ -292,7 +292,7 @@ export const ProjectModal = ({ project }: any) => {
                                 padding: '8px 20px',
                                 borderRadius: 6,
                                 border: 'none',
-                                backgroundColor: 'var(--blue-dark)',
+                                backgroundColor: 'var(--orange)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
                             }}

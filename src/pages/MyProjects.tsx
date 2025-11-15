@@ -12,7 +12,7 @@ export const MyProjects = () => {
 
     const dispatch = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
-    const { allProjectsByUserId, errorNotFoundProject } = useSelector((state: any) => state.projects);
+    const { allProjectsByUserId } = useSelector((state: any) => state.projects);
 
     useEffect(() => {
         // if( allProjectsByUserId.length > 0 ) return;

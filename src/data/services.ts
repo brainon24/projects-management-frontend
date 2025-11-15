@@ -238,58 +238,16 @@ export const servicesDetails: ServicesDetails = {
             text: " (Facebook - Instagram - Whatsapp), desde la estrategia de comunicación y de posicionamiento hasta su ejecución:",
             bold: false
           }
-        ]
+        ],
       },
-      {
-        subtitle: "Estrategia y contenido.",
-        list: [
-          [{ text: "Desarrollo de brief y ADN de marca.", bold: false }],
-          [{ text: "Cocreación con la empresaria o empresario a través del brief.", bold: false }],
-          [{ text: "Generación de Concepto de Posicionamiento.", bold: false }],
-          [{ text: "Propuesta de líneas de comunicación.", bold: false }],
-          [
-            { text: "Generación de contenido:", bold: false },
-            {
-              sublist: [
-                [{ text: "Creación de copies y hashtags", bold: false }],
-                [{ text: "Diseño de piezas gráficas y/o edición de videos", bold: false }]
-              ]
-            }
-          ],
-          [{ text: "Envío de cronograma de publicaciones", bold: false }],
-          [{ text: "Publicación de posts e historias", bold: false }],
-          [{ text: "Servicio al cliente: respuesta a mensajes y comentarios", bold: false }],
-          [{ text: "Entrega de informe mensual de resultados y planeación de actividades a seguir.", bold: false }]
-        ]
-      },
+      
       {
         subtitle: "Pauta digital en Meta.",
-        content: [
-          {
-            text: "Parte 1:",
-            bold: true
-          }
-        ],
         list: [
-          [{ text: "Asesoría", bold: false }],
-          [{ text: "Explicación de tipos de pauta.", bold: false }],
-          [{ text: "Definición de estrategia.", bold: false }],
-          [{ text: "Segmentación de público objetivo.", bold: false }],
-          [{ text: "Elección de intereses.", bold: false }],
-          [{ text: "Distribución del presupuesto.", bold: false }],
-          [{ text: "Recomendaciones de contenidos.", bold: false }]
-        ],
-        additionalContent: [
-          {
-            text: "Parte 2:",
-            bold: true
-          }
-        ],
-        additionalList: [
-          [{ text: "Ejecución de la campaña.", bold: false }],
+          [{ text: "Ejecución de la campaña a través de la pauta.", bold: false }],
           [{ text: "Monitoreo y seguimiento.", bold: false }],
-          [{ text: "Entrega del informe de resultados.", bold: false }]
-        ]
+          [{ text: "Entrega del informe de resultados y análisis.", bold: false }],
+        ],
       },
       {
         subtitle: "Presupuestos:",
