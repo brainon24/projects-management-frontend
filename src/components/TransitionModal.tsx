@@ -36,7 +36,7 @@ export const TransitionModal = ({ title, data, }: any) => {
 
         dispatch( clearlastUpdateProjectsReducer() );
 
-        navigate('/private');
+        navigate('/private/projects');
     };
 
     const { createdAt } = data;
@@ -113,15 +113,17 @@ export const TransitionModal = ({ title, data, }: any) => {
                         <button 
                             onClick={handleClose}
                             style={{
-                                padding: '8px 20px',
+                                padding: '10px 24px',
                                 borderRadius: 6,
                                 border: 'none',
                                 backgroundColor: 'var(--orange)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
+                                fontSize: '14px',
+                                fontWeight: 500,
                             }}
                         >
-                            Continuar
+                            Ver Mi Proyecto
                         </button>
                     </DialogActions>
                 </Box>

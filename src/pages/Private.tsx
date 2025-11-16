@@ -39,29 +39,11 @@ const commonMenuItems = {
         link: '/private/create-project',
         icon: 'file-shield-02'
     },
-    myProjects: {
-        title: 'Listar mis proyectos',
-        description: 'Acá podrás listar todos los proyectos que creaste.',
-        link: '/private/my-projects',
+    projects: {
+        title: 'Gestionar Proyectos',
+        description: 'Acá podrás ver y administrar todos tus proyectos con filtros avanzados.',
+        link: '/private/projects',
         icon: 'laptop-01'
-    },
-    myProjectsClient: {
-        title: 'Listar Mis Proyectos',
-        description: 'Acá podrás listar todos los proyectos que creaste.',
-        link: '/private/my-projects',
-        icon: 'puntos'
-    },
-    myBusinessProjects: {
-        title: 'Listar los proyectos de mi compañia',
-        description: 'Acá podrás listar todos los proyectos de tu empresa.',
-        link: '/private/my-business-projects',
-        icon: 'archivo'
-    },
-    myBusinessProjectsClient: {
-        title: 'Listar Los Proyectos de Mi Compañia',
-        description: 'Acá podrás listar todos los proyectos de tu empresa.',
-        link: '/private/my-business-projects',
-        icon: 'archivo'
     },
     driveFiles: {
         title: 'Mis archivos con brainon24',
@@ -93,33 +75,18 @@ const specificMenuItems = {
             link: '/private/messages',
             icon: 'mail-04'
         },
-        allProjects: {
-            title: 'Listar todos los proyectos',
-            description: 'Acá podrás listar todos los proyectos de tu empresa.',
-            link: '/private/all-projects',
-            icon: 'puntos'
-        }
+
     },
-    ALLY: {
-        assignedProjects: {
-            title: 'Mis proyectos asignados',
-            description: 'Acá podrás listar todos los proyectos que tienes asignados.',
-            link: '/private/my-projects-asigned',
-            icon: 'puntos'
-        }
-    }
+    ALLY: {}
 };
 
-// Configuración de menú por rol usando elementos comunes y específicos
 const menuConfig: Record<string, MenuCard[]> = {
     ADMIN: [
         commonMenuItems.profile,
         specificMenuItems.ADMIN.administrativeManagement,
         commonMenuItems.createProject,
         specificMenuItems.ADMIN.whatsappMessages,
-        commonMenuItems.myProjects,
-        commonMenuItems.myBusinessProjects,
-        specificMenuItems.ADMIN.allProjects,
+        commonMenuItems.projects,
         commonMenuItems.driveFiles,
         commonMenuItems.calendar
     ],
@@ -127,15 +94,14 @@ const menuConfig: Record<string, MenuCard[]> = {
         commonMenuItems.profile,
         commonMenuItems.myBusiness,
         commonMenuItems.createProject,
-        commonMenuItems.myProjectsClient,
-        commonMenuItems.myBusinessProjectsClient,
+        commonMenuItems.projects,
         commonMenuItems.driveFiles,
         commonMenuItems.calendar
     ],
     ALLY: [
         commonMenuItems.profile,
         commonMenuItems.myBusinessLowercase,
-        specificMenuItems.ALLY.assignedProjects,
+        commonMenuItems.projects,
         commonMenuItems.driveFiles,
         commonMenuItems.calendar
     ]

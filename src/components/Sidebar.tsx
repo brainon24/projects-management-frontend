@@ -44,16 +44,14 @@ export const Sidebar = () => {
             const roleSpecific = {
                 CLIENT: [
                     { text: 'Crear proyecto', icon: <Icon name='file-shield-02' size={17} />, to: '/private/create-project' },
-                    { text: 'Mis proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/my-projects' },
-                    { text: 'Proyectos de mi negocio', icon: <Icon name='archivo' size={17} />, to: '/private/my-business-projects' },
+                    { text: 'Gestionar Proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/projects' },
                 ],
                 ALLY: [
-                    { text: 'Mis Proyectos Asignados', icon: <Icon name='puntos' size={17} />, to: '/private/my-projects-asigned' },
+                    { text: 'Gestionar Proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/projects' },
                 ],
                 ADMIN: [
                     { text: 'Crear proyecto', icon: <Icon name='file-shield-02' size={17} />, to: '/private/create-project' },
-                    { text: 'Todos los proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/all-projects' },
-                    { text: 'Mis proyectos asignados', icon: <Icon name='puntos' size={17} />, to: '/private/my-projects-asigned' },
+                    { text: 'Gestionar Proyectos', icon: <Icon name='puntos' size={17} />, to: '/private/projects' },
                     { text: 'Crear negocio', icon: <Icon name='edificio-02' size={17} />, to: '/private/management-business', onClick: handleBussines },
                     { text: 'Gestión Administrativa', icon: <Icon name='users-edit' size={17} />, to: '/private/administrative-managment' },
                     { text: 'Gestionar negocios', icon: <Icon name='edificio-06' size={17} />, to: '/private/management-business' },
@@ -96,6 +94,9 @@ export const Sidebar = () => {
                     <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30, width: '100%', }}>
                         <img src={ profilePicture } alt="Foto de perfil" width={100} style={{ borderRadius: 100}}/>
                     </div>
+                    <p 
+                        style={{ textAlign: 'center', fontWeight: 'bold', marginBottom: 20 }}
+                    >{user?.fullName?.split(' ')[0]} {user?.fullName?.split(' ')?.[1]?.slice(0, 1)}.</p>
 
                     {/* <Divider /> */}
 

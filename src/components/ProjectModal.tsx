@@ -23,11 +23,6 @@ import './projectModal.css';
 import { ProjectStatus } from './ProjectStatus';
 import { Loading100p } from './Loading100p';
 import { getComplementHours } from '../helpers/dates';
-import projectsManagement from '../api/api';
-import { toast } from 'react-toastify';
-import { Icon } from './Icons';
-import { Role } from '../enums/user-role.enum';
-import { findProjectsByUserId_thunk } from '../store/projects/thunks';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -70,13 +65,9 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export const ProjectModal = ({ project }: any) => {
-
-    const [isLoading, setIsLoading] = React.useState(false);
-    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { commentariesByProjectID, isLoadingCommentaries } = useSelector((state: any) => state.commentaries);
-    const { user } = useSelector((state: any) => state.auth);
     const [open, setOpen] = React.useState(true);
 
     const { formatDate } = useFormatDate();
@@ -86,20 +77,6 @@ export const ProjectModal = ({ project }: any) => {
 
         dispatch( clearProjectOneReducer() );
     };
-
-    const handleRemoveProject = async () => {
-        setIsLoading(true);
-        const { status } = await projectsManagement.delete(`/project/remove/${ project._id }`);
-        if (status === 200) {
-            dispatch( clearProjectOneReducer() );
-            dispatch( findProjectsByUserId_thunk( user._id ) );
-            toast('Proyecto eliminado con éxito', { type: 'success' });
-        } else {
-            toast('Error al eliminar el proyecto', { type: 'error' });
-        }
-        setOpen(false);
-        setIsLoading(false);
-    }
 
     const openProject = () => {
         setOpen(false);
@@ -149,18 +126,6 @@ export const ProjectModal = ({ project }: any) => {
                         <LinkRRD to={`/private/project/${ project._id }`}>
                             <span>Creado el { formatDate(project.createdAt) }</span>
                         </LinkRRD>
-
-                        {
-                            user?.role === Role.ADMIN && (
-                                <button 
-                                    onClick={() => handleRemoveProject()} 
-                                    style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
-                                    disabled={ isLoading }
-                                >
-                                    <Icon name='basura' color='var(--red)' size={19} />
-                                </button>
-                            )
-                        }
                     </div>
 
                     <div 
@@ -292,7 +257,7 @@ export const ProjectModal = ({ project }: any) => {
                                 padding: '8px 20px',
                                 borderRadius: 6,
                                 border: 'none',
-                                backgroundColor: 'var(--orange)',
+                                backgroundColor: 'var(--blue-dark)',
                                 color: 'var(--white)',
                                 cursor: 'pointer',
                             }}
