@@ -15,24 +15,22 @@ export const ServicePage = () => {
   const service = services.find(service => service.key === id);
   const serviceDetail = servicesDetails[id as keyof typeof servicesDetails];
 
-  // Imágenes para el slider del servicio
-  const serviceImages: SlideImage[] = serviceDetail?.bannerImages || [
-    {
-      src: "/api/placeholder/800/400",
-      alt: `${service?.title} - Imagen 1`,
-      backgroundColor: '#f8f9fa'
-    },
-    {
-      src: "/api/placeholder/800/400", 
-      alt: `${service?.title} - Imagen 2`,
-      backgroundColor: '#e9ecef'
-    },
-    {
-      src: "/api/placeholder/800/400",
-      alt: `${service?.title} - Imagen 3`, 
-      backgroundColor: '#dee2e6'
+  const getDesktopImages = (): SlideImage[] => {
+    if (serviceDetail?.bannerImages?.desktop) {
+      return serviceDetail.bannerImages.desktop;
     }
-  ];
+    return [];
+  };
+
+  const getMobileImages = (): SlideImage[] => {
+    if (serviceDetail?.bannerImages?.mobile) {
+      return serviceDetail.bannerImages.mobile;
+    }
+    return [];
+  };
+
+  const desktopImages = getDesktopImages();
+  const mobileImages = getMobileImages();
 
   if (!service?.key) {
     return (
@@ -94,12 +92,19 @@ export const ServicePage = () => {
             }}>
             {service.title}
         </h1>
-        
-        {/* Slider de imágenes del servicio */}
+
         <div style={{ margin: '20px 0' }}>
           <ImageSlider 
-            images={serviceImages}
-            autoplayDelay={4000}
+            images={desktopImages}
+            autoplayDelay={90000}
+            showDesktopOnly={true}
+            className={styles.serviceSlider}
+          />
+
+          <ImageSlider 
+            images={mobileImages}
+            autoplayDelay={90000}
+            showMobileOnly={true}
             className={styles.serviceSlider}
           />
         </div>
@@ -229,10 +234,8 @@ export const ServicePage = () => {
         )}
       </div>
       
-      {/* Footer */}
       <Footer />
       
-      {/* Botón flotante de WhatsApp */}
       <WhatsAppButton 
         message={`Hola, me interesa conocer más sobre el servicio: ${service.title}`}
       />

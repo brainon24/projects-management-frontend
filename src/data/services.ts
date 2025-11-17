@@ -3,8 +3,11 @@ import webDevelopmentImage from '../assets/services/web-development.jpg';
 import photographyImage from '../assets/services/photography.jpg';
 import audiovisualImage from '../assets/services/audiovisual.jpg';
 import graphicDesignImage from '../assets/services/graphic-desing.jpg';
-import socialMediaBanner1 from '../assets/social-media/redes-sociales1.jpg';
-import socialMediaBanner2 from '../assets/social-media/redes-sociales2.jpg';
+import socialMediaBanner1 from '../assets/services/social-media/banners/desktop/redes-sociales1.jpg';
+import socialMediaBanner2 from '../assets/services/social-media/banners/desktop/redes-sociales2.jpg';
+
+import socialMediaBannerM1 from '../assets/services/social-media/banners/mobile/redes-sociales1.jpg';
+import socialMediaBannerM2 from '../assets/services/social-media/banners/mobile/redes-sociales2.jpg';
 
 export enum ServiceKeys {
   SOCIAL_NETWORK = 'social-network',
@@ -12,9 +15,6 @@ export enum ServiceKeys {
   PHOTOGRAPHIC_PRODUCTION = 'photographic-production',
   AUDIOVISUAL_PRODUCTION = 'audiovisual-production',
   GRAPHIC_ARTS_DESIGN = 'graphic-arts-design',
-//   BPO = 'bpo',
-//   COMMERCIAL_STRATEGY = 'commercial-strategy',
-//   FAIR_EVENT_STANDS = 'fair-event-stands',
 }
 
 export interface TextContent {
@@ -36,6 +36,17 @@ export interface LinkItem {
 
 export const diagnosticFormLink = "https://forms.gle/m5jiiPShTKdNafvi8";
 
+export interface BannerImage {
+  src: string;
+  alt: string;
+  backgroundColor?: string;
+}
+
+export interface ResponsiveBannerImages {
+  desktop: BannerImage[];
+  mobile: BannerImage[];
+}
+
 export interface ServiceSection {
   title?: string;
   subtitle?: string;
@@ -50,11 +61,7 @@ export interface ServiceSection {
 
 export interface ServiceDetail {
   sections: ServiceSection[];
-  bannerImages?: {
-    src: string;
-    alt: string;
-    backgroundColor?: string;
-  }[];
+  bannerImages?: ResponsiveBannerImages;
 }
 
 export interface Service {
@@ -66,6 +73,11 @@ export interface Service {
 export type ServicesDetails = {
   [key in ServiceKeys]?: ServiceDetail;
 }
+
+// Ejemplo de cómo agregar banners responsivos:
+// Para cada servicio, puedes definir imágenes diferentes para desktop y mobile
+// Desktop: Imágenes más anchas y detalladas (ratio 16:9 o similar)
+// Mobile: Imágenes más altas o cuadradas (ratio 4:3 o 1:1) optimizadas para pantallas verticales
 
 export const services: Service[] = [
   {
@@ -112,18 +124,32 @@ export const services: Service[] = [
 
 export const servicesDetails: ServicesDetails = {
   [ServiceKeys.SOCIAL_NETWORK]: {
-    bannerImages: [
-      {
-        src: socialMediaBanner1,
-        alt: "Redes Sociales - Impulsa tu presencia digital",
-        backgroundColor: '#fff'
-      },
-      {
-        src: socialMediaBanner2,
-        alt: "Redes Sociales - Conecta con tu audiencia",
-        backgroundColor: '#fff'
-      }
-    ],
+    bannerImages: {
+      desktop: [
+        {
+          src: socialMediaBanner1,
+          alt: "Redes Sociales - Impulsa tu presencia digital",
+          backgroundColor: '#fff'
+        },
+        {
+          src: socialMediaBanner2,
+          alt: "Redes Sociales - Conecta con tu audiencia",
+          backgroundColor: '#fff'
+        }
+      ],
+      mobile: [
+        {
+          src: socialMediaBannerM1, // TODO: Agregar versión mobile optimizada
+          alt: "Redes Sociales - Impulsa tu presencia digital",
+          backgroundColor: '#fff'
+        },
+        {
+          src: socialMediaBannerM2, // TODO: Agregar versión mobile optimizada
+          alt: "Redes Sociales - Conecta con tu audiencia",
+          backgroundColor: '#fff'
+        }
+      ]
+    },
     sections: [
       {
         title: "Cómo FONOS conectó con sus mercados y dinamizó sus ventas",
@@ -297,5 +323,38 @@ export const servicesDetails: ServicesDetails = {
         ]
       }
     ]
-  }
+  },
+  
+  // Ejemplo de estructura para otros servicios:
+  // [ServiceKeys.WEB_DEVELOPMENT]: {
+  //   bannerImages: {
+  //     desktop: [
+  //       {
+  //         src: webDevelopmentBannerDesktop1,
+  //         alt: "Desarrollo Web - Soluciones profesionales",
+  //         backgroundColor: '#fff'
+  //       },
+  //       {
+  //         src: webDevelopmentBannerDesktop2,
+  //         alt: "Desarrollo Web - Tecnología moderna",
+  //         backgroundColor: '#f8f9fa'
+  //       }
+  //     ],
+  //     mobile: [
+  //       {
+  //         src: webDevelopmentBannerMobile1,
+  //         alt: "Desarrollo Web - Soluciones profesionales (Mobile)",
+  //         backgroundColor: '#fff'
+  //       },
+  //       {
+  //         src: webDevelopmentBannerMobile2,
+  //         alt: "Desarrollo Web - Tecnología moderna (Mobile)",
+  //         backgroundColor: '#f8f9fa'
+  //       }
+  //     ]
+  //   },
+  //   sections: [
+  //     // Secciones del servicio...
+  //   ]
+  // }
 };
