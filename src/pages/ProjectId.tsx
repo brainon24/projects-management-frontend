@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
 import { findProjectById_thunk, updateProject_thunk } from '../store/projects/thunks';
 
@@ -19,14 +19,19 @@ import { SuccessModal } from '../components/SuccessModal';
 import Loading from '../components/Loading';
 import { ProjectStatus } from '../components/ProjectStatus';
 import { Button } from '../components/Button';
+import { Icon } from '../components/Icons';
+import { Role } from '../enums/user-role.enum';
+import { toast } from 'react-toastify';
+import projectsManagement from '../api/api';
 
 export const ProjectId = () => {
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     const dispatch: any = useDispatch();
     const { user } = useSelector((state: any) => state.auth);
-    const { projectById, errorNotFoundProject, isLoadingProjects, isRequestSuccess: isRequestSuccessProjects, textRequestSuccess: textRequestSuccessProjects, } = useSelector((state: any) => state.projects);
+    const { projectById, isLoadingProjects } = useSelector((state: any) => state.projects);
     const { commentariesByProjectID, isLoadingCommentaries, isRequestSuccess, textRequestSuccess, } = useSelector((state: any) => state.commentaries);
     const { mALLYs = [], mClients = [] } = useSelector((state: any) => state.users);
     const { isOpenModal } = useSelector((state: any) => state.ui);
@@ -38,6 +43,7 @@ export const ProjectId = () => {
     const [ description, setDescription ] = useState(projectById?.description);
     const [ acceptanceCriteria, setAcceptanceCriteria ] = useState(projectById?.acceptanceCriteria);
     const [ showAcceptanceCriteria, setShowAcceptanceCriteria ] = useState<boolean>(false);
+    const [ isLoadingDelete, setIsLoadingDelete ] = useState<boolean>(false);
 
     const { formatDate } = useFormatDate();
 
@@ -68,6 +74,36 @@ export const ProjectId = () => {
                 status,
             })
         );
+    }
+
+    const onDeleteProject = async() => {
+        if (!projectById?._id) return;
+        
+        // Confirmar eliminación
+        const confirmed = window.confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.');
+        if (!confirmed) return;
+        
+        try {
+            setIsLoadingDelete(true);
+            const { status } = await projectsManagement.delete(`/project/remove/${projectById._id}`);
+
+            if( status === 200 ){
+                navigate(`/private/projects`, { 
+                    state: { 
+                        showSuccessToast: true, 
+                        message: 'Proyecto eliminado exitosamente' 
+                    } 
+                });
+            } else {
+                toast.error('Error al eliminar el proyecto');
+            }
+
+        } catch (error) {
+            console.log({error});
+            toast.error('Error al eliminar el proyecto');
+        } finally {
+            setIsLoadingDelete(false);
+        }
     }
 
     const fetchALLY = async (role: string): Promise<any> => {
@@ -215,14 +251,50 @@ export const ProjectId = () => {
                     )
                 }
 
-                <Button 
-                    onClick={ onSubmit }
-                    style={{
-                        marginTop: 20,
-                    }}
-                >
-                    Actualizar Proyecto
-                </Button>
+                <div style={{ display: 'flex', gap: '15px', alignItems: 'center', marginTop: 20 }}>
+                    <Button 
+                        onClick={ onSubmit }
+                        style={{
+                            flex: 1,
+                        }}
+                    >
+                        Actualizar Proyecto
+                    </Button>
+
+                    {user?.role === Role.ADMIN && (
+                        <button
+                            onClick={onDeleteProject}
+                            disabled={isLoadingDelete}
+                            style={{
+                                padding: '12px 20px',
+                                borderRadius: 6,
+                                border: 'none',
+                                backgroundColor: isLoadingDelete ? '#ccc' : 'var(--red)',
+                                color: 'var(--white)',
+                                cursor: isLoadingDelete ? 'not-allowed' : 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                fontSize: 14,
+                                fontWeight: 500,
+                                transition: 'background-color 0.2s ease',
+                            }}
+                            onMouseEnter={(e) => {
+                                if (!isLoadingDelete) {
+                                    e.currentTarget.style.backgroundColor = '#dc2626';
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                if (!isLoadingDelete) {
+                                    e.currentTarget.style.backgroundColor = 'var(--red)';
+                                }
+                            }}
+                        >
+                            <Icon name='basura' color='var(--white)' size={16} />
+                            {isLoadingDelete ? 'Eliminando...' : 'Eliminar Proyecto'}
+                        </button>
+                    )}
+                </div>
 
                 {
                     isLoadingCommentaries 
@@ -261,7 +333,7 @@ export const ProjectId = () => {
                                     padding: '10px 20px',
                                     borderRadius: 20,
                                     cursor: 'pointer',
-                                    backgroundColor: 'var(--blue-dark)',
+                                    backgroundColor: 'var(--orange)',
                                     color: '#fff',
                                     display: 'flex',
                                     alignItems: 'center',

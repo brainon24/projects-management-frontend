@@ -11,9 +11,157 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Cards Styles */
+.cardsContainer {
+    padding: 20px 0;
+    margin: 0;
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+.serviceCard {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: fit-content;
+}
+
+.serviceCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.cardTextContainer {
+    flex: 1;
+}
+
+.cardTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.cardSubtitle {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+}
+
+.cardIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cardIcon svg {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+.cardDescription {
+    margin-bottom: 16px;
+    line-height: 1.6;
+    color: #666;
+}
+
+.cardList {
+    margin-top: 12px;
+}
+
+.cardList ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.cardList li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.cardSignature {
+    margin-top: 16px;
+    font-style: italic;
+    text-align: right;
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 @media (max-width: 768px) {
     .serviceSlider {
         border-radius: 8px;
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .cardsGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .serviceCard {
+        padding: 20px;
+    }
+
+    .cardHeader {
+        gap: 12px;
+    }
+
+    .cardIcon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .cardIcon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .cardTitle {
+        font-size: 1.1rem;
+    }
+
+    .cardSubtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .cardsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .cardsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .cardsGrid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { services, servicesDetails, TextContent, ListItem, SublistItem } from '../../data/services';
+import { services, servicesDetails, TextContent, ListItem, SublistItem, ServiceCard } from '../../data/services';
 import { Icon } from '../../components/Icons';
 import { Header } from '../../components/Header';
 import { WhatsAppButton } from '../../components/WhatsAppButton';
 import { ImageSlider, SlideImage } from '../../components/ImageSlider';
 import { Footer } from '../../components/Footer';
+import { Grid } from '../../components/Grid';
 import styles from './styles.module.css'
 import { CSS_VARS } from '../../theme/colors';
 
@@ -15,24 +16,22 @@ export const ServicePage = () => {
   const service = services.find(service => service.key === id);
   const serviceDetail = servicesDetails[id as keyof typeof servicesDetails];
 
-  // Imágenes para el slider del servicio
-  const serviceImages: SlideImage[] = serviceDetail?.bannerImages || [
-    {
-      src: "/api/placeholder/800/400",
-      alt: `${service?.title} - Imagen 1`,
-      backgroundColor: '#f8f9fa'
-    },
-    {
-      src: "/api/placeholder/800/400", 
-      alt: `${service?.title} - Imagen 2`,
-      backgroundColor: '#e9ecef'
-    },
-    {
-      src: "/api/placeholder/800/400",
-      alt: `${service?.title} - Imagen 3`, 
-      backgroundColor: '#dee2e6'
+  const getDesktopImages = (): SlideImage[] => {
+    if (serviceDetail?.bannerImages?.desktop) {
+      return serviceDetail.bannerImages.desktop;
     }
-  ];
+    return [];
+  };
+
+  const getMobileImages = (): SlideImage[] => {
+    if (serviceDetail?.bannerImages?.mobile) {
+      return serviceDetail.bannerImages.mobile;
+    }
+    return [];
+  };
+
+  const desktopImages = getDesktopImages();
+  const mobileImages = getMobileImages();
 
   if (!service?.key) {
     return (
@@ -82,6 +81,48 @@ export const ServicePage = () => {
     );
   };
 
+  const renderCards = (cards: ServiceCard[]) => {
+    return (
+      <div className={styles.cardsContainer}>
+        <div className={styles.cardsGrid}>
+          {cards.map((card) => (
+            <div key={card.id} className={styles.serviceCard}>
+              <div className={styles.cardHeader}>
+                <div className={styles.cardTextContainer}>
+                  <h4 className={styles.cardTitle}>{card.title}</h4>
+                  {card.subtitle && <p className={styles.cardSubtitle}>{card.subtitle}</p>}
+                </div>
+                {card.icon && (
+                  <div 
+                    className={styles.cardIcon}
+                    style={{ backgroundColor: card.backgroundColor || 'var(--orange-lighter)' }}
+                  >
+                    <Icon name={card.icon} />
+                  </div>
+                )}
+              </div>
+              {card.description && (
+                <div className={styles.cardDescription}>
+                  {renderTextContent(card.description)}
+                </div>
+              )}
+              {card.list && (
+                <div className={styles.cardList}>
+                  {renderList(card.list)}
+                </div>
+              )}
+              {card.signature && (
+                <p className={styles.cardSignature}>
+                  {card.signature}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Header />
@@ -94,12 +135,19 @@ export const ServicePage = () => {
             }}>
             {service.title}
         </h1>
-        
-        {/* Slider de imágenes del servicio */}
+
         <div style={{ margin: '20px 0' }}>
           <ImageSlider 
-            images={serviceImages}
-            autoplayDelay={4000}
+            images={desktopImages}
+            autoplayDelay={90000}
+            showDesktopOnly={true}
+            className={styles.serviceSlider}
+          />
+
+          <ImageSlider 
+            images={mobileImages}
+            autoplayDelay={90000}
+            showMobileOnly={true}
             className={styles.serviceSlider}
           />
         </div>
@@ -139,6 +187,8 @@ export const ServicePage = () => {
                     {renderTextContent(section.content)}
                     </p>
                 )}
+
+                {section.cards && renderCards(section.cards)}
 
                 {section.list && renderList(section.list)}
 
@@ -229,10 +279,8 @@ export const ServicePage = () => {
         )}
       </div>
       
-      {/* Footer */}
       <Footer />
       
-      {/* Botón flotante de WhatsApp */}
       <WhatsAppButton 
         message={`Hola, me interesa conocer más sobre el servicio: ${service.title}`}
       />

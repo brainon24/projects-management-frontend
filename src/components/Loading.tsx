@@ -27,8 +27,8 @@ export const Spinner = (props: CircularProgressPropsMine) => {
         variant="indeterminate"
         disableShrink
         sx={{
-          color: (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
-          animationDuration: '550ms',
+          color: (theme) => (theme.palette.mode === 'light' ? 'var(--orange)' : '#308fe8'),
+          animationDuration: '900ms',
           position: 'absolute',
           left: 0,
           [`& .${circularProgressClasses.circle}`]: {

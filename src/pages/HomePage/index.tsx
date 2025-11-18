@@ -63,14 +63,14 @@ export const HomePage = () => {
       <div className={styles.container}>
         <ImageSlider 
           images={desktopBanners} 
-          autoplayDelay={5000}
+          autoplayDelay={90000}
           showDesktopOnly={true}
           className={styles.desktopBanners}
         />
 
         <ImageSlider 
           images={mobileBanners} 
-          autoplayDelay={6000}
+          autoplayDelay={90000}
           showMobileOnly={true}
           className={styles.mobileBanners}
         />
@@ -139,7 +139,7 @@ export const HomePage = () => {
         <div className={styles.container}>
           <h2 
             className={styles.sectionHead}
-          >Servicios de brainon24</h2>
+          >¿Que necesitas para darle valor a tu negocio?</h2>
           <HomeServices />
         </div>
       </div>
@@ -150,9 +150,11 @@ export const HomePage = () => {
             <p className={styles.impactBannerTitle}>
               ¿Qué tanto está impactando la comunicación del negocio, su visibilidad y sus ventas?
             </p>
-            <Button style={{
+            <Button 
+              style={{
               fontSize: '0.85rem',
-            }}>Diagnóstico Gratuito</Button>
+              }}
+              onClick={() => window.open(diagnosticFormLink, '_blank')}>Diagnóstico Gratuito</Button>
           </div>
         </div>
       </div>

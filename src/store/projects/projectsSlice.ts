@@ -1,12 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: any = {
-    allProjects: [],
     projectById: undefined,
     oneProject: undefined,
-    allProjectsByUserId: [],
-    allProjectsByBusinessId: [],
-    allProjectsByResponsibleId: [],
 
     lastUpdateProject: undefined, 
     errorNotFoundProject: undefined,
@@ -45,10 +41,6 @@ export const projectsSlice = createSlice({
             state.isLoadingProjects = false;
         },
 
-        findAllProjectsReducer: ( state, { payload } ) => {
-            state.allProjects = payload;
-            state.isLoadingProjects = false;
-        },
 
         findProjectOneReducer: ( state, { payload } ) => {
             state.oneProject = payload;
@@ -70,37 +62,12 @@ export const projectsSlice = createSlice({
             state.isLoadingProjects = false;
         },
 
-        findProjectsByUserIdReducer: ( state, { payload } ) => {
-            state.allProjectsByUserId = payload;
-            state.isLoadingProjects = false;
-        },
-
-        findProjectsByBusinessIdReducer: ( state, { payload } ) => {
-            state.allProjectsByBusinessId = payload;
-            state.isLoadingProjects = false;
-        },
-
-        findProjectsByResponsibleIdReducer: ( state, { payload } ) => {
-            state.allProjectsByResponsibleId = payload;
-            state.isLoadingProjects = false;
-        },
-
         updateProjectReducer: (state, { payload }) => {
             state.isLoadingProjects = false;
-            const updatedProject = payload;
-            const index = state.allProjects.findIndex(
-              (project: any) => project._id === updatedProject.id
-            );
-            if (index !== -1) {
-              state.allProjects[index] = updatedProject;
-            }
         },
 
         changeRequestSuccessReducerProjects: ( state, { payload } ) => {
-            // console.log(payload)
             state.isLoadingCommentaries = false;
-            // state.isRequestSuccess = payload.isRequestSuccess;
-            // state.textRequestSuccess = payload.textRequestSuccess;
         },
     }
 });
@@ -111,14 +78,10 @@ export const {
     clearlastUpdateProjectsReducer,
     addErrorNotFoundProjectsReducer,
     clearErrorNotFoundProjectsReducer,
-    findAllProjectsReducer,
     findProjectByIdReducer,
     clearProjectByIdReducer,
     findProjectOneReducer,
     clearProjectOneReducer,
-    findProjectsByUserIdReducer,
-    findProjectsByBusinessIdReducer,
-    findProjectsByResponsibleIdReducer,
     updateProjectReducer,
     changeRequestSuccessReducerProjects,
 } = projectsSlice.actions;
