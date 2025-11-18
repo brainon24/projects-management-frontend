@@ -48,7 +48,7 @@ export const WhatsAppButton = ({
         setShowMessage(true);
         setTimeout(() => {
           setShowMessage(false);
-        }, 5000);
+        }, 25000);
       }, 30000);
     }
 

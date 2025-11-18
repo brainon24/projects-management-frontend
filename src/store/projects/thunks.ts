@@ -15,7 +15,7 @@ export const createProject_thunk = ( payload: any ): any => {
                     data,
                 }) );
             })
-            .catch(_ => {
+            .catch(error => {
                 try {
                     return dispatch( lastUpdateProjectsReducer({
                         code: 'ERROR',
@@ -27,18 +27,6 @@ export const createProject_thunk = ( payload: any ): any => {
             });
     }
 }
-
-
-// DEPRECATED: findAllProjects_thunk - removido, usar llamada directa a API en Projects.tsx
-
-
-// DEPRECATED: findProjectsByUserId_thunk - removido, usar llamada directa a API en Projects.tsx
-
-
-// DEPRECATED: findProjectsByBusinessId_thunk - removido, usar llamada directa a API en Projects.tsx
-
-
-// DEPRECATED: findProjectsByResponsibleI_thunk - removido, usar llamada directa a API en Projects.tsx
 
 
 export const findProjectById_thunk = ( projectId: string ): any => {

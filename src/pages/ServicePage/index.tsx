@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { services, servicesDetails, TextContent, ListItem, SublistItem } from '../../data/services';
+import { services, servicesDetails, TextContent, ListItem, SublistItem, ServiceCard } from '../../data/services';
 import { Icon } from '../../components/Icons';
 import { Header } from '../../components/Header';
 import { WhatsAppButton } from '../../components/WhatsAppButton';
 import { ImageSlider, SlideImage } from '../../components/ImageSlider';
 import { Footer } from '../../components/Footer';
+import { Grid } from '../../components/Grid';
 import styles from './styles.module.css'
 import { CSS_VARS } from '../../theme/colors';
 
@@ -80,6 +81,48 @@ export const ServicePage = () => {
     );
   };
 
+  const renderCards = (cards: ServiceCard[]) => {
+    return (
+      <div className={styles.cardsContainer}>
+        <div className={styles.cardsGrid}>
+          {cards.map((card) => (
+            <div key={card.id} className={styles.serviceCard}>
+              <div className={styles.cardHeader}>
+                <div className={styles.cardTextContainer}>
+                  <h4 className={styles.cardTitle}>{card.title}</h4>
+                  {card.subtitle && <p className={styles.cardSubtitle}>{card.subtitle}</p>}
+                </div>
+                {card.icon && (
+                  <div 
+                    className={styles.cardIcon}
+                    style={{ backgroundColor: card.backgroundColor || 'var(--orange-lighter)' }}
+                  >
+                    <Icon name={card.icon} />
+                  </div>
+                )}
+              </div>
+              {card.description && (
+                <div className={styles.cardDescription}>
+                  {renderTextContent(card.description)}
+                </div>
+              )}
+              {card.list && (
+                <div className={styles.cardList}>
+                  {renderList(card.list)}
+                </div>
+              )}
+              {card.signature && (
+                <p className={styles.cardSignature}>
+                  {card.signature}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Header />
@@ -144,6 +187,8 @@ export const ServicePage = () => {
                     {renderTextContent(section.content)}
                     </p>
                 )}
+
+                {section.cards && renderCards(section.cards)}
 
                 {section.list && renderList(section.list)}
 
