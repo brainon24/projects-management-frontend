@@ -58,6 +58,13 @@ const commonMenuItems = {
         link: 'https://calendar.google.com/calendar/u/0/r/week',
         icon: 'calendario',
         external: true
+    },
+    brief: {
+        title: 'Brief',
+        description: '¡Complétalo para darle valor a Tu Marca!',
+        link: '',
+        icon: 'file-shield-02',
+        external: true
     }
 };
 
@@ -88,7 +95,8 @@ const menuConfig: Record<string, MenuCard[]> = {
         specificMenuItems.ADMIN.whatsappMessages,
         commonMenuItems.projects,
         commonMenuItems.driveFiles,
-        commonMenuItems.calendar
+        commonMenuItems.calendar,
+        commonMenuItems.brief
     ],
     CLIENT: [
         commonMenuItems.profile,
@@ -96,7 +104,8 @@ const menuConfig: Record<string, MenuCard[]> = {
         commonMenuItems.createProject,
         commonMenuItems.projects,
         commonMenuItems.driveFiles,
-        commonMenuItems.calendar
+        commonMenuItems.calendar,
+        commonMenuItems.brief
     ],
     ALLY: [
         commonMenuItems.profile,

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as LinkRRD, Navigate, useNavigate } from 'react-router-dom';
 import { Box, Input, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -9,9 +9,12 @@ import { Icon } from '../../../components/Icons';
 import { Button } from '../../../components/Button';
 import ModalError from '../../../components/ModalError';
 import '../../../styles/login.css';
+import projectsManagement from '../../../api/api';
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   
     const { status } = useSelector((state: any) => state.auth);
 
@@ -20,19 +23,29 @@ export const ForgotPassword = () => {
     });
 
     const successFeedback = () => toast("En un momento recibirás un correo electrónico para recuperar tu contraseña.", {type: "success", autoClose: 6000});
+
+    const forgotPassword = async (email: string) => {
+        await projectsManagement.post('/auth/forgotPassword', { email });
+    }
   
-    const onSubmit = (event: any) => {
+    const onSubmit = async (event: any) => {
         event.preventDefault();
 
-        if(
-            !email
-        ) return;
+        if(!email) return;
 
-        onResetForm();
+        setIsLoading(true);
+        setErrorMessage('');
 
-        // TODO: Call endpoint to send email for password recovery
-
-        // successFeedback();
+        try {
+            await forgotPassword(email);
+            onResetForm();
+            successFeedback();
+        } catch (error: any) {
+            console.error('Error al enviar correo de recuperación:', error);
+            setErrorMessage(error.response?.data?.message || 'Ocurrió un error al enviar el correo de recuperación.');
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -48,15 +61,14 @@ export const ForgotPassword = () => {
             ? <Navigate to='/private' />
             : (
                 <div className='container-page'>
-                    {/* {
+                    {
                         errorMessage ? (
                             <ModalError
                                 title='Ocurrió un error...'
-                                // descriptionError={ errorMessage }
-                                descriptionError={ 'Por favor, verifica tu correo electrónico.' }
+                                descriptionError={ errorMessage }
                             />
                         ) : null
-                    } */}
+                    }
                     <Box
                         sx={{
                             display: 'flex',
@@ -94,8 +106,8 @@ export const ForgotPassword = () => {
                             />
 
                             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
-                                <Button type='submit' style={{width: '100%', padding: '12px 0'}}>
-                                    Recuperar contraseña
+                                <Button type='submit' style={{width: '100%', padding: '12px 0'}} disabled={isLoading}>
+                                    {isLoading ? 'Enviando...' : 'Recuperar contraseña'}
                                 </Button>
                             </Box>
 

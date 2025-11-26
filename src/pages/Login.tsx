@@ -103,9 +103,9 @@ export const Login = () => {
                                     value={ password }
                                     onChange={ onInputChange }
                                 />
-                                {/* <LinkRRD to='/forgot-password'>
+                                <LinkRRD to='/forgot-password'>
                                     <p className='sign-up-link'>Olvidaste tu contraseña? ¡Recuperala!</p>
-                                </LinkRRD> */}
+                                </LinkRRD>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
                                     <Button type='submit' style={{width: '100%', padding: '12px 0'}}>
