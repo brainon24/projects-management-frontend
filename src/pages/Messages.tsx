@@ -32,6 +32,27 @@ export const Messages = () => {
         setMessages(data)
     }
 
+    const renderImagen = (message: any) => {
+        console.log({message})
+        if (message?.attachmentType === 'audio') {
+            return <audio src={message?.attachment} controls />
+        }
+        if (message?.attachmentType === 'video') {
+            return <video src={message?.attachment} width={300} height="auto" controls />
+        }
+        if (message?.attachmentType === 'image') {
+            return <img src={message?.attachment} alt='Imagen' width={300} height="auto" />
+        }
+        if (message?.attachmentType === 'document') {
+            return <iframe
+                src={message?.attachment}
+                title="Documento PDF"
+                width="500px"
+                height="500px"
+            />
+        }
+    }
+
     useEffect(() => {
         getBusiness()
     }, [])
@@ -92,36 +113,7 @@ export const Messages = () => {
                                                 )
                                             }
                                             <div>
-                                                {
-                                                    message?.attachmentType === 'mp4' && (
-                                                        <video src={message?.attachment} width={300} controls />
-                                                    )
-                                                }
-                                                {
-                                                    message?.attachmentType === 'mpeg' && (
-                                                        <video src={message?.attachment} width={300} height={40} controls />
-                                                    )
-                                                }
-                                                {
-                                                    message?.attachmentType === 'png' || message?.attachmentType === 'jpg' || message?.attachmentType === 'jpeg' && (
-                                                        <img src={message?.attachment} alt='Imagen' width={300} />
-                                                    )
-                                                }
-                                                {
-                                                    message?.attachmentType === 'mp3' && (
-                                                        <audio src={message?.attachment} controls />
-                                                    )
-                                                }
-                                                {
-                                                    message?.attachmentType === 'pdf' && (
-                                                        <iframe
-                                                            src={message?.attachment}
-                                                            title="Documento PDF"
-                                                            width="500px"
-                                                            height="500px"
-                                                        />
-                                                    )
-                                                }
+                                                { renderImagen(message) }
                                             </div>
                                         </div>
                                         <p
