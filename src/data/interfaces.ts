@@ -63,10 +63,19 @@ export interface ServiceDetail {
   bannerImages?: ResponsiveBannerImages;
 }
 
+export interface ServiceItem {
+  id: string;
+  title: string;
+  shortDescription: string;
+  image: string;
+  detail?: ServiceDetail;
+}
+
 export interface Service {
   key: ServiceKeys;
   title: string;
-  image: string;
+  image?: string;
+  items?: ServiceItem[];
 }
 
 export type ServicesDetails = {

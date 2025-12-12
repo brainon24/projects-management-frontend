@@ -12,7 +12,8 @@ import {ProtectedRoute} from "./helpers/ProtectedRoute";
 import {Role} from "./enums/user-role.enum";
 import ModalError from "./components/ModalError";
 import { HomePage } from "./pages/HomePage";
-import { ServicePage } from "./pages/ServicePage";
+import { ServiceListPage } from "./pages/ServiceListPage";
+import { ServiceDetailPage } from "./pages/ServiceDetailPage";
 
 const Private = lazy(() => import('./pages/Private').then(module => ({ default: module.Private })));
 const Profile = lazy(() => import('./pages/Profile').then(module => ({ default: module.Profile })));
@@ -89,7 +90,8 @@ const App = () => {
         <Route path="/login" element={ <Login /> } />
         <Route path="/sign-up" element={ <SignUp /> } />
 
-        <Route path="/service/:id" element={ <ServicePage /> } />
+        <Route path="/services/:serviceName" element={ <ServiceListPage /> } />
+        <Route path="/services/:serviceName/:id" element={ <ServiceDetailPage /> } />
 
         <Route path="/forgot-password" element={ <ForgotPassword /> } />
         <Route path="/reset-password/:token" element={ <NewPassword /> } />

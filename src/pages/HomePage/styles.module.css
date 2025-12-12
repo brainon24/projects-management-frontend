@@ -143,9 +143,8 @@
 }
 
 .howWeDoItTimelineContainerBg {
-    /* background-color: #f5f4f4; */
-    /* background-color: #dddddd; */
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
+    background-color: var(--blue-light);
 }
 
 .howWeDoItTimelineContainer {
@@ -155,9 +154,8 @@
 }
 
 .impactBannerContainer {
-    /* background: linear-gradient(135deg, #ff6a00 0%, #ff8533 100%); */
-    /* background: linear-gradient(135deg, #ff6a00 0%, #de732c 80%, #f5f5f5 60%); */
-    background: linear-gradient(135deg, var(--orange) 0%, #de732c 80%, #f5f5f5 60%);
+    /* background: linear-gradient(135deg, var(--orange) 0%, #de732c 80%, rgb(239, 239, 239) 60%); */
+    background: linear-gradient(135deg, var(--orange) 0%, #de732c 80%, #f8f9fa 60%);
     padding: 0;
 }
 
