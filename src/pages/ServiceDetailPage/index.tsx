@@ -1,20 +1,20 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { services, servicesDetails, TextContent, ListItem, SublistItem, ServiceCard } from '../../data/services';
+import { services, TextContent, ListItem, SublistItem, ServiceCard } from '../../data/services';
 import { Icon } from '../../components/Icons';
 import { Header } from '../../components/Header';
 import { WhatsAppButton } from '../../components/WhatsAppButton';
 import { ImageSlider, SlideImage } from '../../components/ImageSlider';
 import { Footer } from '../../components/Footer';
-import { Grid } from '../../components/Grid';
 import styles from './styles.module.css'
 import { CSS_VARS } from '../../theme/colors';
 
-export const ServicePage = () => {
-  const { serviceName, id } = useParams<{ serviceName: string; id?: string }>();
-  const navigate = useNavigate();
+export const ServiceDetailPage = () => {
+  const { serviceName, id } = useParams<{ serviceName: string; id: string }>();
   
   const service = services.find(service => service.key === serviceName);
+  const serviceItem = service?.items?.find(item => item.id === id);
+  const serviceDetail = serviceItem?.detail;
 
   if (!service) {
     return (
@@ -29,99 +29,6 @@ export const ServicePage = () => {
       </div>
     );
   }
-
-  if (!id) {
-    const serviceItems = service.items?.map((item) => ({
-      id: item.id,
-      title: item.title,
-      image: item.image,
-      onClick: () => navigate(`/services/${serviceName}/${item.id}`)
-    })) || [];
-
-    return (
-      <div>
-        <Header />
-        <div className={styles.container}>
-          <div style={{ paddingBottom: 35 }} />
-          <h1 style={{ marginBottom: '20px', color: '#333' }}>
-            {service.title}
-          </h1>
-          
-          {serviceItems.length > 0 ? (
-            <div style={{
-              marginTop: '40px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: '24px'
-            }}>
-              {serviceItems.map((item) => (
-                <div 
-                  key={item.id}
-                  onClick={item.onClick}
-                  style={{
-                    cursor: 'pointer',
-                    borderRadius: '12px',
-                    border: '1px solid #e0e0e0',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: 'white',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
-                  }}
-                >
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    style={{
-                      width: '100%',
-                      height: '200px',
-                      objectFit: 'cover'
-                    }}
-                  />
-                  <div style={{ padding: '20px' }}>
-                    <h3 style={{ marginBottom: '12px', color: '#333', fontSize: '1.25rem' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: '#666', lineHeight: '1.6', fontSize: '0.95rem' }}>
-                      {service.items?.find(i => i.id === item.id)?.shortDescription}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div style={{ 
-              marginTop: '40px', 
-              padding: '20px', 
-              backgroundColor: '#f8f9fa',
-              borderRadius: '8px',
-              textAlign: 'center'
-            }}>
-              <p style={{ color: '#6c757d', fontSize: '1.1rem' }}>
-                Información detallada próximamente para {service.title}
-              </p>
-            </div>
-          )}
-        </div>
-        <Footer />
-        <WhatsAppButton 
-          message={`Hola, me interesa conocer más sobre el servicio: ${service.title}`}
-        />
-      </div>
-    );
-  }
-
-  const serviceItem = service.items?.find(item => item.id === id);
-  const serviceDetail = serviceItem?.detail;
 
   if (!serviceItem) {
     return (
@@ -241,23 +148,22 @@ export const ServicePage = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            marginBottom: '20px',
+            marginBottom: '25px',
             color: CSS_VARS.ORANGE,
             textDecoration: 'none',
             fontWeight: '500'
           }}
         >
           <Icon name="flecha-derecha" />
-          Volver a {service.title}
         </Link>
         
-        <h1 
+        {/* <h1 
             style={{ 
                 marginBottom: '20px', 
                 color: '#333' 
             }}>
             {serviceItem.title}
-        </h1>
+        </h1> */}
 
         <div style={{ margin: '20px 0' }}>
           <ImageSlider 

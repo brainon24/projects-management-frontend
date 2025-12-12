@@ -3,6 +3,7 @@ import { clearBusinessIdAndName } from "../business/businessSlice";
 import projectsManagement from '../../api/api';
 import { clearStateUsersReducer } from "../users/usersSlice";
 import { closeSidemenu } from "../ui/uiSlice";
+import whatsapp from "../../api/whatsapp";
 
 
 interface SignUpProps {
@@ -11,6 +12,21 @@ interface SignUpProps {
     email: string; 
     password: string;
     businessId: string;
+}
+
+const postMessage = async (payload: any) => {
+    try {
+        console.log({payload})
+        const { data } = await whatsapp.post('/send-message', {
+            phone: payload?.phone,
+            content: `Hola ${payload?.fullName}, bienvenido a brainon24. Tu cuenta ha sido creada exitosamente.`,
+            author: payload?._id,
+            conversationId: payload?.id,
+        });
+        return data;
+    } catch (error) {
+        console.log({error})
+    }
 }
 
 export const signUp_thunk = ({ fullName, email, password, phone, businessId }: SignUpProps) => {
@@ -25,13 +41,18 @@ export const signUp_thunk = ({ fullName, email, password, phone, businessId }: S
             phone, 
             businessId,
         })
-            .then(({ data, status }) => {
+            .then(async ({ data, status }) => {
                 if (status !== 201) {
                     throw new Error(data.message);
                 }
                 
                 localStorage.setItem('token', data.token);
                 dispatch( signInReducer( data ) );
+                await postMessage({
+                    phone,
+                    fullName,
+                    ...data.user,
+                });
             })
             .catch(error => {
                 try {

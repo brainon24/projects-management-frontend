@@ -7,7 +7,7 @@ export const HomeServices = () => {
   const navigate = useNavigate();
 
   const handleServiceClick = (serviceKey: string) => {
-    navigate(`/service/${serviceKey}`);
+    navigate(`/services/${serviceKey}`);
   };
 
   const serviceItems: GridItem[] = services.map((service) => ({
