@@ -13,7 +13,9 @@ import {
 import { 
   socialNetworkDetail,
   photographicProductionDetail,
-  webDevelopmentDetail
+  webDevelopmentDetail,
+  audiovisualProductionDetail,
+  graphicArtsDesignDetail
 } from './details';
 
 import { diagnosticFormLink, whyBrainon24Section } from './shared-constants';
@@ -72,8 +74,9 @@ export const services: Service[] = [
       {
         id: 'audiovisual-production-service',
         title: 'Producción Audiovisual',
-        shortDescription: 'Creación de contenido audiovisual de alta calidad para tu marca.',
-        image: audiovisualImage
+        shortDescription: 'Historias que conectan y le dan valor a tu negocio.',
+        image: audiovisualImage,
+        detail: audiovisualProductionDetail
       }
     ]
   },
@@ -86,7 +89,8 @@ export const services: Service[] = [
         id: 'graphic-design-service',
         title: 'Diseño Gráfico',
         shortDescription: 'Diseño de identidad visual, branding y materiales gráficos.',
-        image: graphicDesignImage
+        image: graphicDesignImage,
+        detail: graphicArtsDesignDetail
       }
     ]
   },
@@ -95,5 +99,7 @@ export const services: Service[] = [
 export const servicesDetails: ServicesDetails = {
   [ServiceKeys.SOCIAL_NETWORK]: socialNetworkDetail,
   [ServiceKeys.PHOTOGRAPHIC_PRODUCTION]: photographicProductionDetail,
-  [ServiceKeys.WEB_DEVELOPMENT]: webDevelopmentDetail
+  [ServiceKeys.WEB_DEVELOPMENT]: webDevelopmentDetail,
+  [ServiceKeys.AUDIOVISUAL_PRODUCTION]: audiovisualProductionDetail,
+  [ServiceKeys.GRAPHIC_ARTS_DESIGN]: graphicArtsDesignDetail
 };

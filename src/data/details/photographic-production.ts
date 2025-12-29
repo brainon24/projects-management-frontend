@@ -10,7 +10,7 @@ export const photographicProductionDetail: ServiceDetail = {
         src: photographicProduction1,
         alt: "Producción Fotográfica - Capturamos la esencia de tu marca",
         backgroundColor: '#fff'
-      }  
+      }
     ],
     mobile: [
       {

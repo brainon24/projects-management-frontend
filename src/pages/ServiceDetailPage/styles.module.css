@@ -11,6 +11,23 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.videoWrapper {
+    position: relative;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.videoIframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 /* Cards Styles */
 .cardsContainer {
     padding: 20px 0;
@@ -65,8 +82,8 @@
 }
 
 .cardIcon {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -110,8 +127,142 @@
     font-weight: 500;
 }
 
+.cardCtaButton {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 16px rgba(255, 112, 41, 0.25);
+}
+
+.cardCtaButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 112, 41, 0.3);
+}
+
+.cardCtaButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 112, 41, 0.3);
+}
+
+.blogCta {
+    margin-top: 72px;
+    margin-bottom: 72px;
+    padding: 48px 56px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--orange) 0%, #f49765 50%, #ffd2b3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(255, 112, 41, 0.25);
+}
+
+.blogCta::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 280px;
+    height: 280px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    filter: blur(0.5px);
+}
+
+.blogCtaContent {
+    position: relative;
+    max-width: 760px;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.blogCtaEyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 6px 16px;
+    border-radius: 999px;
+}
+
+.blogCtaTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #fff;
+    padding: 0;
+}
+
+.blogCtaDescription {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 640px;
+    padding: 0;
+}
+
+.blogCtaButton {
+    margin-top: 12px;
+    padding: 13px 50px;
+    border-radius: 999px;
+    border: none;
+    background: #fff;
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.blogCtaButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
+}
+
+.blogCtaButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 768px) {
+    .blogCta {
+        padding: 40px 24px;
+        border-radius: 20px;
+    }
+
+    .blogCtaTitle {
+        font-size: 1.75rem;
+    }
+
+    .blogCtaDescription {
+        font-size: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
     .serviceSlider {
+        border-radius: 8px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .videoWrapper {
         border-radius: 8px;
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
     }
@@ -145,6 +296,18 @@
 
     .cardSubtitle {
         font-size: 0.9rem;
+    }
+
+    .blogCta::after {
+        content: "";
+        position: absolute;
+        top: -35%;
+        right: -25%;
+        width: 280px;
+        height: 280px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        filter: blur(0.5px);
     }
 }
 

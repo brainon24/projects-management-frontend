@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { services, TextContent, ListItem, SublistItem, ServiceCard } from '../../data/services';
 import { Icon } from '../../components/Icons';
-import { Header } from '../../components/Header';
+import { BLOG_URL, Header } from '../../components/Header';
 import { WhatsAppButton } from '../../components/WhatsAppButton';
 import { ImageSlider, SlideImage } from '../../components/ImageSlider';
 import { Footer } from '../../components/Footer';
@@ -60,6 +60,7 @@ export const ServiceDetailPage = () => {
 
   const desktopImages = getDesktopImages();
   const mobileImages = getMobileImages();
+  const bannerVideoId = serviceDetail?.bannerVideo?.youtubeId;
 
   const renderTextContent = (content: TextContent[]) => {
     return content.map((item, idx) => (
@@ -130,12 +131,38 @@ export const ServiceDetailPage = () => {
                   {card.signature}
                 </p>
               )}
+              {card.cta && (
+                <button
+                  className={styles.cardCtaButton}
+                  onClick={() => window.open(card.cta?.to, card.cta?.target ?? '_blank')}
+                >
+                  {card.cta.text}
+                </button>
+              )}
             </div>
           ))}
         </div>
       </div>
     );
   };
+
+  const renderBlogCta = () => (
+    <div className={styles.blogCta}>
+      <div className={styles.blogCtaContent}>
+        {/* <span className={styles.blogCtaEyebrow}>Blog brainon24</span> */}
+        <h2 className={styles.blogCtaTitle}>Historias que inspiran a tu negocio</h2>
+        <p className={styles.blogCtaDescription}>
+          Explora tendencias, ideas y casos reales para potenciar la comunicación estratégica de tu empresa.
+        </p>
+        <button
+          className={styles.blogCtaButton}
+          onClick={() => window.open(BLOG_URL, '_blank')}
+        >
+          Ir al blog de brainon24
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div>
@@ -166,21 +193,34 @@ export const ServiceDetailPage = () => {
         </h1> */}
 
         <div style={{ margin: '20px 0' }}>
-          <ImageSlider 
-            images={desktopImages}
-            autoplayDelay={90000}
-            showDesktopOnly={true}
-            className={styles.serviceSlider}
-          />
+          {bannerVideoId ? (
+            <div className={styles.videoWrapper}>
+              <iframe
+                className={styles.videoIframe}
+                src={`https://www.youtube.com/embed/${bannerVideoId}`}
+                title={serviceItem.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <>
+              <ImageSlider 
+                images={desktopImages}
+                autoplayDelay={90000}
+                showDesktopOnly={true}
+                className={styles.serviceSlider}
+              />
 
-          <ImageSlider 
-            images={mobileImages}
-            autoplayDelay={90000}
-            showMobileOnly={true}
-            className={styles.serviceSlider}
-          />
+              <ImageSlider 
+                images={mobileImages}
+                autoplayDelay={90000}
+                showMobileOnly={true}
+                className={styles.serviceSlider}
+              />
+            </>
+          )}
         </div>
-
         {serviceDetail && (
             <div style={{ marginTop: '40px' }}>
             {serviceDetail.sections.map((section, sectionIdx) => (
@@ -279,7 +319,6 @@ export const ServiceDetailPage = () => {
                                 if (link.type === 'contact') {
                                     return;
                                 }
-                                console.log(`Clicked ${link.type}: ${link.text}`);
                             }}
                         >
                         {link.text}
@@ -306,6 +345,8 @@ export const ServiceDetailPage = () => {
                 </p>
             </div>
         )}
+
+          {renderBlogCta()}
       </div>
       
       <Footer />
