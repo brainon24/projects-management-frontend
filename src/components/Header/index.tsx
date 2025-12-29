@@ -5,6 +5,8 @@ import styles from './styles.module.css'
 import { Icon } from '../Icons'
 import logo from '../../assets/brainon24-logo.png'
 
+export const BLOG_URL = "https://brainon24.com/blog";
+
 const navList = [
     {
         to: "/#about",
@@ -22,7 +24,7 @@ const navList = [
         isAncle: true
     },
     {
-        to: "/",
+        to: BLOG_URL,
         label: "Blog",
         isAncle: false
     }

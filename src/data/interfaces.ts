@@ -43,6 +43,11 @@ export interface ServiceCard {
   icon?: string;
   backgroundColor?: string;
   signature?: string;
+  cta?: {
+    text: string;
+    to: string;
+    target?: '_self' | '_blank';
+  };
 }
 
 export interface ServiceSection {
@@ -58,9 +63,14 @@ export interface ServiceSection {
   cards?: ServiceCard[];
 }
 
+export interface BannerVideo {
+  youtubeId: string;
+}
+
 export interface ServiceDetail {
   sections: ServiceSection[];
   bannerImages?: ResponsiveBannerImages;
+  bannerVideo?: BannerVideo;
 }
 
 export interface ServiceItem {
